@@ -73,6 +73,15 @@ public class Character {
         return this.hp > 0;
     }
 
+    public void reduceDefense(int amount) {
+        // Reduce defense by the specified amount
+        this.defense -= amount;
+        // Ensure defense doesn't go below zero
+        if (this.defense < 0) {
+            this.defense = 0;
+        }
+    }
+
     // Display character status
     public void displayStatus() {
         System.out.println(name + " - HP: " + hp + "/" + maxHp + ", Strength: " + strength + ", Intelligence: "
