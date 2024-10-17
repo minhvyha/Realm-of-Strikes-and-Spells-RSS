@@ -1,12 +1,15 @@
-package CharacterClasses;
+package Characters.Race;
+
+import Characters.Character;
+import Characters.CharacterClass;
 
 public class Human extends Character {
-  public Human(String name) {
-      super(name, 120, 15, 15, 15); // Balanced stats
+  public Human(String name, CharacterClass characterClass) {
+      super(name, 120, 15, 15, 15, characterClass); // Balanced stats
   }
 
   @Override
-  public void useAbility(Character target) {
+  public void useClassAbility(Character target) {
       // Humans have a shield bash ability that deals damage and reduces target's defense temporarily
       int damage = this.getStrength() + 5 - target.getDefense();
       damage = Math.max(damage, 1);

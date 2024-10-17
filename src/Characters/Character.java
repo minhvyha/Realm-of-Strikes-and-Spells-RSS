@@ -1,4 +1,4 @@
-package CharacterClasses;
+package Characters;
 
 public class Character {
     // Attributes
@@ -8,17 +8,18 @@ public class Character {
     private int strength;
     private int intelligence;
     private int defense;
+    private CharacterClass characterClass;
 
     // Constructor
-    public Character(String name, int hp, int strength, int intelligence, int defense) {
+    public Character(String name, int hp, int strength, int intelligence, int defense, CharacterClass characterClass) {
         this.name = name;
         this.hp = hp;
         this.maxHp = hp; // Set max HP equal to initial HP
         this.strength = strength;
         this.intelligence = intelligence;
         this.defense = defense;
+        this.characterClass = characterClass;
     }
-
     // Getters
     public String getName() {
         return name;
@@ -38,6 +39,34 @@ public class Character {
 
     public int getDefense() {
         return defense;
+    }
+    public int getMaxHp() {
+        return maxHp;
+    }
+    public CharacterClass getCharacterClass() {
+        return characterClass;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+    public void setIntelligence(int intelligence) {
+        this.intelligence = intelligence;
+    }
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+    public void setMaxHp(int maxHp) {
+        this.maxHp = maxHp;
+    }
+    public void setCharacterClass(CharacterClass characterClass) {
+        this.characterClass = characterClass;
     }
 
     // Methods
@@ -87,7 +116,11 @@ public class Character {
         System.out.println(name + " - HP: " + hp + "/" + maxHp + ", Strength: " + strength + ", Intelligence: "
                 + intelligence + ", Defense: " + defense);
     }
-    public void useAbility(Character target) {
+    public void useRaceAbility(Character target) {
+        // Default ability: basic attack
+        attack(target);
+    }
+    public void useClassAbility(Character target) {
         // Default ability: basic attack
         attack(target);
     }
