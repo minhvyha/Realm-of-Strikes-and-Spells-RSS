@@ -54,7 +54,7 @@ public class Main extends JFrame {
 
         // Add the slime image to the left character panel
         slimeLabel = new JLabel();
-        ImageIcon slimeIcon = new ImageIcon(getClass().getResource("/assets/slime.png"));
+        ImageIcon slimeIcon = new ImageIcon(getClass().getResource("/assets/character/slime.png"));
         slimeLabel.setIcon(slimeIcon);
         slimeLabel.setBounds(slimeX, 50, slimeIcon.getIconWidth(), slimeIcon.getIconHeight()); // Set initial position
         leftCharacterPanel.add(slimeLabel);
