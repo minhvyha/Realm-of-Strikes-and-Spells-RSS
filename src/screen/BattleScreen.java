@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 
 public class BattleScreen extends JPanel {
     private JPanel topPanel, bottomPanel;
@@ -21,8 +20,8 @@ public class BattleScreen extends JPanel {
 
     private ImageIcon scaleImageHighQuality(ImageIcon icon, int width, int height) {
         Image image = icon.getImage(); // Transform the icon into an Image
-    Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH); // Scale the image
-    return new ImageIcon(scaledImage); // Return the scaled icon
+        Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH); // Scale the image
+        return new ImageIcon(scaledImage); // Return the scaled icon
     }
 
     public BattleScreen(Image backgroundImage) {
@@ -44,33 +43,52 @@ public class BattleScreen extends JPanel {
     private void loadAnimationFrames() {
         // Load the frames from the resources (from 0 to 9)
         elfFrames = new ImageIcon[] {
-            scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_000.png")), 285, 150),
-            scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_001.png")), 285, 150),
-                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_002.png")), 285, 150),
-                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_003.png")), 285, 150),
-                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_004.png")), 285, 150),
-                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_005.png")), 285, 150),
-                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_006.png")), 285, 150),
-                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_007.png")), 285, 150),
-                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_008.png")), 285, 150),
-                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_009.png")), 285, 150)
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_000.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_001.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_002.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_003.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_004.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_005.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_006.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_007.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_008.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_009.png")), 285,
+                        150)
 
         };
         orcFrames = new ImageIcon[] {
-            scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_000.png")), 285, 150),
-            scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_001.png")), 285, 150),
-                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_002.png")), 285, 150),
-                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_003.png")), 285, 150),
-                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_004.png")), 285, 150),
-                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_005.png")), 285, 150),
-                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_006.png")), 285, 150),
-                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_007.png")), 285, 150),
-                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_008.png")), 285, 150),
-                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_009.png")), 285, 150)
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_000.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_001.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_002.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_003.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_004.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_005.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_006.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_007.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_008.png")), 285,
+                        150),
+                scaleImageHighQuality(new ImageIcon(getClass().getResource("/assets/elf/2/Elf_02__IDLE_009.png")), 285,
+                        150)
 
         };
     }
-
 
     private void initializePanels() {
         // Initialize the top panel with character sections
