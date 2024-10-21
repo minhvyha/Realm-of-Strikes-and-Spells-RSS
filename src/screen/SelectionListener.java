@@ -1,5 +1,5 @@
 package screen;
 
 public interface SelectionListener {
-    void onSelectionMade();
+    void onSelectionMade(int map);
 }

@@ -13,18 +13,23 @@ public class Main extends JFrame implements SelectionListener {
     private JPanel leftCharacterPanel, rightCharacterPanel;
     private JTextArea gameTextArea;
     private JLabel slimeLabel;
-    private boolean start = false; // Flag to start the game
     private Timer movementTimer;
     private int slimeX = 50; // Initial X position of the slime
     private boolean movingRight = true; // Flag for direction
     private Image backgroundImage;
-
+    
     private JPanel menuPanel;
     private JButton option1, option2, option3;
     private SelectionMenu selectionMenu;
+    
+    private boolean start = false; // Flag to start the game
+    private int map = -1; // Map selection
+
 
     @Override
-    public void onSelectionMade() {
+    public void onSelectionMade(int map) {
+        System.out.println("Map " + map + " selected");
+        this.map = map;
         // Implement the method logic here
         setStart(true);
     }
