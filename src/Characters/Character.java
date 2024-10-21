@@ -121,7 +121,7 @@ public class Character {
         attack(target);
     }
     public void useClassAbility(Character target) {
-        // Default ability: basic attack
+        characterClass.useClassAbility(this, target);
         attack(target);
     }
 }

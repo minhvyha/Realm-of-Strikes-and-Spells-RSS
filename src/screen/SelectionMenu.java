@@ -8,7 +8,7 @@ import javax.swing.border.EmptyBorder;
 public class SelectionMenu extends JPanel {
     private int total = 0;
     private SelectionListener listener;
-    private JLabel titleLabel = new JLabel("Select Your Battle Map", SwingConstants.CENTER);
+    private JLabel titleLabel = new JLabel("Select Your Allies", SwingConstants.CENTER);
     private JPanel buttonPanel = new JPanel();
 
     public SelectionMenu(SelectionListener listener) {
@@ -68,6 +68,7 @@ public class SelectionMenu extends JPanel {
     
     private void initializeMapButtons() {
         buttonPanel.removeAll(); // Clear existing components
+        titleLabel.setText("Select Your Battlefield");
         Dimension buttonSize = new Dimension(200, 200); // Define button size
         String[] battleMapNames = {
             "Enchanted Forest",   
