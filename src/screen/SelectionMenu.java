@@ -20,33 +20,56 @@ public class SelectionMenu extends JPanel {
 
     public SelectionMenu(SelectionListener listener) {
         this.listener = listener;
-
+    
         // Set the layout to BorderLayout to support NORTH, CENTER, etc.
         setLayout(new BorderLayout());
-
+    
         // Create a JPanel with a black background
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Title font and size
         titleLabel.setForeground(Color.WHITE); // Title color
         titleLabel.setOpaque(true);
         titleLabel.setBackground(Color.BLACK); // Background color for the title
         titleLabel.setBorder(BorderFactory.createEmptyBorder(30, 20, 10, 20));
-
+    
         // Add the title label at the top (NORTH)
         add(titleLabel, BorderLayout.NORTH);
-
+    
         // Create a panel with GridLayout for the buttons
         buttonPanel.setLayout(new GridLayout(1, 3, 20, 20)); // 3 columns
         buttonPanel.setBackground(Color.BLACK);
         int paddingSize = 20;
         buttonPanel.setBorder(new EmptyBorder(paddingSize, paddingSize, paddingSize, paddingSize)); // Add padding
-
+    
         // Add buttons to the buttonPanel
         initializeCharacterButtons();
-        initializeMapButtons();
+    
         // Add the button panel to the CENTER
         add(buttonPanel, BorderLayout.CENTER);
+    
+        // Create "Next" button
+        JButton nextButton = new JButton("Next");
+        nextButton.setFont(new Font("Arial", Font.BOLD, 12)); // Smaller font size for a small fit-text button
+        nextButton.setBackground(Color.GREEN);
+        nextButton.setPreferredSize(new Dimension(100, 30)); // Smaller button size
+    
+        // ActionListener for the button to make it disappear when clicked
+        nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                initializeMapButtons();
+                nextButton.setVisible(false); // Hide the button after it's clicked
+            }
+        });
+    
+        // Create a JPanel with FlowLayout to position the button in the middle
+        JPanel buttonPanelWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 30)); // 30px padding from top
+        buttonPanelWrapper.setBackground(Color.BLACK); // Match the background color
+        buttonPanelWrapper.add(nextButton); // Add the "Next" button to the wrapper panel
+    
+        // Add the button panel wrapper to the CENTER, slightly above the bottom
+        add(buttonPanelWrapper, BorderLayout.SOUTH);
     }
-
+    
     private void initializeCharacterButtons() {
         buttonPanel.removeAll();
 

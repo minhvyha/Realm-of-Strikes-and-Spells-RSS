@@ -18,7 +18,7 @@ public class CharacterLabel extends JLabel {
     // Desired aspect ratio (2000:1050) and height
     private final int desiredWidth = 1050;
     private final int desiredHeight = 1050;
-    private final int targetHeight = 120; // Scale down to this height
+    private final int targetHeight = 130; // Scale down to this height
 
     public CharacterLabel(String name, int maxIdleFrame, int maxAttackFrame, int maxDieFrame, int maxHurtFrame,
             int xPosition, int yPosition) {

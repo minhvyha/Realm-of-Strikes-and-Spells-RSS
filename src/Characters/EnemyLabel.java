@@ -4,7 +4,9 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import java.awt.Image;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.AlphaComposite;
 import java.awt.geom.AffineTransform;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +22,7 @@ public class EnemyLabel extends JLabel {
     // Desired aspect ratio (2000:1050) and height
     private final int desiredWidth = 1050;
     private final int desiredHeight = 1050;
-    private final int targetHeight = 120; // Scale down to this height
+    private final int targetHeight = 130; // Scale down to this height
 
     public EnemyLabel(String name, int maxIdleFrame, int maxAttackFrame, int maxDieFrame, int maxHurtFrame,
             int xPosition, int yPosition) {
@@ -90,7 +92,8 @@ public class EnemyLabel extends JLabel {
         int height = img.getHeight(null);
 
         // Create a new image with a flipped transformation
-        Image flippedImage = new java.awt.image.BufferedImage(width, height, java.awt.image.BufferedImage.TYPE_INT_ARGB);
+        Image flippedImage = new java.awt.image.BufferedImage(width, height,
+                java.awt.image.BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = (Graphics2D) flippedImage.getGraphics();
         AffineTransform tx = AffineTransform.getScaleInstance(-1, 1); // Horizontal flip
         tx.translate(-width, 0); // Shift image back into view
