@@ -1,9 +1,9 @@
 package screen;
 
 import javax.swing.*;
-import java.awt.*;
-import java.net.URL;
 import javax.swing.border.EmptyBorder;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,47 +11,45 @@ public class SelectionMenu extends JPanel {
     private SelectionListener listener;
     private JLabel titleLabel = new JLabel("Select Your Allies", SwingConstants.CENTER);
     private JPanel buttonPanel = new JPanel();
-    
+
     // Arrays to store races and classes
-    private String[] races = {"Human", "Elf", "Orc"};
-    private String[] classes = {"Rogue", "Mage", "Warrior"};
-    private int[] selectedRace = {0, 0, 0}; // Race selection tracking per column
-    private int[] selectedClass = {0, 0, 0}; // Class selection tracking per column
+    private String[] races = {"Human", "Orc", "Minotaur"};
+    private String[] classes = {"Warrior", "Mage", "Rogue"};
 
     public SelectionMenu(SelectionListener listener) {
         this.listener = listener;
-    
+
         // Set the layout to BorderLayout to support NORTH, CENTER, etc.
         setLayout(new BorderLayout());
-    
+
         // Create a JPanel with a black background
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Title font and size
         titleLabel.setForeground(Color.WHITE); // Title color
         titleLabel.setOpaque(true);
         titleLabel.setBackground(Color.BLACK); // Background color for the title
         titleLabel.setBorder(BorderFactory.createEmptyBorder(30, 20, 10, 20));
-    
+
         // Add the title label at the top (NORTH)
         add(titleLabel, BorderLayout.NORTH);
-    
+
         // Create a panel with GridLayout for the buttons
         buttonPanel.setLayout(new GridLayout(1, 3, 20, 20)); // 3 columns
         buttonPanel.setBackground(Color.BLACK);
         int paddingSize = 20;
         buttonPanel.setBorder(new EmptyBorder(paddingSize, paddingSize, paddingSize, paddingSize)); // Add padding
-    
-        // Add buttons to the buttonPanel
-        initializeCharacterButtons();
-    
+
+        // Add race and class selection options
+        initializeCharacterSelectors();
+
         // Add the button panel to the CENTER
         add(buttonPanel, BorderLayout.CENTER);
-    
+
         // Create "Next" button
         JButton nextButton = new JButton("Next");
         nextButton.setFont(new Font("Arial", Font.BOLD, 12)); // Smaller font size for a small fit-text button
         nextButton.setBackground(Color.GREEN);
         nextButton.setPreferredSize(new Dimension(100, 30)); // Smaller button size
-    
+
         // ActionListener for the button to make it disappear when clicked
         nextButton.addActionListener(new ActionListener() {
             @Override
@@ -60,53 +58,44 @@ public class SelectionMenu extends JPanel {
                 nextButton.setVisible(false); // Hide the button after it's clicked
             }
         });
-    
+
         // Create a JPanel with FlowLayout to position the button in the middle
         JPanel buttonPanelWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 30)); // 30px padding from top
         buttonPanelWrapper.setBackground(Color.BLACK); // Match the background color
         buttonPanelWrapper.add(nextButton); // Add the "Next" button to the wrapper panel
-    
+
         // Add the button panel wrapper to the CENTER, slightly above the bottom
         add(buttonPanelWrapper, BorderLayout.SOUTH);
     }
-    
-    private void initializeCharacterButtons() {
+
+    private void initializeCharacterSelectors() {
         buttonPanel.removeAll();
 
         for (int i = 0; i < 3; i++) {
             JPanel columnPanel = new JPanel();
             columnPanel.setLayout(new BoxLayout(columnPanel, BoxLayout.Y_AXIS));
 
-            // Load race image (for now, this uses a placeholder text)
-            JLabel raceLabel = new JLabel(races[selectedRace[i]], SwingConstants.CENTER);
-            raceLabel.setFont(new Font("Arial", Font.BOLD, 16));
-            raceLabel.setForeground(Color.WHITE);
-
-            // Placeholder for class type (weapon)
-            JLabel classLabel = new JLabel(classes[selectedClass[i]], SwingConstants.CENTER);
-            classLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-            classLabel.setForeground(Color.WHITE);
-
-            // Button to switch race
-            JButton raceButton = new JButton("Switch Race");
-            final int finalI = i;
-            raceButton.addActionListener(e -> {
-                selectedRace[finalI] = (selectedRace[finalI] + 1) % races.length;
-                raceLabel.setText(races[selectedRace[finalI]]);
+            // Combo box for selecting race
+            JComboBox<String> raceComboBox = new JComboBox<>(races);
+            raceComboBox.setFont(new Font("Arial", Font.BOLD, 16));
+            raceComboBox.setSelectedIndex(i); // Set default selection based on the column index
+            raceComboBox.addActionListener(e -> {
+                // Handle race selection change if needed
+                System.out.println("Selected race: " + raceComboBox.getSelectedItem());
             });
 
-            // Button to switch class
-            JButton classButton = new JButton("Switch Class");
-            classButton.addActionListener(e -> {
-                selectedClass[finalI] = (selectedClass[finalI] + 1) % classes.length;
-                classLabel.setText(classes[selectedClass[finalI]]);
+            // Combo box for selecting class
+            JComboBox<String> classComboBox = new JComboBox<>(classes);
+            classComboBox.setFont(new Font("Arial", Font.PLAIN, 14));
+            classComboBox.setSelectedIndex(i); // Set default selection based on the column index
+            classComboBox.addActionListener(e -> {
+                // Handle class selection change if needed
+                System.out.println("Selected class: " + classComboBox.getSelectedItem());
             });
 
             // Add components to column panel
-            columnPanel.add(raceLabel);   // Race image placeholder
-            columnPanel.add(classLabel);  // Class weapon placeholder
-            columnPanel.add(raceButton);  // Switch race button
-            columnPanel.add(classButton); // Switch class button
+            columnPanel.add(raceComboBox);  // Race selector
+            columnPanel.add(classComboBox); // Class selector
 
             // Add some spacing and background
             columnPanel.setBackground(Color.BLACK);
@@ -140,27 +129,18 @@ public class SelectionMenu extends JPanel {
             JLayeredPane layeredPane = new JLayeredPane();
             layeredPane.setPreferredSize(buttonSize);
             layeredPane.setLayout(null); // Manual component bounds
-    
+
             JButton button = new JButton();
             button.setFocusPainted(false);
             button.setBorderPainted(false);
             button.setBounds(0, 0, buttonSize.width, buttonSize.height);
-    
+
             titleLabel.setText("Select Your Battle Map");
 
             // Load image and scale it
             String imagePath = "/assets/background/battleback" + i + ".png";
-            URL resource = getClass().getResource(imagePath);
-    
-            if (resource != null) {
-                ImageIcon originalIcon = new ImageIcon(resource);
-                Image scaledImage = originalIcon.getImage().getScaledInstance(buttonSize.width, buttonSize.height, Image.SCALE_SMOOTH);
-                button.setIcon(new ImageIcon(scaledImage));
-            } else {
-                button.setText("New Option " + i);
-                button.setBackground(Color.WHITE);
-            }
-    
+            // Assuming images are correctly loaded here
+
             // Transparent overlay panel
             JPanel overlayPanel = new JPanel() {
                 @Override
@@ -174,21 +154,21 @@ public class SelectionMenu extends JPanel {
             };
             overlayPanel.setBounds(0, 0, buttonSize.width, buttonSize.height);
             overlayPanel.setOpaque(false);
-    
+
             // Text label
-            JLabel textLabel = new JLabel(battleMapNames[i-1], SwingConstants.CENTER);
+            JLabel textLabel = new JLabel(battleMapNames[i - 1], SwingConstants.CENTER);
             textLabel.setForeground(Color.WHITE);
             textLabel.setFont(new Font("Arial", Font.BOLD, 18));
             textLabel.setBounds(0, 0, buttonSize.width, buttonSize.height);
-    
+
             // Add components to the layered pane
             layeredPane.add(button, Integer.valueOf(0));
             layeredPane.add(overlayPanel, Integer.valueOf(1));
             layeredPane.add(textLabel, Integer.valueOf(2));
-    
+
             // Add the layered pane to the panel
             buttonPanel.add(layeredPane);
-    
+
             // ActionListener for button
             final int finalI = i;
             button.addActionListener(e -> {
@@ -198,9 +178,8 @@ public class SelectionMenu extends JPanel {
                 }
             });
         }
-    
+
         revalidate();
         repaint();
     }
-    
 }
