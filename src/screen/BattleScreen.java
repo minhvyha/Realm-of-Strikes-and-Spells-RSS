@@ -39,7 +39,7 @@ public class BattleScreen extends JPanel {
 
                 // Bottom panel with a dark transparent box
                 bottomPanel = new JPanel(new BorderLayout());
-                bottomPanel.setBackground(new Color(0, 0, 0, 150)); // Dark transparent background (RGBA)
+                bottomPanel.setBackground(new Color(0, 0, 0, 180)); // Dark transparent background (RGBA)
 
                 // Initialize character panels
                 leftCharacterPanel = new JPanel(null);
@@ -48,9 +48,8 @@ public class BattleScreen extends JPanel {
                 rightCharacterPanel = new JPanel();
                 rightCharacterPanel.setOpaque(false); // Transparent right character panel
 
-                // Initialize the elf character using CharacterLabel
-                orcLabel = new CharacterLabel("orc", 18, 12, 15, 12, 50, 50); // Pass the frames and initial position
-                leftCharacterPanel.add(orcLabel); // Add the elf character to the left panel
+                orcLabel = new CharacterLabel("orc", 18, 12, 15, 12, 50, 110); // Pass the frames and initial position
+                leftCharacterPanel.add(orcLabel);
 
                 // Add character panels to top panel
                 topPanel.add(leftCharacterPanel);
@@ -70,7 +69,7 @@ public class BattleScreen extends JPanel {
                 add(bottomPanel, BorderLayout.SOUTH); // Bottom section
 
                 // Adjust the proportions of the bottom section
-                bottomPanel.setPreferredSize(new Dimension(800, 200));
+                bottomPanel.setPreferredSize(new Dimension(800, 130));
 
                 // Selection menu with transparent background
                 menuPanel = new JPanel(new GridLayout(3, 1));
@@ -78,8 +77,8 @@ public class BattleScreen extends JPanel {
 
                 // Initialize menu buttons
                 option1 = new JButton("Attack");
-                option2 = new JButton("Defend");
-                option3 = new JButton("Run");
+                option2 = new JButton("Die");
+                option3 = new JButton("Hurt");
 
                 // Customize the buttons
                 customizeButton(option1);
@@ -109,25 +108,24 @@ public class BattleScreen extends JPanel {
         }
 
         private void addMenuActions() {
-                // Set button actions to change the elf's state
                 option1.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                                orcLabel.setState("attack"); // Switch elf animation to attack
+                                orcLabel.setState("attack"); 
                         }
                 });
 
                 option2.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                                orcLabel.setState("defend"); // You can implement a defend state
+                                orcLabel.setState("die"); // You can implement a defend state
                         }
                 });
 
                 option3.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                                orcLabel.setState("run"); // You can implement a run state or action
+                                orcLabel.setState("hurt"); // You can implement a run state or action
                         }
                 });
         }

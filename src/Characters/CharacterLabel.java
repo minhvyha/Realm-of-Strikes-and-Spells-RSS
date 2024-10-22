@@ -16,9 +16,9 @@ public class CharacterLabel extends JLabel {
     private String currentState;
 
     // Desired aspect ratio (2000:1050) and height
-    private final int desiredWidth = 2000;
+    private final int desiredWidth = 1050;
     private final int desiredHeight = 1050;
-    private final int targetHeight = 150; // Scale down to this height
+    private final int targetHeight = 120; // Scale down to this height
 
     public CharacterLabel(String name, int maxIdleFrame, int maxAttackFrame, int maxDieFrame, int maxHurtFrame,
             int xPosition, int yPosition) {
@@ -82,7 +82,7 @@ public class CharacterLabel extends JLabel {
     }
 
     private void setupAnimationTimer() {
-        animationTimer = new Timer(120, new ActionListener() {
+        animationTimer = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 switch (currentState) {
