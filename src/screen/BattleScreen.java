@@ -5,12 +5,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Characters.CharacterLabel; // Import the CharacterLabel class
+import Characters.EnemyLabel;
 
 public class BattleScreen extends JPanel {
         private JPanel topPanel, bottomPanel;
         private JPanel leftCharacterPanel, rightCharacterPanel;
         private JTextArea gameTextArea;
         private CharacterLabel orcLabel; // Replace JLabel with CharacterLabel
+        private EnemyLabel enemy1, enemy2, enemy3;
         private Image backgroundImage;
         private JPanel menuPanel;
         private JButton option1, option2, option3;
@@ -51,8 +53,8 @@ public class BattleScreen extends JPanel {
                 orcLabel = new CharacterLabel("orc", 18, 12, 15, 12, 50, 110); // Pass the frames and initial position
                 leftCharacterPanel.add(orcLabel);
 
-                
-
+                enemy1 = new EnemyLabel("zombie", 18, 12, 15, 12, 550, 110);
+                rightCharacterPanel.add(enemy1);
                 // Add character panels to top panel
                 topPanel.add(leftCharacterPanel);
                 topPanel.add(rightCharacterPanel);

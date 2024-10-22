@@ -65,7 +65,7 @@ public class Main extends JFrame implements SelectionListener {
     private void updateGameScreen() {
         mainPanel.remove(selectionMenu);
         String backgroundPath = "/assets/background/battleback" + map + ".png";
-    
+
         URL resource = getClass().getResource(backgroundPath);
         if (resource != null) {
             backgroundImage = new ImageIcon(resource).getImage();
