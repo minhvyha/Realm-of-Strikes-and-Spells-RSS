@@ -16,7 +16,7 @@ public class SelectionMenu extends JPanel {
     private int[] selectedClass = { 0, 1, 2 }; // Initial
 
     // Arrays to store races and classes
-    private String[] races = { "Human", "Orc", "Minotaur" };
+    private String[] races = { "Angel", "Orc", "Minotaur" };
     private String[] classes = { "Warrior", "Mage", "Rogue" };
 
     public SelectionMenu(SelectionListener listener) {
@@ -72,83 +72,91 @@ public class SelectionMenu extends JPanel {
     }
 
     private void initializeCharacterSelectors() {
-            buttonPanel.removeAll();
-        
-            for (int i = 0; i < 3; i++) {
-                JPanel columnPanel = new JPanel();
-                columnPanel.setLayout(new BoxLayout(columnPanel, BoxLayout.Y_AXIS));
-        
-                // Load and set race image
-                JLabel raceImageLabel = new JLabel();
-                raceImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                loadImage(raceImageLabel, "/assets/races/" + races[selectedRace[i]] + ".png", 150, 150); // Race image is bigger
-        
-                // Load and set class image (weapon)
-                JLabel classImageLabel = new JLabel();
-                classImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                loadImage(classImageLabel, "/assets/classes/" + classes[selectedClass[i]] + ".png", 100, 100); // Class image (weapon) is smaller
-        
-                // Placeholder for race and class names
-                JLabel raceLabel = new JLabel(races[selectedRace[i]], SwingConstants.CENTER);
-                raceLabel.setFont(new Font("Arial", Font.BOLD, 16));
-                raceLabel.setForeground(Color.WHITE);
-        
-                JLabel classLabel = new JLabel(classes[selectedClass[i]], SwingConstants.CENTER);
-                classLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-                classLabel.setForeground(Color.WHITE);
-        
-                // JComboBox for selecting race
-                JComboBox<String> raceComboBox = new JComboBox<>(races);
-                raceComboBox.setSelectedIndex(selectedRace[i]);
-                final int finalI = i;
-                raceComboBox.addActionListener(e -> {
-                    selectedRace[finalI] = raceComboBox.getSelectedIndex();
-                    raceLabel.setText(races[selectedRace[finalI]]);
-                    loadImage(raceImageLabel, "/assets/" + races[selectedRace[finalI]] + "/Idle/" + "0.png", 150, 150); // Update race image
-                });
-        
-                // JComboBox for selecting class
-                JComboBox<String> classComboBox = new JComboBox<>(classes);
-                classComboBox.setSelectedIndex(selectedClass[i]);
-                classComboBox.addActionListener(e -> {
-                    selectedClass[finalI] = classComboBox.getSelectedIndex();
-                    classLabel.setText(classes[selectedClass[finalI]]);
-                    loadImage(classImageLabel, "/assets/classes/" + classes[selectedClass[finalI]] + ".png", 100, 100); // Update class image
-                });
-        
-                // Add components to the column panel
-                columnPanel.add(raceImageLabel);  // Race image
-                columnPanel.add(classImageLabel); // Class weapon image
-                columnPanel.add(raceLabel);       // Race name
-                columnPanel.add(classLabel);      // Class name
-                columnPanel.add(raceComboBox);    // Race JComboBox
-                columnPanel.add(classComboBox);   // Class JComboBox
-        
-                // Add some spacing and background
-                columnPanel.setBackground(Color.BLACK);
-                columnPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        
-                // Add column to the main button panel
-                buttonPanel.add(columnPanel);
-            }
-        
-            buttonPanel.revalidate();
-            buttonPanel.repaint();
+        buttonPanel.removeAll();
+
+        for (int i = 0; i < 3; i++) {
+            JPanel columnPanel = new JPanel();
+            columnPanel.setLayout(new BoxLayout(columnPanel, BoxLayout.Y_AXIS));
+
+            // Load and set race image
+            JLabel raceImageLabel = new JLabel();
+            raceImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            loadImage(raceImageLabel, "/assets/" + races[selectedRace[i]].toLowerCase() + "/Idle/0" + ".png", 150, 150); // Race
+                                                                                                                         // image
+                                                                                                                         // is
+                                                                                                                         // bigger
+
+            // Load and set class image (weapon)
+            JLabel classImageLabel = new JLabel();
+            classImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            loadImage(classImageLabel, "/assets/weapon/" + classes[selectedClass[i]].toLowerCase() + ".png", 40, 40); // Class
+                                                                                                                      // image
+                                                                                                                      // (weapon)
+                                                                                                                      // is
+                                                                                                                      // smaller
+
+            // Placeholder for race and class names
+            JLabel raceLabel = new JLabel(races[selectedRace[i]], SwingConstants.CENTER);
+            raceLabel.setFont(new Font("Arial", Font.BOLD, 16));
+            raceLabel.setForeground(Color.WHITE);
+
+            JLabel classLabel = new JLabel(classes[selectedClass[i]], SwingConstants.CENTER);
+            classLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+            classLabel.setForeground(Color.WHITE);
+
+            // JComboBox for selecting race
+            JComboBox<String> raceComboBox = new JComboBox<>(races);
+            raceComboBox.setSelectedIndex(selectedRace[i]);
+            final int finalI = i;
+            raceComboBox.addActionListener(e -> {
+                selectedRace[finalI] = raceComboBox.getSelectedIndex();
+                raceLabel.setText(races[selectedRace[finalI]]);
+                loadImage(raceImageLabel, "/assets/" + races[selectedRace[finalI]].toLowerCase() + "/idle/" + "0.png",
+                        150, 150); // Update race image
+            });
+
+            // JComboBox for selecting class
+            JComboBox<String> classComboBox = new JComboBox<>(classes);
+            classComboBox.setSelectedIndex(selectedClass[i]);
+            classComboBox.addActionListener(e -> {
+                selectedClass[finalI] = classComboBox.getSelectedIndex();
+                classLabel.setText(classes[selectedClass[finalI]]);
+                loadImage(classImageLabel, "/assets/weapon/" + classes[selectedClass[finalI]].toLowerCase() + ".png",
+                        40, 40); // Update class image
+            });
+
+            // Add components to the column panel
+            columnPanel.add(raceImageLabel); // Race image
+            columnPanel.add(classImageLabel); // Class weapon image
+            columnPanel.add(raceLabel); // Race name
+            columnPanel.add(classLabel); // Class name
+            columnPanel.add(raceComboBox); // Race JComboBox
+            columnPanel.add(classComboBox); // Class JComboBox
+
+            // Add some spacing and background
+            columnPanel.setBackground(Color.BLACK);
+            columnPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+            // Add column to the main button panel
+            buttonPanel.add(columnPanel);
         }
-        
-        // Helper method to load and scale images
-        private void loadImage(JLabel label, String imagePath, int width, int height) {
-            URL resource = getClass().getResource(imagePath);
-            if (resource != null) {
-                ImageIcon icon = new ImageIcon(resource);
-                Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-                label.setIcon(new ImageIcon(image));
-            } else {
-                System.out.println("Error: Image not found at " + imagePath);
-                label.setText("Image Not Found");
-            }
+
+        buttonPanel.revalidate();
+        buttonPanel.repaint();
+    }
+
+    // Helper method to load and scale images
+    private void loadImage(JLabel label, String imagePath, int width, int height) {
+        URL resource = getClass().getResource(imagePath);
+        if (resource != null) {
+            ImageIcon icon = new ImageIcon(resource);
+            Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            label.setIcon(new ImageIcon(image));
+        } else {
+            System.out.println("Error: Image not found at " + imagePath);
+            label.setText("Image Not Found");
         }
-        
+    }
 
     private void initializeMapButtons() {
         buttonPanel.removeAll(); // Clear existing components
