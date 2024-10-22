@@ -46,7 +46,7 @@ public class EnemyLabel extends JLabel {
             if (imageURL != null) {
                 this.attack[i] = flipImageIcon(resizeImageIcon(new ImageIcon(imageURL), targetHeight));
             } else {
-                System.err.println("Image not found: " + imageURL);
+                System.err.println("Image not found (attack): " + imageURL);
             }
         }
 
@@ -55,7 +55,7 @@ public class EnemyLabel extends JLabel {
             if (imageURL != null) {
                 this.die[i] = flipImageIcon(resizeImageIcon(new ImageIcon(imageURL), targetHeight));
             } else {
-                System.err.println("Image not found: " + imageURL);
+                System.err.println("Image not found (die): " + imageURL);
             }
         }
 
@@ -64,7 +64,7 @@ public class EnemyLabel extends JLabel {
             if (imageURL != null) {
                 this.hurt[i] = flipImageIcon(resizeImageIcon(new ImageIcon(imageURL), targetHeight));
             } else {
-                System.err.println("Image not found: " + imageURL);
+                System.err.println("Image not found (hurt): " + imageURL);
             }
         }
 
