@@ -51,6 +51,8 @@ public class BattleScreen extends JPanel {
                 orcLabel = new CharacterLabel("orc", 18, 12, 15, 12, 50, 110); // Pass the frames and initial position
                 leftCharacterPanel.add(orcLabel);
 
+                
+
                 // Add character panels to top panel
                 topPanel.add(leftCharacterPanel);
                 topPanel.add(rightCharacterPanel);
