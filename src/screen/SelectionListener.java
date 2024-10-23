@@ -1,5 +1,6 @@
 package screen;
 
 public interface SelectionListener {
-    void onSelectionMade(int map);
+    void onMapSelected(int map);
+    void onCharacterSelected(int[] characters, int[] classes);
 }
