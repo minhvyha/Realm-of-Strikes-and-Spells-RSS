@@ -1,12 +1,12 @@
 package screen;
 
-import javax.swing.*;
+import Characters.CharacterLabel;
+import Characters.EnemyLabel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import Characters.CharacterLabel; // Import the CharacterLabel class
-import Characters.EnemyLabel;
+import java.awt.event.ActionListener; // Import the CharacterLabel class
 import java.util.Random;
+import javax.swing.*;
 
 
 public class BattleScreen extends JPanel {
@@ -83,12 +83,66 @@ public class BattleScreen extends JPanel {
                 add(topPanel, BorderLayout.CENTER); // Top section
                 add(bottomPanel, BorderLayout.SOUTH); // Bottom section
 
-                // Adjust the proportions of the bottom section
+                //bottom section
                 bottomPanel.setPreferredSize(new Dimension(800, 130));
 
                 // Add action listeners for menu options
+                initializeActionButtons();
         }
-
+        private void initializeActionButtons() {
+                // Create a panel for the buttons using GridLayout with 3 rows and 1 column
+                JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 0, 5)); // 3 rows, 1 column, 10px vertical gap
+                buttonPanel.setOpaque(false); // Make the button panel transparent
+            
+                // Create Attack, Defend, and Special buttons
+                JButton attackButton = new JButton("Attack");
+                JButton defendButton = new JButton("Defend");
+                JButton specialButton = new JButton("Special");
+            
+                Dimension buttonSize = new Dimension(130, 40); // Width of 150 and height of 40
+                attackButton.setPreferredSize(buttonSize);
+                defendButton.setPreferredSize(buttonSize);
+                specialButton.setPreferredSize(buttonSize);
+            
+                // Add buttons to panel
+                buttonPanel.add(attackButton);
+                buttonPanel.add(defendButton);
+                buttonPanel.add(specialButton);
+            
+                // Create panel to center 
+                JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+                centerPanel.setOpaque(false); // Make the center panel transparent
+                centerPanel.add(buttonPanel);
+            
+                // Add the center panel to the bottom panel
+                bottomPanel.add(centerPanel, BorderLayout.CENTER);
+            
+                // Add action
+                attackButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Attack button clicked!");
+                        // Implement attack logic here
+                    }
+                });
+            
+                defendButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Defend button clicked!");
+                        // Implement defend logic here
+                    }
+                });
+            
+                specialButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Special button clicked!");
+                        // Implement special ability logic here
+                    }
+                });
+            }
+            
         @Override
         protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
