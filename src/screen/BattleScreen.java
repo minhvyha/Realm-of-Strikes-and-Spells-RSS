@@ -65,9 +65,23 @@ public class BattleScreen extends JPanel {
         enemyHealthBars = new JProgressBar[3]; // Initialize array of health bars for enemies
 
         for (int i = 0; i < 3; i++) {
+            // Adding allies to the leftCharacterPanel
             CharacterLabel allyLabel = new CharacterLabel(allyRaces[selectedRace[i]], 18, 12, 15, 12,
-                    70 + (i % 2) * 80, 150 + (i * 60)); // Pass the frames and initial position
-            leftCharacterPanel.add(allyLabel);
+            70 + (i % 2) * 80, 150 + (i * 60)); // Set the frame and position for allies
+            leftCharacterPanel.add(allyLabel); // Add ally label to left panel
+
+            //health bar for allies
+            JProgressBar allyHealthBar = new JProgressBar(0, 100);
+            allyHealthBar.setValue(100); // Set full health initially
+            allyHealthBar.setBounds(70 + (i % 2) * 80, 255 + (i * 60), 80, 10); // Position health bar under ally
+            allyHealthBar.setForeground(Color.GREEN); // Set to green
+            leftCharacterPanel.add(allyHealthBar); // Add health bar to left panel for allies
+
+            JLabel allyNameLabel = new JLabel(allyRaces[selectedRace[i]]); // Set ally name
+            allyNameLabel.setBounds(70 + (i % 2) * 80, 265 + (i * 60), 80, 20); // Position under the health bar
+            allyNameLabel.setForeground(Color.WHITE); // text white 
+            leftCharacterPanel.add(allyNameLabel); //Add name label to the panel
+            
         }
 
         for (int i = 0; i < 3; i++) {
