@@ -17,7 +17,7 @@ public class BattleScreen extends JPanel {
     private Image backgroundImage;
     private Character[] allies;
     private Character[] enemies;
-
+    private Random random;
     private int[] selectedRace, selectedClass;
     private String[] allyRaces = { "angel", "orc", "minotaur" };
     private String[] enemyRaces = { "zombie", "golem", "reaper" };
@@ -27,7 +27,7 @@ public class BattleScreen extends JPanel {
         this.backgroundImage = backgroundImage;
         this.selectedRace = selectedRace;
         this.selectedClass = selectedClass;
-
+        this.random = new Random();
         // Load the animation frames (if needed for other characters like orc)
         loadGame();
 
@@ -138,17 +138,35 @@ public class BattleScreen extends JPanel {
         JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         centerPanel.setOpaque(false); 
         centerPanel.add(buttonPanel);
-
         bottomPanel.add(centerPanel, BorderLayout.CENTER);
-
+        
         attackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Attack button clicked!");
-                enemyHealthBars[0].setValue(enemyHealthBars[0].getValue() - 10);
+                int enemyIndex = 0; 
+                int currentHealth = enemyHealthBars[enemyIndex].getValue();
+
+                int baseDamage = 10; 
+                int diceRoll = rollDice();
+                int totalDamage = baseDamage + diceRoll;
+
+                System.out.println("Total damage dealt: " + totalDamage + " (Base: " + baseDamage + ", Dice: " + diceRoll + ")");
+                
+                int newHealth = currentHealth - totalDamage;
+                newHealth = Math.max(newHealth, 0);
+                
+                enemyHealthBars[enemyIndex].setValue(newHealth);
+                
+                if (newHealth <= 0) {
+                    System.out.println("Enemy defeated!");
+                }
+                
+                // Display status of characters
+                //currentCharacter.displayStatus();
+                //targetEnemy.displayStatus();
             }
         });
-
         defendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -162,6 +180,9 @@ public class BattleScreen extends JPanel {
                 System.out.println("Special button clicked!");
             }
         });
+    }
+    private int rollDice() {
+        return random.nextInt(6) + 1; // Roll dice (1-6)
     }
 
     @Override
