@@ -1,7 +1,5 @@
 package Characters;
 
-import java.util.Random;
-
 public class Character {
     // Attributes
     private String name;
@@ -10,12 +8,10 @@ public class Character {
     private int strength;
     private int intelligence;
     private int defense;
-    private int round;
     private CharacterClass characterClass;
-    private Random random;
-    
+
     // Constructor
-    public Character(String name, int hp, int strength, int intelligence, int defense, int round, CharacterClass characterClass) {
+    public Character(String name, int hp, int strength, int intelligence, int defense, CharacterClass characterClass) {
         this.name = name;
         this.hp = hp;
         this.maxHp = hp; // Set max HP equal to initial HP
@@ -23,16 +19,10 @@ public class Character {
         this.intelligence = intelligence;
         this.defense = defense;
         this.characterClass = characterClass;
-        this.round=round;
-        this.random = new Random();
     }
-
     // Getters
     public String getName() {
         return name;
-    }
-    public int round() {
-        return round=1;
     }
 
     public int getHp() {
@@ -81,30 +71,13 @@ public class Character {
 
     // Methods
     public void attack(Character target) {
-        System.out.println("Round " + round + ":");
-        round++;
-
         // Calculate damage based on strength and target's defense
         int damage = this.strength - target.getDefense();
-         // Roll a dice (1-6) and add to damage
-         int diceRoll = rollDice();
-        System.out.println(this.name + " rolls a " + diceRoll + " on the dice.");
-        damage += diceRoll;
- 
-         //critical hit
-         if (random.nextInt(100) < 10) { // 10% chance
-             damage *= 2;
-             System.out.println("Critical hit!");
-         }
-         
         // Ensure damage is at least 1
         damage = Math.max(damage, 1);
+        // Apply damage to the target
         target.takeDamage(damage);
-        
         System.out.println(this.name + " attacks " + target.getName() + " for " + damage + " damage.");
-    }
-    private int rollDice() {
-        return random.nextInt(6) + 1; //Roll dice (1-6)
     }
 
     public void takeDamage(int damage) {
