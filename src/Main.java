@@ -126,7 +126,7 @@ public class Main extends JFrame implements SelectionListener {
             System.out.println("Error: Background image not found at " + backgroundPath);
         }
         // Create and add the BattleScreen instance
-        battleScreen = new BattleScreen(backgroundImage);
+        battleScreen = new BattleScreen(backgroundImage, selectedRace,selectedClass);
         mainPanel.add(battleScreen, BorderLayout.CENTER);
 
         mainPanel.revalidate();
