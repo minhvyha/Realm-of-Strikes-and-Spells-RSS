@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainMenu extends JPanel {
-  
+
   public MainMenu(SelectionListener listener) {
 
     // Set layout and properties for the panel
@@ -35,11 +35,13 @@ public class MainMenu extends JPanel {
     JButton playButton = createMenuButton("Play");
     JButton chooseAlliesButton = createMenuButton("Choose Allies");
     JButton chooseMapButton = createMenuButton("Choose Map");
+    JButton quitButton = createMenuButton("Quit"); // New Quit button
 
     // Center-align the buttons and add some spacing between them
     playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
     chooseAlliesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
     chooseMapButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+    quitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
     // Add buttons to the button panel with spacing
     buttonPanel.add(playButton);
@@ -47,6 +49,8 @@ public class MainMenu extends JPanel {
     buttonPanel.add(chooseAlliesButton);
     buttonPanel.add(Box.createVerticalStrut(20)); // Add space between buttons
     buttonPanel.add(chooseMapButton);
+    buttonPanel.add(Box.createVerticalStrut(20)); // Add space between buttons
+    buttonPanel.add(quitButton);
 
     // Add some spacing at the bottom of the button panel
     buttonPanel.add(Box.createVerticalStrut(50));
@@ -84,39 +88,67 @@ public class MainMenu extends JPanel {
 
       }
     });
+    quitButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+
+          // Load the custom icon
+          ImageIcon originalIcon = new ImageIcon(getClass().getResource("/assets/logo.png"));
+
+          // Scale the image to 50x50 pixels
+          Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+          ImageIcon scaledIcon = new ImageIcon(scaledImage);
+  
+          // Use showOptionDialog to display a more customized dialog with an icon
+          int confirm = JOptionPane.showOptionDialog(
+                  null,                                      // Parent component
+                  "Are you sure you want to quit?",          // Message
+                  "Quit Confirmation",                       // Title
+                  JOptionPane.YES_NO_OPTION,                 // Option type (Yes/No)
+                  JOptionPane.QUESTION_MESSAGE,              // Message type
+                  scaledIcon,                                      // Custom icon
+                  null,                                      // No custom button options
+                  null);                                     // Default button option
+
+          // If the user clicks "Yes", exit the game
+          if (confirm == JOptionPane.YES_OPTION) {
+              System.exit(0); // Exit the game
+          }
+      }
+  });
+
   }
 
   private JButton createMenuButton(String text) {
     JButton button = new JButton(text) {
-        @Override
-        protected void paintComponent(Graphics g) {
-            Graphics2D g2 = (Graphics2D) g.create();
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      @Override
+      protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            // Set the button background with rounded corners
-            g2.setColor(getBackground());
-            g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30); // 30 is the radius for rounded corners
+        // Set the button background with rounded corners
+        g2.setColor(getBackground());
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30); // 30 is the radius for rounded corners
 
-            super.paintComponent(g);
-            g2.dispose();
-        }
+        super.paintComponent(g);
+        g2.dispose();
+      }
 
-        @Override
-        protected void paintBorder(Graphics g) {
-            Graphics2D g2 = (Graphics2D) g.create();
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      @Override
+      protected void paintBorder(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            // Draw the border with rounded corners
-            g2.setColor(Color.BLACK);
-            g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 30, 30); // 30 is the radius for rounded corners
+        // Draw the border with rounded corners
+        g2.setColor(Color.BLACK);
+        g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 30, 30); // 30 is the radius for rounded corners
 
-            g2.dispose();
-        }
+        g2.dispose();
+      }
 
-        @Override
-        public boolean isContentAreaFilled() {
-            return false; // Prevents the default background from being painted
-        }
+      @Override
+      public boolean isContentAreaFilled() {
+        return false; // Prevents the default background from being painted
+      }
     };
 
     button.setFont(new Font("Arial", Font.BOLD, 24));
@@ -128,20 +160,19 @@ public class MainMenu extends JPanel {
 
     // Add mouse listener to change cursor on hover
     button.addMouseListener(new java.awt.event.MouseAdapter() {
-        @Override
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-            button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Set hand cursor on hover
-        }
+      @Override
+      public void mouseEntered(java.awt.event.MouseEvent evt) {
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Set hand cursor on hover
+      }
 
-        @Override
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-            button.setCursor(Cursor.getDefaultCursor()); // Set back to default cursor when not hovering
-        }
+      @Override
+      public void mouseExited(java.awt.event.MouseEvent evt) {
+        button.setCursor(Cursor.getDefaultCursor()); // Set back to default cursor when not hovering
+      }
     });
 
     return button;
-}
-
+  }
 
   // Override the paintComponent method to draw the background and darken it
   @Override

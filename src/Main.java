@@ -102,6 +102,10 @@ public class Main extends JFrame implements SelectionListener {
         setLayout(new BorderLayout());
         setResizable(false);
 
+        ImageIcon icon = new ImageIcon("/assets/logo.png");
+        Image image = icon.getImage();
+        setIconImage(image);
+
         mainPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
