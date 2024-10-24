@@ -1,6 +1,5 @@
 import javax.swing.*;
 
-
 import java.awt.*;
 import java.net.URL;
 import java.util.Random;
@@ -21,6 +20,7 @@ import character.classes.Mage;
 import character.classes.Rogue;
 import character.classes.Warrior;
 
+
 public class Main extends JFrame implements SelectionListener {
 
     private JPanel mainPanel;
@@ -37,8 +37,8 @@ public class Main extends JFrame implements SelectionListener {
     private String[] classes = { "Warrior", "Mage", "Rogue" };
     private Character[] allies;
     private Character[] enemies;
-    private int[] selectedRace = {0, 1, 2}; // Initial
-    private int[] selectedClass = {0, 1, 2}; // Initial
+    private int[] selectedRace = { 0, 1, 2 }; // Initial
+    private int[] selectedClass = { 0, 1, 2 }; // Initial
     private int[] enemyRace; // Initial
     private int[] enemyClass; // Initial
 
@@ -53,7 +53,7 @@ public class Main extends JFrame implements SelectionListener {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if(map >=0){
+            if (map >= 0) {
 
                 this.map = map;
             }
@@ -77,7 +77,7 @@ public class Main extends JFrame implements SelectionListener {
                 System.out.println("Character " + characters[i] + " selected with class " + classes[i]);
 
             }
-            if(characters.length > 0 && classes.length > 0){
+            if (characters.length > 0 && classes.length > 0) {
                 selectedRace = characters;
                 selectedClass = classes;
             }
@@ -110,11 +110,13 @@ public class Main extends JFrame implements SelectionListener {
             }
 
             updateGameScreen();
+            
 
             loadingOverlay.turnOff();
         });
         // Add the game-starting logic here\
     }
+
     public Main() {
         // Initialize the loading overlay
         loadingOverlay = new LoadingOverlay();
@@ -160,6 +162,7 @@ public class Main extends JFrame implements SelectionListener {
         mainPanel.revalidate();
         mainPanel.repaint();
     }
+
     private void updateCharacterScreen() {
         mainPanel.removeAll();
 
@@ -169,7 +172,6 @@ public class Main extends JFrame implements SelectionListener {
         mainPanel.repaint();
     }
 
-    
     private void updateMapScreen() {
         mainPanel.removeAll();
         mapSelection = new MapSelection(this, map);
@@ -190,14 +192,14 @@ public class Main extends JFrame implements SelectionListener {
         }
         // Create and add the BattleScreen instance
         updateCharacters();
-        battleScreen = new BattleScreen(backgroundImage, selectedRace,selectedClass, enemyRace, enemyClass);
+        battleScreen = new BattleScreen(backgroundImage, selectedRace, selectedClass, enemyRace, enemyClass);
         mainPanel.add(battleScreen, BorderLayout.CENTER);
 
         mainPanel.revalidate();
         mainPanel.repaint();
     }
 
-    private void updateCharacters(){
+    private void updateCharacters() {
         allies = new Character[selectedRace.length];
         enemies = new Character[selectedRace.length];
         for (int i = 0; i < selectedRace.length; i++) {
@@ -270,10 +272,12 @@ public class Main extends JFrame implements SelectionListener {
             }
         }
     }
+
     private int generateRandomNumber() {
         Random rand = new Random();
-        return rand.nextInt(3); 
+        return rand.nextInt(3);
     }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             Main game = new Main();

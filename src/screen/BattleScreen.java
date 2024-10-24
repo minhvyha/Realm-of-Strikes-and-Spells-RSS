@@ -54,6 +54,7 @@ public class BattleScreen extends JPanel {
         bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setBackground(new Color(0, 0, 0, 180)); // Dark transparent background (RGBA)
 
+
         // Initialize character panels
         leftCharacterPanel = new JPanel(null);
         leftCharacterPanel.setOpaque(false); // Transparent left character panel
