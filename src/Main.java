@@ -8,18 +8,24 @@ import screen.SelectionListener;
 import screen.menu.CharacterSelection;
 import screen.menu.MapSelection;
 import screen.BattleScreen;
+import screen.DiceOverlay;
 import screen.LoadingOverlay;
 import screen.MainMenu;
 
 import character.race.Angel;
-import character.race.Human;
+import character.race.Orc;
 import character.race.Minotaur;
+
+import character.enemyRace.Zombie;
+import character.enemyRace.Golem;
+import character.enemyRace.Reaper;
+
 import character.Character;
 import character.CharacterClass;
+
 import character.classes.Mage;
 import character.classes.Rogue;
 import character.classes.Warrior;
-
 
 public class Main extends JFrame implements SelectionListener {
 
@@ -31,6 +37,7 @@ public class Main extends JFrame implements SelectionListener {
     private Image backgroundImage;
     private BattleScreen battleScreen;
     private LoadingOverlay loadingOverlay; // Loading overlay instance
+    private DiceOverlay DiceOverlay;
     private MainMenu mainMenu;
 
     private String[] races = { "Angel", "Orc", "Minotaur" };
@@ -110,16 +117,45 @@ public class Main extends JFrame implements SelectionListener {
             }
 
             updateGameScreen();
-            
 
             loadingOverlay.turnOff();
         });
         // Add the game-starting logic here\
     }
 
+    @Override
+    public void onCharacterAttack(int source, int target, int dice1, int dice2) {
+        DiceOverlay.setDice(dice1, dice2);
+        DiceOverlay.turnOn();
+        SwingUtilities.invokeLater(() -> {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            DiceOverlay.turnOff();
+
+        });
+        System.out.println("Character " + source + " attacks character " + target);
+
+    }
+
+    @Override
+    public void onCharacterDefend(int source, int dice1) {
+        System.out.println("Character " + source + " defends");
+    }
+
+    @Override
+
+    public void onCharacterUseAbility(int source, int target, int dice1, int dice2) {
+        System.out.println("Character " + source + " uses ability on character " + target);
+    }
+
     public Main() {
         // Initialize the loading overlay
         loadingOverlay = new LoadingOverlay();
+        DiceOverlay = new DiceOverlay();
 
         setTitle("Masters of MQ RPG");
         setSize(1000, 700);
@@ -148,6 +184,9 @@ public class Main extends JFrame implements SelectionListener {
 
         // Add the loading overlay on top of the main panel
         getLayeredPane().add(loadingOverlay, JLayeredPane.POPUP_LAYER);
+        getLayeredPane().add(DiceOverlay, JLayeredPane.POPUP_LAYER);
+        DiceOverlay.setBounds(0, 0, getWidth(), getHeight());
+        DiceOverlay.turnOff();
         loadingOverlay.setBounds(0, 0, getWidth(), getHeight());
         loadingOverlay.turnOff();
 
@@ -192,7 +231,7 @@ public class Main extends JFrame implements SelectionListener {
         }
         // Create and add the BattleScreen instance
         updateCharacters();
-        battleScreen = new BattleScreen(backgroundImage, selectedRace, selectedClass, enemyRace, enemyClass);
+        battleScreen = new BattleScreen(backgroundImage, selectedRace, selectedClass, enemyRace, enemyClass, this);
         mainPanel.add(battleScreen, BorderLayout.CENTER);
 
         mainPanel.revalidate();
@@ -220,16 +259,16 @@ public class Main extends JFrame implements SelectionListener {
             }
             switch (selectedRace[i]) {
                 case 0:
-                    allies[i] = new Angel("name", currClass);
+                    allies[i] = new Angel("Angle", currClass);
                     break;
                 case 1:
-                    allies[i] = new Human("name", currClass);
+                    allies[i] = new Orc("Orc", currClass);
                     break;
                 case 2:
-                    allies[i] = new Minotaur("name", currClass);
+                    allies[i] = new Minotaur("Minotaur", currClass);
                     break;
                 default:
-                    allies[i] = new Angel("name", currClass);
+                    allies[i] = new Angel("Angel", currClass);
                     break;
             }
         }
@@ -258,16 +297,16 @@ public class Main extends JFrame implements SelectionListener {
             }
             switch (enemyRace[i]) {
                 case 0:
-                    allies[i] = new Angel("name", currClass);
+                    enemies[i] = new Zombie("name", currClass);
                     break;
                 case 1:
-                    allies[i] = new Human("name", currClass);
+                    enemies[i] = new Golem("name", currClass);
                     break;
                 case 2:
-                    allies[i] = new Minotaur("name", currClass);
+                    enemies[i] = new Reaper("name", currClass);
                     break;
                 default:
-                    allies[i] = new Angel("name", currClass);
+                    enemies[i] = new Zombie("name", currClass);
                     break;
             }
         }

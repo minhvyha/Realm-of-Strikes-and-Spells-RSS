@@ -6,4 +6,7 @@ public interface SelectionListener {
     void onMenuMapSelected();
     void onMenuCharacterSelected();
     void onMenuPlaySelected();
+    void onCharacterAttack(int source, int target, int dice1, int dice2);
+    void onCharacterDefend(int source, int dice1);
+    void onCharacterUseAbility(int source, int target, int dice1, int dice2);
 }

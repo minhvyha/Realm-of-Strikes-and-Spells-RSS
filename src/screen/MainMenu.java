@@ -36,7 +36,10 @@ public class MainMenu extends JPanel {
     JButton chooseAlliesButton = createMenuButton("Choose Allies");
     JButton chooseMapButton = createMenuButton("Choose Map");
     JButton quitButton = createMenuButton("Quit"); // New Quit button
-
+    playButton.setBorder(BorderFactory.createEmptyBorder(10, 95, 10, 95)); 
+    chooseAlliesButton.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40));
+    chooseMapButton.setBorder(BorderFactory.createEmptyBorder(10, 48, 10, 48));
+    quitButton.setBorder(BorderFactory.createEmptyBorder(10, 95, 10, 95));
     // Center-align the buttons and add some spacing between them
     playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
     chooseAlliesButton.setAlignmentX(Component.CENTER_ALIGNMENT);

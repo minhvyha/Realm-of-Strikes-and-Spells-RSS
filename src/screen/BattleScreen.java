@@ -12,11 +12,13 @@ import character.EnemyLabel;
 public class BattleScreen extends JPanel {
     private JPanel topPanel, bottomPanel;
     private JPanel leftCharacterPanel, rightCharacterPanel;
+    private SelectionListener listener;
     private JProgressBar[] enemyHealthBars; // Add health bars for enemies
     private CharacterLabel orcLabel; // Replace JLabel with CharacterLabel
     private EnemyLabel[] enemyLabels;
     private Image backgroundImage;
     private Character[] allies;
+
     private CharacterLabel[] alliesLabel;
     private EnemyLabel[] enemiesLabel;
     private Character[] enemies;
@@ -26,11 +28,13 @@ public class BattleScreen extends JPanel {
     private String[] enemyRaces = { "zombie", "golem", "reaper" };
     private String[] classes = { "warrior", "mage", "rogue" };
 
+
     // Declare Log instance
     private Log logPanel;
 
     public BattleScreen(Image backgroundImage, int[] selectedRace, int[] selectedClass, int[] enemyRace,
-            int[] enemyClass) {
+            int[] enemyClass, SelectionListener listener) {
+        this.listener = listener;
         this.backgroundImage = backgroundImage;
         this.selectedRace = selectedRace;
         this.selectedClass = selectedClass;
@@ -38,11 +42,11 @@ public class BattleScreen extends JPanel {
         this.enemyClass = enemyClass;
         this.random = new Random();
 
-        // Set up the panel
         setLayout(new BorderLayout());
-
         // Initialize panels
         initializePanels();
+
+
     }
 
     private void initializePanels() {
@@ -154,12 +158,21 @@ public class BattleScreen extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 logPanel.addMessage("Player attacks!");
+
+                // Roll two dice for both sides
+                int leftRoll = rollDice();
+
+                int rightRoll = rollDice();
+        
+                listener.onCharacterAttack(1, 2, leftRoll, rightRoll);
+
+
+                // Example damage calculation and panel actions (as before)
                 int enemyIndex = 0;
                 int currentHealth = enemyHealthBars[enemyIndex].getValue();
-                enemiesLabel[enemyIndex].setState("die");
+                enemiesLabel[enemyIndex].setState("hurt");
                 int baseDamage = 10;
-                int diceRoll = rollDice();
-                int totalDamage = baseDamage + diceRoll;
+                int totalDamage = baseDamage + leftRoll - rightRoll;
 
                 int newHealth = currentHealth - totalDamage;
                 newHealth = Math.max(newHealth, 0);

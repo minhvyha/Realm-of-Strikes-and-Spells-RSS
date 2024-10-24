@@ -116,10 +116,10 @@ public class EnemyLabel extends JLabel {
                     case "die":
                         if(currentFrame == 0) break;
                         currentFrame =  (currentFrame - 1);
-                        
                         setIcon(die[currentFrame]); // Set die frames
                         break;
                     case "hurt":
+                        if(currentFrame == hurt.length - 1) setState("idle");
                         currentFrame = (currentFrame + 1) % hurt.length;
                         setIcon(hurt[currentFrame]); // Set hurt frames
                         break;
