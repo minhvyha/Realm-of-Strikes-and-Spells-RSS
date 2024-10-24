@@ -26,7 +26,8 @@ public class BattleScreen extends JPanel {
     private String[] enemyRaces = { "zombie", "golem", "reaper" };
     private String[] classes = { "warrior", "mage", "rogue" };
 
-    public BattleScreen(Image backgroundImage, int[] selectedRace, int[] selectedClass, int[] enemyRace, int[] enemyClass) {
+    public BattleScreen(Image backgroundImage, int[] selectedRace, int[] selectedClass, int[] enemyRace,
+            int[] enemyClass) {
         this.backgroundImage = backgroundImage;
         this.selectedRace = selectedRace;
         this.selectedClass = selectedClass;
@@ -35,15 +36,12 @@ public class BattleScreen extends JPanel {
         this.random = new Random();
         // Load the animation frames (if needed for other characters like orc)
 
-
         // Set up the panel
         setLayout(new BorderLayout());
 
         // Initialize panels
         initializePanels();
     }
-
-
 
     private void initializePanels() {
         // Initialize the top panel with character sections
@@ -53,7 +51,6 @@ public class BattleScreen extends JPanel {
         // Bottom panel with a dark transparent box
         bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setBackground(new Color(0, 0, 0, 180)); // Dark transparent background (RGBA)
-
 
         // Initialize character panels
         leftCharacterPanel = new JPanel(null);
@@ -66,54 +63,59 @@ public class BattleScreen extends JPanel {
         alliesLabel = new CharacterLabel[3];
         for (int i = 0; i < 3; i++) {
             // Adding allies to the leftCharacterPanel
+            int x = 150 + (i % 2) * 90;
+            int y = 210 + (i * 60);
             CharacterLabel allyLabel = new CharacterLabel(allyRaces[selectedRace[i]], 18, 12, 15, 12,
-            70 + (i % 2) * 80, 150 + (i * 60)); // Set the frame and position for allies
+                    x, y); // Set the frame and position for allies
             leftCharacterPanel.add(allyLabel); // Add ally label to left panel
             alliesLabel[i] = allyLabel;
 
-            //health bar for allies
             JProgressBar allyHealthBar = new JProgressBar(0, 100);
             allyHealthBar.setValue(100); // Set full health initially
-            allyHealthBar.setBounds(70 + (i % 2) * 80, 255 + (i * 60), 80, 10); // Position health bar under ally
-            allyHealthBar.setForeground(Color.GREEN); // Set to green
+            allyHealthBar.setBounds(x + 20, y + 105, 80, 10); // Position health bar under ally
+            allyHealthBar.setForeground(Color.GREEN); // Set bar color to green
+            allyHealthBar.setBackground(Color.BLACK);
             leftCharacterPanel.add(allyHealthBar); // Add health bar to left panel for allies
 
             JLabel allyNameLabel = new JLabel(allyRaces[selectedRace[i]]); // Set ally name
-            allyNameLabel.setBounds(70 + (i % 2) * 80, 265 + (i * 60), 80, 20); // Position under the health bar
-            allyNameLabel.setForeground(Color.WHITE); // text white 
-            leftCharacterPanel.add(allyNameLabel); //Add name label to the panel
-            
+            allyNameLabel.setBounds(x + 20, y + 110, 80, 20); // Position under the health bar
+            System.out.println(allyNameLabel.getWidth());
+            allyNameLabel.setForeground(Color.WHITE); // text white
+            leftCharacterPanel.add(allyNameLabel); // Add name label to the panel
+
         }
         enemiesLabel = new EnemyLabel[3];
 
         for (int i = 0; i < 3; i++) {
-                EnemyLabel enemyLabel = new EnemyLabel(enemyRaces[enemyRace[i]], 18, 12, 15, 12,
-                        220 - (i % 2) * 80, 150 + (i * 60));
-                rightCharacterPanel.add(enemyLabel);
-                enemiesLabel[i] = enemyLabel;
-    
-                JProgressBar healthBar = new JProgressBar(0, 100);
-                healthBar.setValue(100); // Set full health initially
-                healthBar.setBounds(230 - (i % 2)*80, 255 + (i*60), 80, 10); // Position under enemyLabel
-                healthBar.setForeground(Color.GREEN); //colour to green
-    
-                enemyHealthBars[i] = healthBar; // Store health bar
-                rightCharacterPanel.add(healthBar); //health bar to panel
+            int x = 240 - (i % 2) * 90;
+            int y = 210 + (i * 60);
+            EnemyLabel enemyLabel = new EnemyLabel(enemyRaces[enemyRace[i]], 18, 12, 15, 12,
+                    x, y);
+            rightCharacterPanel.add(enemyLabel);
+            enemiesLabel[i] = enemyLabel;
 
-                JLabel enemyNameLabel = new JLabel(enemyRaces[enemyRace[i]]);
-                enemyNameLabel.setBounds(230 - (i % 2) * 80, 265 + (i * 60), 80, 20); // Position
-                enemyNameLabel.setForeground(Color.WHITE); //text white 
-                rightCharacterPanel.add(enemyNameLabel); // Add name label to the panel
+            JProgressBar healthBar = new JProgressBar(0, 100);
+            healthBar.setValue(100); // Set full health initially
+            healthBar.setBounds(x + 20, y + 105, 80, 10); // Position under enemyLabel
+            healthBar.setForeground(Color.GREEN); // colour to green
 
-            }
+            enemyHealthBars[i] = healthBar; // Store health bar
+            rightCharacterPanel.add(healthBar); // health bar to panel
+
+            JLabel enemyNameLabel = new JLabel(enemyRaces[enemyRace[i]]);
+            enemyNameLabel.setBounds(x+ 20, y+ 110, 80, 20); // Position
+            enemyNameLabel.setForeground(Color.WHITE); // text white
+            rightCharacterPanel.add(enemyNameLabel); // Add name label to the panel
+
+        }
 
         // Add character panels to top panel
         topPanel.add(leftCharacterPanel);
         topPanel.add(rightCharacterPanel);
 
         // Add top and bottom panels to the main panel
-        add(topPanel, BorderLayout.CENTER); 
-        add(bottomPanel, BorderLayout.SOUTH); 
+        add(topPanel, BorderLayout.CENTER);
+        add(bottomPanel, BorderLayout.SOUTH);
 
         bottomPanel.setPreferredSize(new Dimension(800, 130));
 
@@ -122,14 +124,14 @@ public class BattleScreen extends JPanel {
     }
 
     private void initializeActionButtons() {
-        JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 0, 5)); 
-        buttonPanel.setOpaque(false); 
-        
+        JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 0, 5));
+        buttonPanel.setOpaque(false);
+
         JButton attackButton = new JButton("Attack");
         JButton defendButton = new JButton("Defend");
         JButton specialButton = new JButton("Special");
 
-        Dimension buttonSize = new Dimension(130, 40); 
+        Dimension buttonSize = new Dimension(130, 40);
         attackButton.setPreferredSize(buttonSize);
         defendButton.setPreferredSize(buttonSize);
         specialButton.setPreferredSize(buttonSize);
@@ -139,35 +141,36 @@ public class BattleScreen extends JPanel {
         buttonPanel.add(specialButton);
 
         JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        centerPanel.setOpaque(false); 
+        centerPanel.setOpaque(false);
         centerPanel.add(buttonPanel);
         bottomPanel.add(centerPanel, BorderLayout.CENTER);
-        
+
         attackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Attack button clicked!");
-                int enemyIndex = 0; 
+                int enemyIndex = 0;
                 int currentHealth = enemyHealthBars[enemyIndex].getValue();
                 enemiesLabel[enemyIndex].setState("die");
-                int baseDamage = 10; 
+                int baseDamage = 10;
                 int diceRoll = rollDice();
                 int totalDamage = baseDamage + diceRoll;
 
-                System.out.println("Total damage dealt: " + totalDamage + " (Base: " + baseDamage + ", Dice: " + diceRoll + ")");
-                
+                System.out.println(
+                        "Total damage dealt: " + totalDamage + " (Base: " + baseDamage + ", Dice: " + diceRoll + ")");
+
                 int newHealth = currentHealth - totalDamage;
                 newHealth = Math.max(newHealth, 0);
-                
+
                 enemyHealthBars[enemyIndex].setValue(newHealth);
-                
+
                 if (newHealth <= 0) {
                     System.out.println("Enemy defeated!");
                 }
-                
+
                 // Display status of characters
-                //currentCharacter.displayStatus();
-                //targetEnemy.displayStatus();
+                // currentCharacter.displayStatus();
+                // targetEnemy.displayStatus();
             }
         });
         defendButton.addActionListener(new ActionListener() {
@@ -184,6 +187,7 @@ public class BattleScreen extends JPanel {
             }
         });
     }
+
     private int rollDice() {
         return random.nextInt(6) + 1; // Roll dice (1-6)
     }
@@ -196,6 +200,6 @@ public class BattleScreen extends JPanel {
 
     private int generateRandomNumber() {
         Random rand = new Random();
-        return rand.nextInt(3); 
+        return rand.nextInt(3);
     }
 }
