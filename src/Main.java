@@ -1,31 +1,25 @@
-import javax.swing.*;
-
+import character.Character;
+import character.CharacterClass;
+import character.classes.Mage;
+import character.classes.Rogue;
+import character.classes.Warrior;
+import character.enemyRace.Golem;
+import character.enemyRace.Reaper;
+import character.enemyRace.Zombie;
+import character.race.Angel;
+import character.race.Minotaur;
+import character.race.Orc;
 import java.awt.*;
 import java.net.URL;
 import java.util.Random;
-
-import screen.SelectionListener;
-import screen.menu.CharacterSelection;
-import screen.menu.MapSelection;
+import javax.swing.*;
 import screen.BattleScreen;
 import screen.DiceOverlay;
 import screen.LoadingOverlay;
 import screen.MainMenu;
-
-import character.race.Angel;
-import character.race.Orc;
-import character.race.Minotaur;
-
-import character.enemyRace.Zombie;
-import character.enemyRace.Golem;
-import character.enemyRace.Reaper;
-
-import character.Character;
-import character.CharacterClass;
-
-import character.classes.Mage;
-import character.classes.Rogue;
-import character.classes.Warrior;
+import screen.SelectionListener;
+import screen.menu.CharacterSelection;
+import screen.menu.MapSelection;
 
 public class Main extends JFrame implements SelectionListener {
 
