@@ -19,7 +19,7 @@ public class LoadingOverlay extends JPanel {
         Graphics2D g2d = (Graphics2D) g.create();
 
         // Darken the screen
-        g2d.setColor(new Color(0, 0, 0, 150)); // Semi-transparent black
+        g2d.setColor(new Color(0, 0, 0, 180)); // Semi-transparent black
         g2d.fillRect(0, 0, getWidth(), getHeight());
 
         // Set font and color for the "Loading..." text

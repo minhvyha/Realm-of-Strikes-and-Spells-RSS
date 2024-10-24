@@ -94,8 +94,21 @@ public class Main extends JFrame implements SelectionListener {
     @Override
     public void onMenuPlaySelected() {
         System.out.println("Starting the game...");
+        loadingOverlay.turnOn();
+        SwingUtilities.invokeLater(() -> {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if(map >=0){
+
+            }
+            updateGameScreen();
+
+            loadingOverlay.turnOff();
+        });
         // Add the game-starting logic here\
-        updateGameScreen();
     }
     public Main() {
         // Initialize the loading overlay
