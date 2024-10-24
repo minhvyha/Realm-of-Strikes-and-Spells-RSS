@@ -23,7 +23,7 @@ public class Main extends JFrame implements SelectionListener {
     private CharacterSelection selectionMenu;
     private MapSelection mapSelection;
     private boolean start = false;
-    private int map = -1;
+    private int map = 1;
     private Image backgroundImage;
     private BattleScreen battleScreen;
     private LoadingOverlay loadingOverlay; // Loading overlay instance
@@ -32,7 +32,8 @@ public class Main extends JFrame implements SelectionListener {
     private String[] races = { "Angel", "Orc", "Minotaur" };
     private String[] classes = { "Warrior", "Mage", "Rogue" };
     private Character[] allies;
-    private int[] selectedRace, selectedClass; // Initial
+    private int[] selectedRace = {0, 1, 2}; // Initial
+    private int[] selectedClass = {0, 1, 2}; // Initial
 
     @Override
     public void onMapSelected(int map) {
@@ -45,7 +46,10 @@ public class Main extends JFrame implements SelectionListener {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            this.map = map;
+            if(map >=0){
+
+                this.map = map;
+            }
             updateMenuScreen();
             loadingOverlay.turnOff();
         });
@@ -66,8 +70,10 @@ public class Main extends JFrame implements SelectionListener {
                 System.out.println("Character " + characters[i] + " selected with class " + classes[i]);
 
             }
-            selectedRace = characters;
-            selectedClass = classes;
+            if(characters.length > 0 && classes.length > 0){
+                selectedRace = characters;
+                selectedClass = classes;
+            }
             updateMenuScreen();
             loadingOverlay.turnOff(); // Turn off the loading overlay after the game screen is updated
         });
@@ -139,7 +145,7 @@ public class Main extends JFrame implements SelectionListener {
     private void updateCharacterScreen() {
         mainPanel.removeAll();
 
-        selectionMenu = new CharacterSelection(this);
+        selectionMenu = new CharacterSelection(this, selectedRace, selectedClass);
         mainPanel.add(selectionMenu, BorderLayout.CENTER);
         mainPanel.revalidate();
         mainPanel.repaint();
@@ -148,7 +154,7 @@ public class Main extends JFrame implements SelectionListener {
     
     private void updateMapScreen() {
         mainPanel.removeAll();
-        mapSelection = new MapSelection(this);
+        mapSelection = new MapSelection(this, map);
         mainPanel.add(mapSelection, BorderLayout.CENTER);
         mainPanel.revalidate();
         mainPanel.repaint();

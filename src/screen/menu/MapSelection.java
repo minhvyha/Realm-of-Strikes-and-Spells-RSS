@@ -11,6 +11,7 @@ import java.net.URL;
 public class MapSelection extends JPanel {
   private JLabel titleLabel = new JLabel("Select Your Allies", SwingConstants.CENTER);
   private JPanel buttonPanel = new JPanel();
+  private int map;
   private String[] battleMapNames = {
     "Enchanted Forest",
     "Frozen Tundra",
@@ -23,9 +24,9 @@ public class MapSelection extends JPanel {
     "Rocky Plateau"
 };
 
-  public MapSelection(SelectionListener listener) {
+  public MapSelection(SelectionListener listener, int map) {
     setLayout(new BorderLayout());
-
+    this.map = map;
     titleLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Title font and size
     titleLabel.setForeground(Color.WHITE); // Title color
     titleLabel.setOpaque(true);
@@ -34,11 +35,11 @@ public class MapSelection extends JPanel {
 
     // Add the title label at the top (NORTH)
     add(titleLabel, BorderLayout.NORTH);
-    buttonPanel.setLayout(new GridLayout(3, 3, 20, 20));
+    buttonPanel.setLayout(new GridLayout(3, 3, 40, 40));
     buttonPanel.setBackground(Color.BLACK);
     int paddingSize = 20;
     buttonPanel.setBorder(new EmptyBorder(paddingSize, paddingSize, paddingSize, paddingSize)); // Add padding
-    Dimension buttonSize = new Dimension(240, 200); // Define button size
+    Dimension buttonSize = new Dimension(230, 200); // Define button size
 
     // Add 9 buttons for map choices
     for (int i = 1; i <= 9; i++) {
@@ -74,7 +75,7 @@ public class MapSelection extends JPanel {
         protected void paintComponent(Graphics g) {
           super.paintComponent(g);
           Graphics2D g2d = (Graphics2D) g;
-          g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f)); // Transparency
+          g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // Transparency
           g2d.setColor(Color.BLACK);
           g2d.fillRect(0, 0, getWidth(), getHeight());
         }
@@ -85,7 +86,7 @@ public class MapSelection extends JPanel {
       JLabel textLabel = new JLabel(battleMapNames[i - 1], SwingConstants.CENTER);
       textLabel.setForeground(Color.WHITE);
       textLabel.setFont(new Font("Arial", Font.BOLD, 18));
-      textLabel.setBounds(0, 0, buttonSize.width, buttonSize.height);
+      textLabel.setBounds(0, -40, buttonSize.width, buttonSize.height);
 
       // Add components to the layered pane
       layeredPane.add(button, Integer.valueOf(0));
@@ -100,15 +101,41 @@ public class MapSelection extends JPanel {
       final int finalI = i;
       button.addActionListener(e -> {
         System.out.println("New Option " + finalI + " selected");
-        if (listener != null) {
-          listener.onMapSelected(finalI); // Notify listener
-        }
+        this.map = finalI;
       });
     }
     buttonPanel.setBorder(new EmptyBorder(paddingSize, paddingSize, paddingSize, paddingSize)); // Add padding
 
+    JButton nextButton = new JButton("Next");
+        nextButton.setFont(new Font("Arial", Font.BOLD, 12)); // Smaller font size for a small fit-text button
+        nextButton.setPreferredSize(new Dimension(100, 30)); // Smaller button size
+
+        nextButton.addActionListener(e -> {
+            if (listener != null) {
+                listener.onMapSelected(this.map); // Notify listener
+            }
+        });
+
+        JButton backButton = new JButton("Back");
+        backButton.setFont(new Font("Arial", Font.BOLD, 12)); // Smaller font size for a small fit-text button
+        backButton.setPreferredSize(new Dimension(100, 30)); // Smaller button size
+
+        backButton.addActionListener(e -> {
+            System.out.println("Back button clicked!");
+            if (listener != null) {
+                listener.onMapSelected(-1); // Notify listener
+            }
+        });
+        // Create a JPanel with FlowLayout to position the button in the middle
+        JPanel buttonPanelWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20)); // 30px padding from top
+        buttonPanelWrapper.setBackground(Color.BLACK); // Match the background color
+        buttonPanelWrapper.add(backButton); // Add the "Next" button to the wrapper panel
+        buttonPanelWrapper.add(nextButton); // Add the "Next" button to the wrapper panel
+        // Add the button panel wrapper to the CENTER, slightly above the bottom
+        add(buttonPanelWrapper, BorderLayout.SOUTH);
     // Add the button panel to the CENTER
     add(buttonPanel, BorderLayout.CENTER);
+
     revalidate();
     repaint();
   }

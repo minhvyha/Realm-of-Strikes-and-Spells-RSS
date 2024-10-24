@@ -11,15 +11,15 @@ import java.net.URL;
 public class CharacterSelection extends JPanel {
     private JLabel titleLabel = new JLabel("Select Your Allies", SwingConstants.CENTER);
     private JPanel buttonPanel = new JPanel();
-    private int[] selectedRace = { 0, 1, 2 }; // Initial
-    private int[] selectedClass = { 0, 1, 2 }; // Initial
+    private int[] selectedRace, selectedClass ; // Initial
 
     // Arrays to store races and classes
     private String[] races = { "Angel", "Orc", "Minotaur" };
     private String[] classes = { "Warrior", "Mage", "Rogue" };
 
-    public CharacterSelection(SelectionListener listener) {
-
+    public CharacterSelection(SelectionListener listener, int[] selectedRace, int[] selectedClass) {
+        this.selectedRace = selectedRace;
+        this.selectedClass = selectedClass;
         // Set the layout to BorderLayout to support NORTH, CENTER, etc.
         setLayout(new BorderLayout());
 
@@ -127,9 +127,9 @@ public class CharacterSelection extends JPanel {
         add(buttonPanel, BorderLayout.CENTER);
 
         // Create "Next" button
+
         JButton nextButton = new JButton("Next");
         nextButton.setFont(new Font("Arial", Font.BOLD, 12)); // Smaller font size for a small fit-text button
-        nextButton.setBackground(Color.GREEN);
         nextButton.setPreferredSize(new Dimension(100, 30)); // Smaller button size
 
         nextButton.addActionListener(e -> {
@@ -137,11 +137,22 @@ public class CharacterSelection extends JPanel {
                 listener.onCharacterSelected(selectedRace, selectedClass); // Notify listener
             }
         });
-        // Create a JPanel with FlowLayout to position the button in the middle
-        JPanel buttonPanelWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 30)); // 30px padding from top
-        buttonPanelWrapper.setBackground(Color.BLACK); // Match the background color
-        buttonPanelWrapper.add(nextButton); // Add the "Next" button to the wrapper panel
 
+        JButton backButton = new JButton("Back");
+        backButton.setFont(new Font("Arial", Font.BOLD, 12)); // Smaller font size for a small fit-text button
+        backButton.setPreferredSize(new Dimension(100, 30)); // Smaller button size
+
+        backButton.addActionListener(e -> {
+            System.out.println("Back button clicked!");
+            if (listener != null) {
+                listener.onCharacterSelected(new int[] {}, new int[] {}); // Notify listener
+            }
+        });
+        // Create a JPanel with FlowLayout to position the button in the middle
+        JPanel buttonPanelWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20)); // 30px padding from top
+        buttonPanelWrapper.setBackground(Color.BLACK); // Match the background color
+        buttonPanelWrapper.add(backButton); // Add the "Next" button to the wrapper panel
+        buttonPanelWrapper.add(nextButton); // Add the "Next" button to the wrapper panel
         // Add the button panel wrapper to the CENTER, slightly above the bottom
         add(buttonPanelWrapper, BorderLayout.SOUTH);
     }
