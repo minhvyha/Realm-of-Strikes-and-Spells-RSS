@@ -11,6 +11,17 @@ import java.net.URL;
 public class MapSelection extends JPanel {
   private JLabel titleLabel = new JLabel("Select Your Allies", SwingConstants.CENTER);
   private JPanel buttonPanel = new JPanel();
+  private String[] battleMapNames = {
+    "Enchanted Forest",
+    "Frozen Tundra",
+    "Desert Dunes",
+    "Desert Oasis",
+    "Cavern Depths",
+    "Autumn Woods",
+    "Mystic Grove",
+    "Dungeon Chambers",
+    "Rocky Plateau"
+};
 
   public MapSelection(SelectionListener listener) {
     setLayout(new BorderLayout());
@@ -28,17 +39,7 @@ public class MapSelection extends JPanel {
     int paddingSize = 20;
     buttonPanel.setBorder(new EmptyBorder(paddingSize, paddingSize, paddingSize, paddingSize)); // Add padding
     Dimension buttonSize = new Dimension(240, 200); // Define button size
-    String[] battleMapNames = {
-        "Enchanted Forest", // New Option 1
-        "Frozen Tundra", // New Option 2
-        "Desert Dunes", // New Option 3
-        "Desert Oasis", // New Option 4
-        "Cavern Depths", // New Option 5
-        "Autumn Woods", // New Option 6
-        "Mystic Grove", // New Option 7
-        "Dungeon Chambers", // New Option 8
-        "Rocky Plateau" // New Option 9
-    };
+
     // Add 9 buttons for map choices
     for (int i = 1; i <= 9; i++) {
       JLayeredPane layeredPane = new JLayeredPane();
