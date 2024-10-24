@@ -3,8 +3,8 @@ package character.race;
 import character.Character;
 import character.CharacterClass;
 
-public class Elf extends Character {
-  public Elf(String name, CharacterClass characterClass) {
+public class Angel extends Character {
+  public Angel(String name, CharacterClass characterClass) {
       super(name, 100, 10, 20, 15, characterClass); // Elves have higher intelligence and defense but lower HP
   }
 

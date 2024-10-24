@@ -21,18 +21,20 @@ public class BattleScreen extends JPanel {
     private EnemyLabel[] enemiesLabel;
     private Character[] enemies;
     private Random random;
-    private int[] selectedRace, selectedClass;
+    private int[] selectedRace, selectedClass, enemyRace, enemyClass;
     private String[] allyRaces = { "angel", "orc", "minotaur" };
     private String[] enemyRaces = { "zombie", "golem", "reaper" };
     private String[] classes = { "warrior", "mage", "rogue" };
 
-    public BattleScreen(Image backgroundImage, int[] selectedRace, int[] selectedClass) {
+    public BattleScreen(Image backgroundImage, int[] selectedRace, int[] selectedClass, int[] enemyRace, int[] enemyClass) {
         this.backgroundImage = backgroundImage;
         this.selectedRace = selectedRace;
         this.selectedClass = selectedClass;
+        this.enemyRace = enemyRace;
+        this.enemyClass = enemyClass;
         this.random = new Random();
         // Load the animation frames (if needed for other characters like orc)
-        loadGame();
+
 
         // Set up the panel
         setLayout(new BorderLayout());
@@ -41,13 +43,7 @@ public class BattleScreen extends JPanel {
         initializePanels();
     }
 
-    private void loadGame() {
-        enemies = new Character[3]; // Array of enemy characters
-        String[] enemyRaces = { "zombie", "golem", "reaper" };
-        String[] enemyClasses = { "warrior", "mage", "rogue" };
-    
-    }
-    
+
 
     private void initializePanels() {
         // Initialize the top panel with character sections
@@ -90,7 +86,7 @@ public class BattleScreen extends JPanel {
         enemiesLabel = new EnemyLabel[3];
 
         for (int i = 0; i < 3; i++) {
-                EnemyLabel enemyLabel = new EnemyLabel(enemyRaces[generateRandomNumber()], 18, 12, 15, 12,
+                EnemyLabel enemyLabel = new EnemyLabel(enemyRaces[enemyRace[i]], 18, 12, 15, 12,
                         220 - (i % 2) * 80, 150 + (i * 60));
                 rightCharacterPanel.add(enemyLabel);
                 enemiesLabel[i] = enemyLabel;
@@ -103,7 +99,7 @@ public class BattleScreen extends JPanel {
                 enemyHealthBars[i] = healthBar; // Store health bar
                 rightCharacterPanel.add(healthBar); //health bar to panel
 
-                JLabel enemyNameLabel = new JLabel(enemyRaces[generateRandomNumber()]);
+                JLabel enemyNameLabel = new JLabel(enemyRaces[enemyRace[i]]);
                 enemyNameLabel.setBounds(230 - (i % 2) * 80, 265 + (i * 60), 80, 20); // Position
                 enemyNameLabel.setForeground(Color.WHITE); //text white 
                 rightCharacterPanel.add(enemyNameLabel); // Add name label to the panel

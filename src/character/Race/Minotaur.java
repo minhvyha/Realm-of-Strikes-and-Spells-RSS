@@ -4,8 +4,8 @@ package character.race;
 import character.Character;
 import character.CharacterClass;
 
-public class Orc extends Character {
-  public Orc(String name, CharacterClass characterClass) {
+public class Minotaur extends Character {
+  public Minotaur(String name, CharacterClass characterClass) {
       super(name, 150, 20, 5, 10, characterClass); // Orcs have higher HP and strength but low intelligence
   }
 

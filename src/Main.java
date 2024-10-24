@@ -3,6 +3,7 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.net.URL;
+import java.util.Random;
 
 import screen.SelectionListener;
 import screen.menu.CharacterSelection;
@@ -11,11 +12,14 @@ import screen.BattleScreen;
 import screen.LoadingOverlay;
 import screen.MainMenu;
 
-import character.race.Elf;
+import character.race.Angel;
 import character.race.Human;
-import character.race.Orc;
+import character.race.Minotaur;
 import character.Character;
+import character.CharacterClass;
 import character.classes.Mage;
+import character.classes.Rogue;
+import character.classes.Warrior;
 
 public class Main extends JFrame implements SelectionListener {
 
@@ -32,8 +36,11 @@ public class Main extends JFrame implements SelectionListener {
     private String[] races = { "Angel", "Orc", "Minotaur" };
     private String[] classes = { "Warrior", "Mage", "Rogue" };
     private Character[] allies;
+    private Character[] enemies;
     private int[] selectedRace = {0, 1, 2}; // Initial
     private int[] selectedClass = {0, 1, 2}; // Initial
+    private int[] enemyRace; // Initial
+    private int[] enemyClass; // Initial
 
     @Override
     public void onMapSelected(int map) {
@@ -101,9 +108,7 @@ public class Main extends JFrame implements SelectionListener {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if(map >=0){
 
-            }
             updateGameScreen();
 
             loadingOverlay.turnOff();
@@ -115,7 +120,7 @@ public class Main extends JFrame implements SelectionListener {
         loadingOverlay = new LoadingOverlay();
 
         setTitle("Masters of MQ RPG");
-        setSize(800, 600);
+        setSize(1000, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
@@ -184,13 +189,91 @@ public class Main extends JFrame implements SelectionListener {
             System.out.println("Error: Background image not found at " + backgroundPath);
         }
         // Create and add the BattleScreen instance
-        battleScreen = new BattleScreen(backgroundImage, selectedRace,selectedClass);
+        updateCharacters();
+        battleScreen = new BattleScreen(backgroundImage, selectedRace,selectedClass, enemyRace, enemyClass);
         mainPanel.add(battleScreen, BorderLayout.CENTER);
 
         mainPanel.revalidate();
         mainPanel.repaint();
     }
 
+    private void updateCharacters(){
+        allies = new Character[selectedRace.length];
+        enemies = new Character[selectedRace.length];
+        for (int i = 0; i < selectedRace.length; i++) {
+            CharacterClass currClass;
+            switch (selectedClass[i]) {
+                case 0:
+                    currClass = new Warrior();
+                    break;
+                case 1:
+                    currClass = new Mage();
+                    break;
+                case 2:
+                    currClass = new Rogue();
+                    break;
+                default:
+                    currClass = new Warrior();
+                    break;
+            }
+            switch (selectedRace[i]) {
+                case 0:
+                    allies[i] = new Angel("name", currClass);
+                    break;
+                case 1:
+                    allies[i] = new Human("name", currClass);
+                    break;
+                case 2:
+                    allies[i] = new Minotaur("name", currClass);
+                    break;
+                default:
+                    allies[i] = new Angel("name", currClass);
+                    break;
+            }
+        }
+        enemyRace = new int[3];
+        enemyClass = new int[3];
+        for (int i = 0; i < enemyRace.length; i++) {
+            enemyRace[i] = generateRandomNumber();
+            enemyClass[i] = generateRandomNumber();
+        }
+
+        for (int i = 0; i < enemyRace.length; i++) {
+            CharacterClass currClass;
+            switch (enemyClass[i]) {
+                case 0:
+                    currClass = new Warrior();
+                    break;
+                case 1:
+                    currClass = new Mage();
+                    break;
+                case 2:
+                    currClass = new Rogue();
+                    break;
+                default:
+                    currClass = new Warrior();
+                    break;
+            }
+            switch (enemyRace[i]) {
+                case 0:
+                    allies[i] = new Angel("name", currClass);
+                    break;
+                case 1:
+                    allies[i] = new Human("name", currClass);
+                    break;
+                case 2:
+                    allies[i] = new Minotaur("name", currClass);
+                    break;
+                default:
+                    allies[i] = new Angel("name", currClass);
+                    break;
+            }
+        }
+    }
+    private int generateRandomNumber() {
+        Random rand = new Random();
+        return rand.nextInt(3); 
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             Main game = new Main();
