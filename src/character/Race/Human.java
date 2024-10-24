@@ -1,7 +1,7 @@
-package Characters.Race;
+package character.Race;
 
-import Characters.Character;
-import Characters.CharacterClass;
+import character.Character;
+import character.CharacterClass;
 
 public class Human extends Character {
   public Human(String name, CharacterClass characterClass) {

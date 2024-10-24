@@ -1,4 +1,7 @@
 import javax.swing.*;
+
+import character.race.Human;
+
 import java.awt.*;
 import java.net.URL;
 
@@ -7,6 +10,11 @@ import screen.SelectionListener;
 import screen.BattleScreen;
 import screen.LoadingOverlay;
 import screen.MapSelection;
+import character.race.Elf;
+import character.race.Human;
+import character.race.Orc;
+import character.Character;
+import character.classes.Mage;
 
 public class Main extends JFrame implements SelectionListener {
 
@@ -21,7 +29,7 @@ public class Main extends JFrame implements SelectionListener {
 
     private String[] races = { "Angel", "Orc", "Minotaur" };
     private String[] classes = { "Warrior", "Mage", "Rogue" };
-
+    private Character[] allies;
     private int[] selectedRace, selectedClass; // Initial
 
     @Override
@@ -38,6 +46,7 @@ public class Main extends JFrame implements SelectionListener {
             this.map = map;
             updateGameScreen();
             loadingOverlay.turnOff();
+            Human ally1 = new Human("minh", new Mage());
         });
     }
 

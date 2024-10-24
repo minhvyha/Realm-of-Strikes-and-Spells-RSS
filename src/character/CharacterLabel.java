@@ -1,4 +1,4 @@
-package Characters;
+package character;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;

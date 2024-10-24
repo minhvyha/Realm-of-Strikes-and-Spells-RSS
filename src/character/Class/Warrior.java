@@ -1,7 +1,7 @@
-package Characters.Class;
+package character.Class;
 
-import Characters.Character;
-import Characters.CharacterClass;
+import character.Character;
+import character.CharacterClass;
 
 public class Warrior implements CharacterClass {
     @Override

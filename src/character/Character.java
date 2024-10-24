@@ -1,4 +1,4 @@
-package Characters;
+package character;
 
 public class Character {
     // Attributes

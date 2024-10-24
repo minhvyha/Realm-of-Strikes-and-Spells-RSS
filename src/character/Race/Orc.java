@@ -1,8 +1,8 @@
 // Orc.java
-package Characters.Race;
+package character.Race;
 
-import Characters.Character;
-import Characters.CharacterClass;
+import character.Character;
+import character.CharacterClass;
 
 public class Orc extends Character {
   public Orc(String name, CharacterClass characterClass) {

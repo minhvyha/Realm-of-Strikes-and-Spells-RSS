@@ -1,12 +1,13 @@
 package screen;
 
-import Characters.CharacterLabel;
-import Characters.EnemyLabel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 import javax.swing.*;
+
+import character.CharacterLabel;
+import character.EnemyLabel;
 
 public class BattleScreen extends JPanel {
     private JPanel topPanel, bottomPanel;
@@ -16,6 +17,8 @@ public class BattleScreen extends JPanel {
     private EnemyLabel[] enemyLabels;
     private Image backgroundImage;
     private Character[] allies;
+    private CharacterLabel[] alliesLabel;
+    private EnemyLabel[] enemiesLabel;
     private Character[] enemies;
     private Random random;
     private int[] selectedRace, selectedClass;
@@ -63,12 +66,13 @@ public class BattleScreen extends JPanel {
         rightCharacterPanel.setOpaque(false); // Transparent right character panel
 
         enemyHealthBars = new JProgressBar[3]; // Initialize array of health bars for enemies
-
+        alliesLabel = new CharacterLabel[3];
         for (int i = 0; i < 3; i++) {
             // Adding allies to the leftCharacterPanel
             CharacterLabel allyLabel = new CharacterLabel(allyRaces[selectedRace[i]], 18, 12, 15, 12,
             70 + (i % 2) * 80, 150 + (i * 60)); // Set the frame and position for allies
             leftCharacterPanel.add(allyLabel); // Add ally label to left panel
+            alliesLabel[i] = allyLabel;
 
             //health bar for allies
             JProgressBar allyHealthBar = new JProgressBar(0, 100);
@@ -83,11 +87,13 @@ public class BattleScreen extends JPanel {
             leftCharacterPanel.add(allyNameLabel); //Add name label to the panel
             
         }
+        enemiesLabel = new EnemyLabel[3];
 
         for (int i = 0; i < 3; i++) {
                 EnemyLabel enemyLabel = new EnemyLabel(enemyRaces[generateRandomNumber()], 18, 12, 15, 12,
                         220 - (i % 2) * 80, 150 + (i * 60));
                 rightCharacterPanel.add(enemyLabel);
+                enemiesLabel[i] = enemyLabel;
     
                 JProgressBar healthBar = new JProgressBar(0, 100);
                 healthBar.setValue(100); // Set full health initially
@@ -146,7 +152,7 @@ public class BattleScreen extends JPanel {
                 System.out.println("Attack button clicked!");
                 int enemyIndex = 0; 
                 int currentHealth = enemyHealthBars[enemyIndex].getValue();
-
+                enemiesLabel[enemyIndex].setState("die");
                 int baseDamage = 10; 
                 int diceRoll = rollDice();
                 int totalDamage = baseDamage + diceRoll;

@@ -1,4 +1,4 @@
-package Characters;
+package character;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -114,7 +114,9 @@ public class EnemyLabel extends JLabel {
                         setIcon(attack[currentFrame]); // Set attack frames
                         break;
                     case "die":
-                        currentFrame = (currentFrame + 1) % die.length;
+                        if(currentFrame == 0) break;
+                        currentFrame =  (currentFrame - 1);
+                        
                         setIcon(die[currentFrame]); // Set die frames
                         break;
                     case "hurt":
@@ -132,5 +134,6 @@ public class EnemyLabel extends JLabel {
     public void setState(String newState) {
         this.currentState = newState;
         this.currentFrame = 0; // Reset frame to start animation from the beginning
+        if(newState == "die") currentFrame = die.length; 
     }
 }
