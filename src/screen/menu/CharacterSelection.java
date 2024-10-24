@@ -1,7 +1,9 @@
-package screen;
+package screen.menu;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import screen.SelectionListener;
 
 import java.awt.*;
 import java.net.URL;

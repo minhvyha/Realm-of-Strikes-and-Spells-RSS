@@ -1,16 +1,14 @@
 import javax.swing.*;
 
-import character.race.Human;
 
 import java.awt.*;
 import java.net.URL;
 
-import screen.CharacterSelection;
 import screen.SelectionListener;
+import screen.menu.CharacterSelection;
+import screen.menu.MapSelection;
 import screen.BattleScreen;
 import screen.LoadingOverlay;
-import screen.MapSelection;
-
 import screen.MainMenu;
 
 import character.race.Elf;
@@ -50,7 +48,6 @@ public class Main extends JFrame implements SelectionListener {
             this.map = map;
             updateMenuScreen();
             loadingOverlay.turnOff();
-            Human ally1 = new Human("minh", new Mage());
         });
     }
 
