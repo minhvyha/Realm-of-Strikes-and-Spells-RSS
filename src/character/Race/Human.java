@@ -5,7 +5,7 @@ import character.CharacterClass;
 
 public class Human extends Character {
   public Human(String name, CharacterClass characterClass) {
-      super(name, 120, 15, 15, 15, characterClass); // Balanced stats
+      super(name, 120, 15,10, 15, 15, characterClass); // Balanced stats
   }
 
   @Override

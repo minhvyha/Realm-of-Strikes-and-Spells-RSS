@@ -6,17 +6,19 @@ public class Character {
     private int hp;
     private int maxHp;
     private int strength;
+    private int agility;
     private int intelligence;
     private int defense;
     private CharacterClass characterClass;
 
     // Constructor
-    public Character(String name, int hp, int strength, int intelligence, int defense, CharacterClass characterClass) {
+    public Character(String name, int hp, int strength, int agility, int intelligence, int defense, CharacterClass characterClass) {
         this.name = name;
         this.hp = hp;
         this.maxHp = hp; // Set max HP equal to initial HP
         this.strength = strength;
         this.intelligence = intelligence;
+        this.agility = agility;
         this.defense = defense;
         this.characterClass = characterClass;
     }
@@ -33,6 +35,9 @@ public class Character {
         return strength;
     }
 
+    public int getAgility() {
+        return agility;
+    }
     public int getIntelligence() {
         return intelligence;
     }
@@ -55,6 +60,9 @@ public class Character {
     }
     public void setStrength(int strength) {
         this.strength = strength;
+    }
+    public void setAgility(int agility) {
+        this.agility = agility;
     }
     public void setIntelligence(int intelligence) {
         this.intelligence = intelligence;
@@ -114,7 +122,7 @@ public class Character {
     // Display character status
     public void displayStatus() {
         System.out.println(name + " - HP: " + hp + "/" + maxHp + ", Strength: " + strength + ", Intelligence: "
-                + intelligence + ", Defense: " + defense);
+                + intelligence + "Agility: " + agility + ", Defense: " + defense);
     }
     public void useRaceAbility(Character target) {
         // Default ability: basic attack
