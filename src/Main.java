@@ -10,6 +10,9 @@ import screen.SelectionListener;
 import screen.BattleScreen;
 import screen.LoadingOverlay;
 import screen.MapSelection;
+
+import screen.MainMenu;
+
 import character.race.Elf;
 import character.race.Human;
 import character.race.Orc;
@@ -26,6 +29,7 @@ public class Main extends JFrame implements SelectionListener {
     private Image backgroundImage;
     private BattleScreen battleScreen;
     private LoadingOverlay loadingOverlay; // Loading overlay instance
+    private MainMenu mainMenu;
 
     private String[] races = { "Angel", "Orc", "Minotaur" };
     private String[] classes = { "Warrior", "Mage", "Rogue" };
@@ -44,7 +48,7 @@ public class Main extends JFrame implements SelectionListener {
                 e.printStackTrace();
             }
             this.map = map;
-            updateGameScreen();
+            updateMenuScreen();
             loadingOverlay.turnOff();
             Human ally1 = new Human("minh", new Mage());
         });
@@ -73,6 +77,23 @@ public class Main extends JFrame implements SelectionListener {
 
     }
 
+    @Override
+    public void onMenuMapSelected() {
+        System.out.println("Menu Map Selected");
+        updateMapScreen();
+    }
+
+    @Override
+    public void onMenuCharacterSelected() {
+        updateCharacterScreen();
+    }
+
+    @Override
+    public void onMenuPlaySelected() {
+        System.out.println("Starting the game...");
+        // Add the game-starting logic here\
+        updateGameScreen();
+    }
     public Main() {
         // Initialize the loading overlay
         loadingOverlay = new LoadingOverlay();
@@ -103,20 +124,29 @@ public class Main extends JFrame implements SelectionListener {
         loadingOverlay.setBounds(0, 0, getWidth(), getHeight());
         loadingOverlay.turnOff();
 
-        updateCharacterScreen();
-
+        updateMenuScreen();
         setVisible(true);
     }
 
+    private void updateMenuScreen() {
+        mainPanel.removeAll();
+        mainMenu = new MainMenu(this);
+        mainPanel.add(mainMenu, BorderLayout.CENTER);
+        mainPanel.revalidate();
+        mainPanel.repaint();
+    }
     private void updateCharacterScreen() {
+        mainPanel.removeAll();
+
         selectionMenu = new CharacterSelection(this);
         mainPanel.add(selectionMenu, BorderLayout.CENTER);
         mainPanel.revalidate();
         mainPanel.repaint();
     }
 
-    private void updateMenuScreen() {
-        mainPanel.remove(selectionMenu);
+    
+    private void updateMapScreen() {
+        mainPanel.removeAll();
         mapSelection = new MapSelection(this);
         mainPanel.add(mapSelection, BorderLayout.CENTER);
         mainPanel.revalidate();
@@ -124,8 +154,7 @@ public class Main extends JFrame implements SelectionListener {
     }
 
     private void updateGameScreen() {
-        mainPanel.remove(selectionMenu);
-        mainPanel.remove(mapSelection);
+        mainPanel.removeAll();
         String backgroundPath = "/assets/background/battleback" + map + ".png";
 
         URL resource = getClass().getResource(backgroundPath);

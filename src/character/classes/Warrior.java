@@ -1,4 +1,4 @@
-package character.Class;
+package character.classes;
 
 import character.Character;
 import character.CharacterClass;
