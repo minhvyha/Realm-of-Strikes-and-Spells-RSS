@@ -35,25 +35,32 @@ public class MainMenu extends JPanel {
     JButton playButton = createMenuButton("Play");
     JButton chooseAlliesButton = createMenuButton("Choose Allies");
     JButton chooseMapButton = createMenuButton("Choose Map");
+    JButton guideButton = createMenuButton("Guide");
     JButton quitButton = createMenuButton("Quit"); // New Quit button
+
     playButton.setBorder(BorderFactory.createEmptyBorder(10, 95, 10, 95)); 
     chooseAlliesButton.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40));
     chooseMapButton.setBorder(BorderFactory.createEmptyBorder(10, 48, 10, 48));
+    guideButton.setBorder(BorderFactory.createEmptyBorder(10, 85, 10, 85));
     quitButton.setBorder(BorderFactory.createEmptyBorder(10, 95, 10, 95));
     // Center-align the buttons and add some spacing between them
     playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
     chooseAlliesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
     chooseMapButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+    guideButton.setAlignmentX(Component.CENTER_ALIGNMENT);
     quitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
     // Add buttons to the button panel with spacing
     buttonPanel.add(playButton);
-    buttonPanel.add(Box.createVerticalStrut(20)); // Add space between buttons
+    buttonPanel.add(Box.createVerticalStrut(15)); // Add space between buttons
     buttonPanel.add(chooseAlliesButton);
-    buttonPanel.add(Box.createVerticalStrut(20)); // Add space between buttons
+    buttonPanel.add(Box.createVerticalStrut(15)); // Add space between buttons
     buttonPanel.add(chooseMapButton);
-    buttonPanel.add(Box.createVerticalStrut(20)); // Add space between buttons
+    buttonPanel.add(Box.createVerticalStrut(15)); // Add space between buttons
+    buttonPanel.add(guideButton);
+    buttonPanel.add(Box.createVerticalStrut(15)); // Add space between buttons
     buttonPanel.add(quitButton);
+
 
     // Add some spacing at the bottom of the button panel
     buttonPanel.add(Box.createVerticalStrut(50));
@@ -83,7 +90,13 @@ public class MainMenu extends JPanel {
 
       }
     });
+    guideButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        System.out.println("Guide button pressed");
+        listener.onMenuGuideSelected();
 
+      }
+    });
     chooseMapButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         System.out.println("Choose Map button pressed");

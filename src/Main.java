@@ -1,3 +1,20 @@
+
+import java.awt.*;
+import java.net.URL;
+import java.util.Random;
+import javax.swing.*;
+
+import screen.BattleScreen;
+import screen.DiceOverlay;
+import screen.LoadingOverlay;
+import screen.MainMenu;
+import screen.SelectionListener;
+import screen.BeginOverlay;
+
+import screen.menu.GuideMenu;
+import screen.menu.CharacterSelection;
+import screen.menu.MapSelection;
+
 import character.Character;
 import character.CharacterClass;
 import character.classes.Mage;
@@ -9,30 +26,12 @@ import character.enemyRace.Zombie;
 import character.race.Angel;
 import character.race.Minotaur;
 import character.race.Orc;
-import java.awt.*;
-import java.net.URL;
-import java.util.Random;
-import javax.swing.*;
-import screen.BattleScreen;
-import screen.DiceOverlay;
-import screen.LoadingOverlay;
-import screen.MainMenu;
-import screen.SelectionListener;
-import screen.menu.CharacterSelection;
-import screen.menu.MapSelection;
-
 public class Main extends JFrame implements SelectionListener {
 
     private JPanel mainPanel;
-    private CharacterSelection selectionMenu;
-    private MapSelection mapSelection;
+
     private boolean start = false;
     private int map = 1;
-    private Image backgroundImage;
-    private BattleScreen battleScreen;
-    private LoadingOverlay loadingOverlay; // Loading overlay instance
-    private DiceOverlay DiceOverlay;
-    private MainMenu mainMenu;
 
     private String[] races = { "Angel", "Orc", "Minotaur" };
     private String[] classes = { "Warrior", "Mage", "Rogue" };
@@ -43,6 +42,20 @@ public class Main extends JFrame implements SelectionListener {
     private int[] enemyRace; // Initial
     private int[] enemyClass; // Initial
 
+    private CharacterSelection selectionMenu;
+    private MapSelection mapSelection;
+    private GuideMenu guideMenu;
+    private MainMenu mainMenu;
+
+
+    private Image backgroundImage;
+    private BattleScreen battleScreen;
+
+    private LoadingOverlay loadingOverlay; // Loading overlay instance
+    private DiceOverlay DiceOverlay;
+    private BeginOverlay beginOverlay;
+
+
     @Override
     public void onMapSelected(int map) {
         System.out.println("Map " + map + " selected");
@@ -50,7 +63,7 @@ public class Main extends JFrame implements SelectionListener {
         loadingOverlay.turnOn();
         SwingUtilities.invokeLater(() -> {
             try {
-                Thread.sleep(10);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -70,7 +83,7 @@ public class Main extends JFrame implements SelectionListener {
         SwingUtilities.invokeLater(() -> {
             // Simulate loading work by calling updateGameScreen() after a small delay
             try {
-                Thread.sleep(10); // Simulate some loading delay (1 second)
+                Thread.sleep(500); // Simulate some loading delay (1 second)
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -90,13 +103,35 @@ public class Main extends JFrame implements SelectionListener {
 
     @Override
     public void onMenuMapSelected() {
-        System.out.println("Menu Map Selected");
-        updateMapScreen();
+        loadingOverlay.turnOn();
+
+        SwingUtilities.invokeLater(() -> {
+            // Simulate loading work by calling updateGameScreen() after a small delay
+            try {
+                Thread.sleep(500); // Simulate some loading delay (1 second)
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            updateMapScreen();
+            loadingOverlay.turnOff(); // Turn off the loading overlay after the game screen is updated
+        });
     }
 
     @Override
     public void onMenuCharacterSelected() {
-        updateCharacterScreen();
+        
+        loadingOverlay.turnOn();
+
+        SwingUtilities.invokeLater(() -> {
+            // Simulate loading work by calling updateGameScreen() after a small delay
+            try {
+                Thread.sleep(500); // Simulate some loading delay (1 second)
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            updateCharacterScreen();
+            loadingOverlay.turnOff(); // Turn off the loading overlay after the game screen is updated
+        });
     }
 
     @Override
@@ -115,6 +150,24 @@ public class Main extends JFrame implements SelectionListener {
             loadingOverlay.turnOff();
         });
         // Add the game-starting logic here\
+    }
+
+    @Override
+    public void onMenuGuideSelected() {
+        System.out.println("Guide selected");
+        loadingOverlay.turnOn();
+
+
+        SwingUtilities.invokeLater(() -> {
+            // Simulate loading work by calling updateGameScreen() after a small delay
+            try {
+                Thread.sleep(500); // Simulate some loading delay (1 second)
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            updateGuideScreen();
+            loadingOverlay.turnOff(); // Turn off the loading overlay after the game screen is updated
+        });
     }
 
     @Override
@@ -150,6 +203,7 @@ public class Main extends JFrame implements SelectionListener {
         // Initialize the loading overlay
         loadingOverlay = new LoadingOverlay();
         DiceOverlay = new DiceOverlay();
+        beginOverlay = new BeginOverlay();
 
         setTitle("Masters of MQ RPG");
         setSize(1000, 700);
@@ -179,10 +233,13 @@ public class Main extends JFrame implements SelectionListener {
         // Add the loading overlay on top of the main panel
         getLayeredPane().add(loadingOverlay, JLayeredPane.POPUP_LAYER);
         getLayeredPane().add(DiceOverlay, JLayeredPane.POPUP_LAYER);
+        getLayeredPane().add(beginOverlay, JLayeredPane.POPUP_LAYER);
         DiceOverlay.setBounds(0, 0, getWidth(), getHeight());
         DiceOverlay.turnOff();
         loadingOverlay.setBounds(0, 0, getWidth(), getHeight());
         loadingOverlay.turnOff();
+        beginOverlay.setBounds(0, 0, getWidth(), getHeight());
+        beginOverlay.turnOff();
 
         updateMenuScreen();
         setVisible(true);
@@ -201,6 +258,14 @@ public class Main extends JFrame implements SelectionListener {
 
         selectionMenu = new CharacterSelection(this, selectedRace, selectedClass);
         mainPanel.add(selectionMenu, BorderLayout.CENTER);
+        mainPanel.revalidate();
+        mainPanel.repaint();
+    }
+
+    private void updateGuideScreen() {
+        mainPanel.removeAll();
+        guideMenu = new GuideMenu(this);
+        mainPanel.add(guideMenu, BorderLayout.CENTER);
         mainPanel.revalidate();
         mainPanel.repaint();
     }
@@ -230,6 +295,15 @@ public class Main extends JFrame implements SelectionListener {
 
         mainPanel.revalidate();
         mainPanel.repaint();
+        beginOverlay.turnOn();
+        SwingUtilities.invokeLater(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            beginOverlay.turnOff();
+        });
     }
 
     private void updateCharacters() {
