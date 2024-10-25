@@ -261,11 +261,7 @@ public class BattleScreen extends JPanel {
         int characterTurn = listener.getCharacterTurn();
 
         if (turn % (6 - dead) == 0) {
-            if (characterTurn < 3) {
-                wasPlayerTurn = false;
-            } else {
-                wasPlayerTurn = true;
-            }
+            wasPlayerTurn=characterTurn>=3; 
         }
 
         if (characterTurn < 3) {
@@ -283,7 +279,7 @@ public class BattleScreen extends JPanel {
 
             if (!wasPlayerTurn) {
                 logPanel.addMessage(" ");
-                logPanel.addMessage("[Ally’s Turn]");
+                logPanel.addMessage("Step: " +(turn+1)+" - [Ally’s Turn] " );
             }
         } else {
             source = characterTurn - 3;
@@ -297,7 +293,7 @@ public class BattleScreen extends JPanel {
 
             if (wasPlayerTurn) {
                 logPanel.addMessage(" ");
-                logPanel.addMessage("[Enemy’s Turn]");
+                logPanel.addMessage("Step: " +(turn+1)+" - [Enemy’s Turn] " );
             }
 
             enemyNameLabels[characterTurn - 3].setForeground(Color.GREEN);
@@ -357,7 +353,6 @@ public class BattleScreen extends JPanel {
         }
         isPlayerTurn = false;
         turn += 1;
-
         // Roll two dice for both sides
         int leftRoll = rollDice();
 
@@ -373,7 +368,6 @@ public class BattleScreen extends JPanel {
 
             @Override
             protected void done() {
-
                 alliesLabel[source].setState("attack");
 
                 enemyHealthBars[target].setValue(listener.getEnemyHp(target));
@@ -391,18 +385,18 @@ public class BattleScreen extends JPanel {
                     updateTurn();
                 } else {
                     enemiesLabel[target].setState("hurt");
-
                 }
                 wasPlayerTurn = true;
                 updateGame();
             }
         }.execute();
     }
-
     private void allyDefense() {
-        if (isPlayerTurn == false) {
+        if (!isPlayerTurn) {
             return;
         }
+
+        
         isPlayerTurn = false;
         int defense = listener.onCharacterDefend(source, rollDice());
         String name = allyRaces[selectedRace[source]].substring(0, 1).toUpperCase()
