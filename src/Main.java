@@ -55,30 +55,28 @@ public class Main extends JFrame implements SelectionListener {
     private BattleScreen battleScreen;
 
     // Declare the screen overlays
-    private LoadingOverlay loadingOverlay; 
+    private LoadingOverlay loadingOverlay;
     private DiceOverlay DiceOverlay;
     private BeginOverlay beginOverlay;
     private GameEnd gameEnd;
 
-
-
     @Override
     public void onMapSelected(int map) {
         loadingOverlay.turnOn();
-        new SwingWorker<Void, Void>() {  // Create a new SwingWorker to handle the delay
+        new SwingWorker<Void, Void>() { // Create a new SwingWorker to handle the delay
             @Override
             protected Void doInBackground() throws Exception {
                 Thread.sleep(1000); // Delay for 1 second
                 return null;
             }
-    
+
             @Override
             protected void done() {
                 updateMenuScreen(); // Update the menu screen, bring back the main menu
                 loadingOverlay.turnOff();
             }
         }.execute();
-        if(map >= 1){
+        if (map >= 1) {
             this.map = map; // Set the map to the selected map
         }
     }
@@ -92,155 +90,138 @@ public class Main extends JFrame implements SelectionListener {
                 Thread.sleep(1000); // Delay for 1 second
                 return null;
             }
-    
+
             @Override
             protected void done() {
-                for (int i = 0; i < characters.length; i++) {
-                }
-                if (characters.length > 0 && classes.length > 0) {
+                if (characters.length > 0 && classes.length > 0) { // Check if the arrays are not empty
                     selectedRace = characters;
                     selectedClass = classes;
                 }
-                updateMenuScreen();
-                loadingOverlay.turnOff();
-            }
-        }.execute();
-
-    }
-
-    @Override
-    public void onMenuMapSelected() {
-        loadingOverlay.turnOn();
-
-        
-        new SwingWorker<Void, Void>() {
-            @Override
-            protected Void doInBackground() throws Exception {
-                Thread.sleep(1000); // Delay for 1 second
-                return null;
-            }
-    
-            @Override
-            protected void done() {
-
-                updateMapScreen();
-                loadingOverlay.turnOff(); 
-            }
-        }.execute();
-    }
-
-    @Override
-    public void onMenuCharacterSelected() {
-        
-        loadingOverlay.turnOn();
-
-        new SwingWorker<Void, Void>() {
-            @Override
-            protected Void doInBackground() throws Exception {
-                Thread.sleep(1000); // Delay for 1 second
-                return null;
-            }
-    
-            @Override
-            protected void done() {
-
-                updateCharacterScreen();
+                updateMenuScreen(); // Update the menu screen, bring back the main menu
                 loadingOverlay.turnOff();
             }
         }.execute();
     }
 
     @Override
-    public void onMenuPlaySelected() {
+    public void onMenuMapSelected() { // Method to handle map option selection on the main menu
         loadingOverlay.turnOn();
-
-        new SwingWorker<Void, Void>() {
+        new SwingWorker<Void, Void>() { // Create a new SwingWorker to handle the delay
             @Override
             protected Void doInBackground() throws Exception {
                 Thread.sleep(1000); // Delay for 1 second
                 return null;
             }
-    
+
             @Override
             protected void done() {
-
-                updateGameScreen();
-
+                updateMapScreen(); // Update the map screen
                 loadingOverlay.turnOff();
-
             }
         }.execute();
-        // Add the game-starting logic here\
     }
 
     @Override
-    public void onMenuGuideSelected() {
+    public void onMenuCharacterSelected() { // Method to handle character selection on the main menu
         loadingOverlay.turnOn();
-        new SwingWorker<Void, Void>() {
+        new SwingWorker<Void, Void>() { // Create a new SwingWorker to handle the delay
             @Override
             protected Void doInBackground() throws Exception {
                 Thread.sleep(1000); // Delay for 1 second
                 return null;
             }
-    
+
+            @Override
+            protected void done() {
+                updateCharacterScreen(); // Update the character selection screen
+                loadingOverlay.turnOff();
+            }
+        }.execute();
+    }
+
+    @Override
+    public void onMenuPlaySelected() { // Method to handle play option selection on the main menu
+        loadingOverlay.turnOn();
+        new SwingWorker<Void, Void>() { // Create a new SwingWorker to handle the delay
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(1000); // Delay for 1 second
+                return null;
+            }
+
+            @Override
+            protected void done() {
+                updateGameScreen(); // Update the game screen
+                loadingOverlay.turnOff();
+            }
+        }.execute();
+    }
+
+    @Override
+    public void onMenuGuideSelected() { // Method to handle guide option selection on the main menu
+        loadingOverlay.turnOn();
+        new SwingWorker<Void, Void>() { // Create a new SwingWorker to handle the delay
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(1000); // Delay for 1 second
+                return null;
+            }
+
             @Override
             protected void done() {
                 updateGuideScreen();
                 loadingOverlay.turnOff();
-
             }
         }.execute();
     }
 
     @Override
     public int onCharacterAttack(int source, int target, int dice1, int dice2) {
-
+        // Set the dice images and turn on the overlay
         DiceOverlay.setDice(dice1, dice2);
         DiceOverlay.turnOn();
-        new SwingWorker<Void, Void>() {
+
+        new SwingWorker<Void, Void>() { // Create a new SwingWorker to handle the delay
             @Override
             protected Void doInBackground() throws Exception {
                 Thread.sleep(1000); // Delay for 1 second
                 return null;
             }
-    
+
             @Override
             protected void done() {
-                DiceOverlay.turnOff();
-
+                DiceOverlay.turnOff(); // Turn off the overlay after the delay
             }
         }.execute();
 
-        int dmg;
-        if(source < 3){
-             dmg = allies[source].getStrength() * dice1 - enemies[target].getDefense() * dice2;
-            if(dmg > 0){
-                enemies[target].takeDamage(dmg);
+        int totalDamge; // Total damage dealt
+        if (source < 3) { // Check if the source is an ally
+            totalDamge = allies[source].getStrength() * dice1 - enemies[target].getDefense() * dice2; // Calculate the total damage
+            if (totalDamge > 0) {
+                enemies[target].takeDamage(totalDamge);
+            } else {
+                totalDamge = 0;
             }
-            else{
-                dmg = 0;
-            }
-        }
-        else{
-             dmg = enemies[source - 3].getStrength() * dice2 - allies[target].getDefense() * dice1;
-            if(dmg > 0){
-                allies[target].takeDamage(dmg);
-            }
-            else{
-                dmg = 0;
+        } else { // If the source is an enemy
+            totalDamge = enemies[source - 3].getStrength() * dice2 - allies[target].getDefense() * dice1; // Calculate the total damage
+            if (totalDamge > 0) {
+                allies[target].takeDamage(totalDamge);
+            } else {
+                totalDamge = 0;
             }
         }
-        return dmg;
+        return totalDamge; // Return the total damage dealt
     }
 
     @Override
     public int onCharacterDefend(int source, int dice) {
-        if(source < 3){
-            allies[source].setDefense(allies[source].getDefense() + dice);
+        if (source < 3) { // Check if the source is an ally
+            int newDefense = allies[source].getDefense() + dice; // Increase the defense by the dice roll
+            allies[source].setDefense(newDefense);
             return allies[source].getDefense();
-        }
-        else{
-            enemies[source - 3].setDefense(enemies[source - 3].getDefense() + dice);
+        } else { // If the source is an enemy
+            int newDefense = enemies[source - 3].getDefense() + dice; // Increase the defense by the dice roll
+            enemies[source - 3].setDefense(newDefense);
             return enemies[source - 3].getDefense();
         }
     }
@@ -254,25 +235,24 @@ public class Main extends JFrame implements SelectionListener {
                 Thread.sleep(1000); // Delay for 1 second
                 return null;
             }
-    
+
             @Override
             protected void done() {
                 DiceOverlay.turnOff();
 
             }
         }.execute();
-        if(source < 3){
+        if (source < 3) {
             int dmg = allies[source].useClassAbility(enemies[target]);
             return dmg;
-        }
-        else{
+        } else {
             int dmg = enemies[source - 3].useClassAbility(allies[target]);
             return dmg;
         }
     }
 
     @Override
-    public int getCharacterTurn(){
+    public int getCharacterTurn() {
         int target = 0;
         int highestAgility = Integer.MIN_VALUE;
 
@@ -289,28 +269,27 @@ public class Main extends JFrame implements SelectionListener {
             }
         }
 
-        for(int i = 0; i < allies.length; i++){
-            if(allies[i].isAlive()){
+        for (int i = 0; i < allies.length; i++) {
+            if (allies[i].isAlive()) {
                 System.out.println("Ally " + i + " agility: " + allies[i].getAgility());
             }
         }
-        for(int i = 0; i < enemies.length; i++){
-            if(enemies[i].isAlive()){
+        for (int i = 0; i < enemies.length; i++) {
+            if (enemies[i].isAlive()) {
                 System.out.println("Enemy " + i + " agility: " + enemies[i].getAgility());
             }
         }
 
-        if(target < 3){
+        if (target < 3) {
             allies[target].setAgility(-1);
-        }
-        else{
+        } else {
             enemies[target - 3].setAgility(-1);
         }
         return target;
     }
-    
+
     @Override
-    public boolean isGameOn(){
+    public boolean isGameOn() {
         boolean alliesAlive = false;
         boolean enemiesAlive = false;
         for (int i = 0; i < allies.length; i++) {
@@ -329,7 +308,7 @@ public class Main extends JFrame implements SelectionListener {
     }
 
     @Override
-    public void resetAgility(){
+    public void resetAgility() {
         System.out.println("Resetting agility");
         for (int i = 0; i < allies.length; i++) {
             allies[i].setAgility(allies[i].getMaxAgility());
@@ -359,7 +338,7 @@ public class Main extends JFrame implements SelectionListener {
                 Thread.sleep(8000); // Delay for 1 second
                 return null;
             }
-    
+
             @Override
             protected void done() {
 
@@ -367,19 +346,17 @@ public class Main extends JFrame implements SelectionListener {
                 gameEnd.turnOff();
             }
         }.execute();
-        
+
     }
 
     @Override
     public void resetDefense(int source) {
-        if(source < 3){
+        if (source < 3) {
             allies[source].resetDefense();
-        }
-        else{
+        } else {
             enemies[source - 3].resetDefense();
         }
     }
-
 
     public Main() {
         // Initialize the loading overlay
@@ -403,9 +380,9 @@ public class Main extends JFrame implements SelectionListener {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                    g.setColor(Color.BLACK);
+                g.setColor(Color.BLACK);
 
-                    g.fillRect(0, 0, getWidth(), getHeight());
+                g.fillRect(0, 0, getWidth(), getHeight());
             }
         };
         mainPanel.setLayout(new BorderLayout());
@@ -484,15 +461,14 @@ public class Main extends JFrame implements SelectionListener {
                 Thread.sleep(3000); // Delay for 1 second
                 return null;
             }
-    
+
             @Override
             protected void done() {
                 beginOverlay.turnOff();
 
-
             }
         }.execute();
-        
+
         mainPanel.revalidate();
         mainPanel.repaint();
 
@@ -572,14 +548,13 @@ public class Main extends JFrame implements SelectionListener {
         }
     }
 
-
     private int generateRandomNumber() {
         Random rand = new Random();
         return rand.nextInt(3);
     }
 
     public static void main(String[] args) {
-            Main game = new Main();
-            game.setVisible(true);
+        Main game = new Main();
+        game.setVisible(true);
     }
 }
