@@ -24,7 +24,7 @@ public class Log extends JPanel {
         head = new LogNode(initialMessage, next);
 
         // Initialize the JTextArea to display messages with black background and white text
-        logArea = new JTextArea(10, 20);
+        logArea = new JTextArea(10, 23);
         logArea.setEditable(false);
         logArea.setLineWrap(true);
         logArea.setWrapStyleWord(true);

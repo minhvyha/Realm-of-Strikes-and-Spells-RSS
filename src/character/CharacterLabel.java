@@ -91,14 +91,17 @@ public class CharacterLabel extends JLabel {
                         setIcon(idle[currentFrame]); // Set idle frames
                         break;
                     case "attack":
+                        if(currentFrame == attack.length - 1) setState("idle");
                         currentFrame = (currentFrame + 1) % attack.length;
                         setIcon(attack[currentFrame]); // Set attack frames
                         break;
                     case "die":
-                        currentFrame = (currentFrame + 1) % die.length;
+                        if(currentFrame == 0) break;
+                        currentFrame =  (currentFrame - 1);
                         setIcon(die[currentFrame]); // Set die frames
                         break;
                     case "hurt":
+                        if(currentFrame == hurt.length - 1) setState("idle");
                         currentFrame = (currentFrame + 1) % hurt.length;
                         setIcon(hurt[currentFrame]); // Set hurt frames
                         break;

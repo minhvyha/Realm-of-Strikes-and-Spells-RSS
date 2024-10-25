@@ -110,6 +110,7 @@ public class EnemyLabel extends JLabel {
                         setIcon(idle[currentFrame]); // Set idle frames
                         break;
                     case "attack":
+                        if(currentFrame == attack.length - 1) setState("idle");
                         currentFrame = (currentFrame + 1) % attack.length;
                         setIcon(attack[currentFrame]); // Set attack frames
                         break;

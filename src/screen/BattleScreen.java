@@ -12,12 +12,14 @@ import character.EnemyLabel;
 public class BattleScreen extends JPanel {
     private JPanel topPanel, bottomPanel;
     private JPanel leftCharacterPanel, rightCharacterPanel;
+    private JLabel allyNameBox, allyStatus, enemyNameBox, enemyStatus;
     private Random random;
     private SelectionListener listener;
     private Image backgroundImage;
 
     private int source, target;
-    
+    private boolean isPlayerTurn = true;
+
     private JProgressBar[] enemyHealthBars, allyHealthBars; // Add health bars for enemies
     private CharacterLabel[] alliesLabel;
     private EnemyLabel[] enemiesLabel;
@@ -48,7 +50,6 @@ public class BattleScreen extends JPanel {
         initializePanels();
 
     }
-
 
     private void initializePanels() {
         // Initialize the top panel with character sections
@@ -84,8 +85,9 @@ public class BattleScreen extends JPanel {
             allyHealthBar.setBackground(Color.BLACK);
             leftCharacterPanel.add(allyHealthBar); // Add health bar to left panel for allies
             allyHealthBars[i] = allyHealthBar;
-            
-            JLabel allyNameLabel = new JLabel(allyRaces[selectedRace[i]] + " " + classes[selectedClass[i]]); // Set ally name
+
+            JLabel allyNameLabel = new JLabel(allyRaces[selectedRace[i]] + " " + classes[selectedClass[i]]); // Set ally
+                                                                                                             // name
             allyNameLabel.setBounds(x + 20, y + 110, 120, 20); // Position under the health bar
             allyNameLabel.setForeground(Color.WHITE); // text white
             leftCharacterPanel.add(allyNameLabel); // Add name label to the panel
@@ -112,7 +114,8 @@ public class BattleScreen extends JPanel {
             enemyHealthBars[i] = healthBar; // Store health bar
             rightCharacterPanel.add(healthBar); // health bar to panel
 
-            JLabel enemyNameLabel = new JLabel(enemyRaces[enemyRace[i]] + " " +classes[enemyClass[i]]); // Set enemy name);
+            JLabel enemyNameLabel = new JLabel(enemyRaces[enemyRace[i]] + " " + classes[enemyClass[i]]); // Set enemy
+                                                                                                         // name);
             enemyNameLabel.setBounds(x + 20, y + 110, 120, 20); // Position
             enemyNameLabel.setForeground(Color.WHITE); // text white
             rightCharacterPanel.add(enemyNameLabel); // Add name label to the panel
@@ -126,9 +129,10 @@ public class BattleScreen extends JPanel {
 
         // Initialize log panel
         logPanel = new Log("Battle started!", null);
+        bottomPanel.add(logPanel, BorderLayout.WEST);
+        // Main panel to hold both inner panels
 
         // Add log panel to the left side of the bottom panel without scroll bars
-        bottomPanel.add(logPanel, BorderLayout.WEST);
 
         // Add buttons to the bottom panel's center area
         initializeActionButtons();
@@ -142,28 +146,75 @@ public class BattleScreen extends JPanel {
 
     private void initializeActionButtons() {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
-buttonPanel.setOpaque(false);
+        buttonPanel.setOpaque(false);
 
-JButton attackButton = new JButton("Attack");
-JButton defendButton = new JButton("Defend");
-JButton specialButton = new JButton("Special");
+        JPanel enemyNameBoxPanel = new JPanel();
+        enemyNameBoxPanel.setBackground(Color.BLACK); // Set background to black
+        enemyNameBoxPanel.setPreferredSize(new Dimension(140, 110)); // Set the size
+        enemyNameBoxPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
-Dimension buttonSize = new Dimension(130, 120);
-attackButton.setPreferredSize(buttonSize);
-defendButton.setPreferredSize(buttonSize);
-specialButton.setPreferredSize(buttonSize);
+        enemyNameBoxPanel.setLayout(new BorderLayout());
 
+        JLabel nameLabel = new JLabel("Name", SwingConstants.CENTER);
+        nameLabel.setForeground(Color.WHITE); // Set text color to white
+        nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        nameLabel.setVerticalAlignment(SwingConstants.CENTER);
+        enemyNameBoxPanel.setLayout(new BorderLayout());
+        enemyNameBoxPanel.add(nameLabel, BorderLayout.CENTER);
 
+        JLabel enemyStatusLabel = new JLabel("Enemy: Defending", SwingConstants.CENTER);
+        enemyStatusLabel.setForeground(Color.WHITE); // Set text color to white
+        enemyStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        enemyStatusLabel.setVerticalAlignment(SwingConstants.CENTER);
+        enemyNameBoxPanel.add(enemyStatusLabel, BorderLayout.NORTH);
 
-buttonPanel.add(attackButton);
-buttonPanel.add(defendButton);
-buttonPanel.add(specialButton);
+        enemyNameBox = nameLabel;
+        enemyStatus = enemyStatusLabel;
 
+        // Create the panel for ally's name and status
+        JPanel allyNameBoxPanel = new JPanel();
+        allyNameBoxPanel.setBackground(Color.BLACK); // Set background to black
+        allyNameBoxPanel.setPreferredSize(new Dimension(140, 110)); // Set the size
+        allyNameBoxPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
-        JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        centerPanel.setOpaque(false);
-        centerPanel.add(buttonPanel);
-        bottomPanel.add(centerPanel, BorderLayout.EAST);
+        // Set layout only once
+        allyNameBoxPanel.setLayout(new BorderLayout());
+
+        // Create and add the name label
+        JLabel allyNameLabel = new JLabel("Name", SwingConstants.CENTER);
+        allyNameLabel.setForeground(Color.WHITE); // Set text color to white
+        allyNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        allyNameLabel.setVerticalAlignment(SwingConstants.CENTER);
+        allyNameBoxPanel.add(allyNameLabel, BorderLayout.CENTER); // Add name label to the center
+
+        // Create and add the status label
+        JLabel allyStatusLabel = new JLabel("Ally: Attacking", SwingConstants.CENTER);
+        allyStatusLabel.setForeground(Color.WHITE); // Set text color to white
+        allyStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        allyStatusLabel.setVerticalAlignment(SwingConstants.CENTER);
+        allyNameBoxPanel.add(allyStatusLabel, BorderLayout.NORTH);
+
+        // Add both the button panel and the name box to the bottom panel
+        buttonPanel.add(allyNameBoxPanel); // Add the name box panel
+        buttonPanel.add(enemyNameBoxPanel); // Add the name box panel
+
+        allyNameBox = allyNameLabel;
+        allyStatus = allyStatusLabel;
+
+        JButton attackButton = new JButton("Strike");
+        JButton defendButton = new JButton("Defense Stand");
+        JButton specialButton = new JButton("Special Ability");
+
+        Dimension buttonSize = new Dimension(120, 120);
+        attackButton.setPreferredSize(buttonSize);
+        defendButton.setPreferredSize(buttonSize);
+        specialButton.setPreferredSize(buttonSize);
+
+        buttonPanel.add(attackButton);
+        buttonPanel.add(defendButton);
+        buttonPanel.add(specialButton);
+
+        bottomPanel.add(buttonPanel, BorderLayout.EAST);
 
         // Add action listeners to buttons
         attackButton.addActionListener(new ActionListener() {
@@ -177,13 +228,13 @@ buttonPanel.add(specialButton);
                 int leftRoll = rollDice();
 
                 int rightRoll = rollDice();
-        
-                listener.onCharacterAttack(source, target, leftRoll, rightRoll);
 
+                listener.onCharacterAttack(source, target, leftRoll, rightRoll);
 
                 // Example damage calculation and panel actions (as before)
                 int currentHealth = enemyHealthBars[target].getValue();
                 enemiesLabel[target].setState("hurt");
+                alliesLabel[source].setState("attack");
                 int baseDamage = 10;
                 int totalDamage = baseDamage + leftRoll - rightRoll;
 
@@ -218,54 +269,72 @@ buttonPanel.add(specialButton);
     }
 
     private void updateGame() {
-        if(turn % 6 == 0) {
-            logPanel.addMessage("Turn " + (int) Math.floor(turn));
+        if (turn % 6 == 0) {
+            logPanel.addMessage("Turn " + turn / 6);
+            listener.resetAgility();
         }
         int characterTurn = listener.getCharacterTurn();
         System.out.println(characterTurn);
 
-        for(JLabel label : allyNameLabels){
+        for (JLabel label : allyNameLabels) {
             label.setForeground(Color.WHITE);
         }
-        for(JLabel label : enemyNameLabels){
+        for (JLabel label : enemyNameLabels) {
             label.setForeground(Color.WHITE);
         }
 
-        if(characterTurn < 3){
+        if (characterTurn < 3) {
+            isPlayerTurn = true;
             allyNameLabels[characterTurn].setForeground(Color.GREEN);
             source = characterTurn;
             target = random.nextInt(3);
+            updateInfoPanel();
             enemyNameLabels[target].setForeground(Color.RED);
-        }
-        else{
+        } else {
+            isPlayerTurn = false;
+            source = characterTurn - 3;
+            enemyNameLabels[characterTurn - 3].setForeground(Color.GREEN);
+            target = random.nextInt(3);
+            allyNameLabels[target].setForeground(Color.RED);
             logPanel.addMessage("Enemy turn");
+            updateInfoPanel();
             new SwingWorker<Void, Void>() {
                 @Override
                 protected Void doInBackground() throws Exception {
                     Thread.sleep(5000); // Delay for 1 second
                     return null;
                 }
-        
+
                 @Override
                 protected void done() {
-                    enemyNameLabels[characterTurn - 3].setForeground(Color.GREEN);
-                    target = random.nextInt(3);
-                    allyNameLabels[target].setForeground(Color.RED);
+   
                     System.out.println("enemy turn");
                 }
             }.execute();
-
 
         }
         // Update game state here
         // For example, update health bars, check for victory conditions, etc.
     }
 
+    private void updateInfoPanel() {
+        // Update the information panel with character names, health, etc.
+        if(isPlayerTurn) {
+            allyNameBox.setText(allyRaces[selectedRace[source]] + " " + classes[selectedClass[source]]);
+            allyStatus.setText("Ally: Attacking");
+            enemyNameBox.setText(enemyRaces[enemyRace[target]] + " " + classes[enemyClass[target]]);
+            enemyStatus.setText("Enemy: Defending");
+        } else {
+            allyNameBox.setText(allyRaces[selectedRace[target]] + " " + classes[selectedClass[target]]);
+            allyStatus.setText("Ally: Defending");
+            enemyNameBox.setText(enemyRaces[enemyRace[source]] + " " + classes[enemyClass[source]]);
+            enemyStatus.setText("Enemy: Attacking");
+        }
+    }
+
     private int rollDice() {
         return random.nextInt(6) + 1; // Roll dice (1-6)
     }
-
-    
 
     @Override
     protected void paintComponent(Graphics g) {
