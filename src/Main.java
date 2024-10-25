@@ -61,43 +61,52 @@ public class Main extends JFrame implements SelectionListener {
         System.out.println("Map " + map + " selected");
 
         loadingOverlay.turnOn();
-        SwingUtilities.invokeLater(() -> {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(1000); // Delay for 1 second
+                return null;
             }
-            if (map >= 0) {
+    
+            @Override
+            protected void done() {
 
-                this.map = map;
+                updateMenuScreen();
+                loadingOverlay.turnOff();
             }
-            updateMenuScreen();
-            loadingOverlay.turnOff();
-        });
+        }.execute();
+        if(map >= 1){
+            this.map = map;
+        }
     }
 
     @Override
     public void onCharacterSelected(int[] characters, int[] classes) {
         loadingOverlay.turnOn();
 
-        SwingUtilities.invokeLater(() -> {
-            // Simulate loading work by calling updateGameScreen() after a small delay
-            try {
-                Thread.sleep(500); // Simulate some loading delay (1 second)
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(1000); // Delay for 1 second
+                return null;
             }
-            for (int i = 0; i < characters.length; i++) {
-                System.out.println("Character " + characters[i] + " selected with class " + classes[i]);
+    
+            @Override
+            protected void done() {
 
+                for (int i = 0; i < characters.length; i++) {
+                    System.out.println("Character " + characters[i] + " selected with class " + classes[i]);
+    
+                }
+                if (characters.length > 0 && classes.length > 0) {
+                    selectedRace = characters;
+                    selectedClass = classes;
+                }
+                updateMenuScreen();
+                loadingOverlay.turnOff();
             }
-            if (characters.length > 0 && classes.length > 0) {
-                selectedRace = characters;
-                selectedClass = classes;
-            }
-            updateMenuScreen();
-            loadingOverlay.turnOff(); // Turn off the loading overlay after the game screen is updated
-        });
+        }.execute();
 
     }
 
@@ -105,16 +114,21 @@ public class Main extends JFrame implements SelectionListener {
     public void onMenuMapSelected() {
         loadingOverlay.turnOn();
 
-        SwingUtilities.invokeLater(() -> {
-            // Simulate loading work by calling updateGameScreen() after a small delay
-            try {
-                Thread.sleep(500); // Simulate some loading delay (1 second)
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(1000); // Delay for 1 second
+                return null;
             }
-            updateMapScreen();
-            loadingOverlay.turnOff(); // Turn off the loading overlay after the game screen is updated
-        });
+    
+            @Override
+            protected void done() {
+
+                updateMapScreen();
+                loadingOverlay.turnOff(); 
+            }
+        }.execute();
     }
 
     @Override
@@ -122,33 +136,43 @@ public class Main extends JFrame implements SelectionListener {
         
         loadingOverlay.turnOn();
 
-        SwingUtilities.invokeLater(() -> {
-            // Simulate loading work by calling updateGameScreen() after a small delay
-            try {
-                Thread.sleep(500); // Simulate some loading delay (1 second)
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(1000); // Delay for 1 second
+                return null;
             }
-            updateCharacterScreen();
-            loadingOverlay.turnOff(); // Turn off the loading overlay after the game screen is updated
-        });
+    
+            @Override
+            protected void done() {
+
+                updateCharacterScreen();
+                loadingOverlay.turnOff();
+            }
+        }.execute();
     }
 
     @Override
     public void onMenuPlaySelected() {
         System.out.println("Starting the game...");
         loadingOverlay.turnOn();
-        SwingUtilities.invokeLater(() -> {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(1000); // Delay for 1 second
+                return null;
             }
+    
+            @Override
+            protected void done() {
 
-            updateGameScreen();
+                updateGameScreen();
 
-            loadingOverlay.turnOff();
-        });
+                loadingOverlay.turnOff();
+
+            }
+        }.execute();
         // Add the game-starting logic here\
     }
 
@@ -156,35 +180,40 @@ public class Main extends JFrame implements SelectionListener {
     public void onMenuGuideSelected() {
         System.out.println("Guide selected");
         loadingOverlay.turnOn();
-
-
-        SwingUtilities.invokeLater(() -> {
-            // Simulate loading work by calling updateGameScreen() after a small delay
-            try {
-                Thread.sleep(500); // Simulate some loading delay (1 second)
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(1000); // Delay for 1 second
+                return null;
             }
-            updateGuideScreen();
-            loadingOverlay.turnOff(); // Turn off the loading overlay after the game screen is updated
-        });
+    
+            @Override
+            protected void done() {
+                updateGuideScreen();
+                loadingOverlay.turnOff();
+
+            }
+        }.execute();
     }
 
     @Override
     public void onCharacterAttack(int source, int target, int dice1, int dice2) {
+
         DiceOverlay.setDice(dice1, dice2);
         DiceOverlay.turnOn();
-        SwingUtilities.invokeLater(() -> {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(1000); // Delay for 1 second
+                return null;
             }
+    
+            @Override
+            protected void done() {
+                DiceOverlay.turnOff();
 
-            DiceOverlay.turnOff();
-
-        });
-        System.out.println("Character " + source + " attacks character " + target);
+            }
+        }.execute();
 
     }
 
@@ -203,32 +232,27 @@ public class Main extends JFrame implements SelectionListener {
     public int getCharacterTurn(){
         // Implement character turn logic here
         // For now, just simulate a random character turn
-        int target = 1;
-        int lowestAgility = Integer.MAX_VALUE;
+        int target = 0;
+        int highestAgility = Integer.MIN_VALUE;
 
         for (int i = 0; i < allies.length; i++) {
-            if (allies[i].getAgility() < lowestAgility && allies[i].isAlive()) {
+            if (allies[i].getAgility() > highestAgility && allies[i].isAlive()) {
                 target = i;
-                lowestAgility = allies[i].getAgility();
+                highestAgility = allies[i].getAgility();
             }
         }
         for (int i = 0; i < enemies.length; i++) {
-            if (enemies[i].getAgility() < lowestAgility && enemies[i].isAlive()) {
+            System.out.println(enemies[i].getAgility());
+            if (enemies[i].getAgility() > highestAgility && enemies[i].isAlive()) {
                 target = i + 3;
-                lowestAgility = enemies[i].getAgility();
+                highestAgility = enemies[i].getAgility();
             }
         }
-        for (int i = 0; i < allies.length; i++) {
-            allies[i].setAgility(allies[i].getAgility() - lowestAgility);
-            if(allies[i].getAgility() <= 0 && allies[i].isAlive()){
-                allies[i].setAgility(allies[i].getMaxAgility());
-            }
+        if(target < 3){
+            allies[target].setAgility(-1);
         }
-        for (int i = 0; i < enemies.length; i++) {
-            enemies[i].setAgility(enemies[i].getAgility() - lowestAgility);
-            if(enemies[i].getAgility() <= 0 && enemies[i].isAlive()){
-                enemies[i].setAgility(enemies[i].getMaxAgility());
-            }
+        else{
+            enemies[target - 3].setAgility(-1);
         }
         return target;
     }
@@ -252,6 +276,15 @@ public class Main extends JFrame implements SelectionListener {
         return alliesAlive && enemiesAlive;
     }
 
+    @Override
+    public void resetAgility(){
+        for (int i = 0; i < allies.length; i++) {
+            allies[i].setAgility(allies[i].getMaxAgility());
+        }
+        for (int i = 0; i < enemies.length; i++) {
+            enemies[i].setAgility(enemies[i].getMaxAgility());
+        }
+    }
 
     public Main() {
         // Initialize the loading overlay
@@ -347,17 +380,25 @@ public class Main extends JFrame implements SelectionListener {
         battleScreen = new BattleScreen(backgroundImage, selectedRace, selectedClass, enemyRace, enemyClass, this);
         mainPanel.add(battleScreen, BorderLayout.CENTER);
 
+        beginOverlay.turnOn();
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(3000); // Delay for 1 second
+                return null;
+            }
+    
+            @Override
+            protected void done() {
+                beginOverlay.turnOff();
+
+
+            }
+        }.execute();
+        
         mainPanel.revalidate();
         mainPanel.repaint();
-        beginOverlay.turnOn();
-        SwingUtilities.invokeLater(() -> {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            beginOverlay.turnOff();
-        });
+
     }
 
     private void updateCharacters() {
@@ -441,9 +482,7 @@ public class Main extends JFrame implements SelectionListener {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
             Main game = new Main();
             game.setVisible(true);
-        });
     }
 }

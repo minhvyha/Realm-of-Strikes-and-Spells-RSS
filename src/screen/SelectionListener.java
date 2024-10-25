@@ -12,4 +12,5 @@ public interface SelectionListener {
     void onCharacterUseAbility(int source, int target, int dice1, int dice2);
     int getCharacterTurn();
     boolean isGameOn(); 
+    void resetAgility();
 }

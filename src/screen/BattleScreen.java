@@ -31,7 +31,7 @@ public class BattleScreen extends JPanel {
     // Declare Log instance
     private Log logPanel;
 
-    private double turn = 0;
+    private int turn = 0;
 
     public BattleScreen(Image backgroundImage, int[] selectedRace, int[] selectedClass, int[] enemyRace,
             int[] enemyClass, SelectionListener listener) {
@@ -126,7 +126,6 @@ public class BattleScreen extends JPanel {
 
         // Initialize log panel
         logPanel = new Log("Battle started!", null);
-        logPanel.addMessage("Turn " + (int) Math.floor(turn));
 
         // Add log panel to the left side of the bottom panel without scroll bars
         bottomPanel.add(logPanel, BorderLayout.WEST);
@@ -142,31 +141,36 @@ public class BattleScreen extends JPanel {
     }
 
     private void initializeActionButtons() {
-        JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 0, 5));
-        buttonPanel.setOpaque(false);
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
+buttonPanel.setOpaque(false);
 
-        JButton attackButton = new JButton("Attack");
-        JButton defendButton = new JButton("Defend");
-        JButton specialButton = new JButton("Special");
+JButton attackButton = new JButton("Attack");
+JButton defendButton = new JButton("Defend");
+JButton specialButton = new JButton("Special");
 
-        Dimension buttonSize = new Dimension(130, 40);
-        attackButton.setPreferredSize(buttonSize);
-        defendButton.setPreferredSize(buttonSize);
-        specialButton.setPreferredSize(buttonSize);
+Dimension buttonSize = new Dimension(130, 120);
+attackButton.setPreferredSize(buttonSize);
+defendButton.setPreferredSize(buttonSize);
+specialButton.setPreferredSize(buttonSize);
 
-        buttonPanel.add(attackButton);
-        buttonPanel.add(defendButton);
-        buttonPanel.add(specialButton);
+
+
+buttonPanel.add(attackButton);
+buttonPanel.add(defendButton);
+buttonPanel.add(specialButton);
+
 
         JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         centerPanel.setOpaque(false);
         centerPanel.add(buttonPanel);
-        bottomPanel.add(centerPanel, BorderLayout.CENTER);
+        bottomPanel.add(centerPanel, BorderLayout.EAST);
 
         // Add action listeners to buttons
         attackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                turn += 1;
+
                 logPanel.addMessage("Player attacks!");
 
                 // Roll two dice for both sides
@@ -193,6 +197,7 @@ public class BattleScreen extends JPanel {
                 } else {
                     logPanel.addMessage("Enemy takes " + totalDamage + " damage.");
                 }
+                updateGame();
             }
         });
 
@@ -213,18 +218,44 @@ public class BattleScreen extends JPanel {
     }
 
     private void updateGame() {
-        turn += 1/6;
-        if(turn % 1 == 0) {
+        if(turn % 6 == 0) {
             logPanel.addMessage("Turn " + (int) Math.floor(turn));
         }
         int characterTurn = listener.getCharacterTurn();
+        System.out.println(characterTurn);
+
+        for(JLabel label : allyNameLabels){
+            label.setForeground(Color.WHITE);
+        }
+        for(JLabel label : enemyNameLabels){
+            label.setForeground(Color.WHITE);
+        }
+
         if(characterTurn < 3){
             allyNameLabels[characterTurn].setForeground(Color.GREEN);
             source = characterTurn;
             target = random.nextInt(3);
+            enemyNameLabels[target].setForeground(Color.RED);
         }
         else{
-            enemyNameLabels[characterTurn - 3].setForeground(Color.GREEN);
+            logPanel.addMessage("Enemy turn");
+            new SwingWorker<Void, Void>() {
+                @Override
+                protected Void doInBackground() throws Exception {
+                    Thread.sleep(5000); // Delay for 1 second
+                    return null;
+                }
+        
+                @Override
+                protected void done() {
+                    enemyNameLabels[characterTurn - 3].setForeground(Color.GREEN);
+                    target = random.nextInt(3);
+                    allyNameLabels[target].setForeground(Color.RED);
+                    System.out.println("enemy turn");
+                }
+            }.execute();
+
+
         }
         // Update game state here
         // For example, update health bars, check for victory conditions, etc.
