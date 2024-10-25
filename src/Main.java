@@ -58,7 +58,6 @@ public class Main extends JFrame implements SelectionListener {
 
     @Override
     public void onMapSelected(int map) {
-        System.out.println("Map " + map + " selected");
 
         loadingOverlay.turnOn();
         new SwingWorker<Void, Void>() {
@@ -96,7 +95,6 @@ public class Main extends JFrame implements SelectionListener {
             protected void done() {
 
                 for (int i = 0; i < characters.length; i++) {
-                    System.out.println("Character " + characters[i] + " selected with class " + classes[i]);
     
                 }
                 if (characters.length > 0 && classes.length > 0) {
@@ -154,7 +152,6 @@ public class Main extends JFrame implements SelectionListener {
 
     @Override
     public void onMenuPlaySelected() {
-        System.out.println("Starting the game...");
         loadingOverlay.turnOn();
 
         new SwingWorker<Void, Void>() {
@@ -178,7 +175,6 @@ public class Main extends JFrame implements SelectionListener {
 
     @Override
     public void onMenuGuideSelected() {
-        System.out.println("Guide selected");
         loadingOverlay.turnOn();
         new SwingWorker<Void, Void>() {
             @Override
@@ -197,7 +193,7 @@ public class Main extends JFrame implements SelectionListener {
     }
 
     @Override
-    public void onCharacterAttack(int source, int target, int dice1, int dice2) {
+    public int onCharacterAttack(int source, int target, int dice1, int dice2) {
 
         DiceOverlay.setDice(dice1, dice2);
         DiceOverlay.turnOn();
@@ -215,6 +211,24 @@ public class Main extends JFrame implements SelectionListener {
             }
         }.execute();
 
+        int dmg;
+        if(source < 3){
+             dmg = allies[source].getStrength() * dice1 - enemies[target].getDefense() * dice2;
+            if(dmg > 0){
+                enemies[target].takeDamage(dmg);
+            }
+        }
+        else{
+             dmg = enemies[source - 3].getStrength() * dice2 - allies[target].getDefense() * dice1;
+
+            System.out.println("Character " + source + " attacks character " + target + " for " + dmg + " damage!");
+            System.out.println(enemies[source - 3].getName() + " attacks " + enemies[source - 3].getStrength());
+            if(dmg > 0){
+                allies[target].takeDamage(dmg);
+            }
+        }
+        System.out.println("damgage "+ dmg);
+        return dmg;
     }
 
     @Override
@@ -242,7 +256,6 @@ public class Main extends JFrame implements SelectionListener {
             }
         }
         for (int i = 0; i < enemies.length; i++) {
-            System.out.println(enemies[i].getAgility());
             if (enemies[i].getAgility() > highestAgility && enemies[i].isAlive()) {
                 target = i + 3;
                 highestAgility = enemies[i].getAgility();
@@ -284,6 +297,17 @@ public class Main extends JFrame implements SelectionListener {
         for (int i = 0; i < enemies.length; i++) {
             enemies[i].setAgility(enemies[i].getMaxAgility());
         }
+    }
+
+    @Override
+    public int getAllyHp(int index) {
+        return allies[index].getHp();
+
+    }
+
+    @Override
+    public int getEnemyHp(int index) {
+        return enemies[index].getHp();
     }
 
     public Main() {

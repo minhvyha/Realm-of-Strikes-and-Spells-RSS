@@ -90,7 +90,8 @@ public class EnemyLabel extends JLabel {
         int height = img.getHeight(null);
 
         // Create a new image with a flipped transformation
-        Image flippedImage = new java.awt.image.BufferedImage(width, height, java.awt.image.BufferedImage.TYPE_INT_ARGB);
+        Image flippedImage = new java.awt.image.BufferedImage(width, height,
+                java.awt.image.BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = (Graphics2D) flippedImage.getGraphics();
         AffineTransform tx = AffineTransform.getScaleInstance(-1, 1); // Horizontal flip
         tx.translate(-width, 0); // Shift image back into view
@@ -106,23 +107,32 @@ public class EnemyLabel extends JLabel {
             public void actionPerformed(ActionEvent e) {
                 switch (currentState) {
                     case "idle":
-                        currentFrame = (currentFrame + 1) % idle.length;
-                        setIcon(idle[currentFrame]); // Set idle frames
+                        if (currentFrame == 0)
+                            currentFrame = idle.length;
+                        currentFrame = (currentFrame - 1);
+                        setIcon(idle[currentFrame]); // Set die frames
                         break;
                     case "attack":
-                        if(currentFrame == attack.length - 1) setState("idle");
-                        currentFrame = (currentFrame + 1) % attack.length;
-                        setIcon(attack[currentFrame]); // Set attack frames
+                        if (currentFrame == 0) {
+                            currentState = "idle";
+                            break;
+                        }
+                        currentFrame = (currentFrame - 1);
+                        setIcon(attack[currentFrame]); // Set die frames
                         break;
                     case "die":
-                        if(currentFrame == 0) break;
-                        currentFrame =  (currentFrame - 1);
+                        if (currentFrame == 0)
+                            break;
+                        currentFrame = (currentFrame - 1);
                         setIcon(die[currentFrame]); // Set die frames
                         break;
                     case "hurt":
-                        if(currentFrame == hurt.length - 1) setState("idle");
-                        currentFrame = (currentFrame + 1) % hurt.length;
-                        setIcon(hurt[currentFrame]); // Set hurt frames
+                        if (currentFrame == 0) {
+                            currentState = "idle";
+                            break;
+                        }
+                        currentFrame = (currentFrame - 1);
+                        setIcon(hurt[currentFrame]); // Set die frames
                         break;
                 }
                 repaint();
@@ -134,7 +144,13 @@ public class EnemyLabel extends JLabel {
     // Method to change character state
     public void setState(String newState) {
         this.currentState = newState;
-        this.currentFrame = 0; // Reset frame to start animation from the beginning
-        if(newState == "die") currentFrame = die.length; 
+        if (newState == "die")
+            currentFrame = die.length;
+        if (newState == "attack")
+            currentFrame = attack.length;
+        if (newState == "hurt")
+            currentFrame = hurt.length;
+        if (newState == "idle")
+            currentFrame = idle.length;
     }
 }

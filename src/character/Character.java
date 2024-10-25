@@ -82,16 +82,7 @@ public class Character {
         this.characterClass = characterClass;
     }
 
-    // Methods
-    public void attack(Character target) {
-        // Calculate damage based on strength and target's defense
-        int damage = this.strength - target.getDefense();
-        // Ensure damage is at least 1
-        damage = Math.max(damage, 1);
-        // Apply damage to the target
-        target.takeDamage(damage);
-        System.out.println(this.name + " attacks " + target.getName() + " for " + damage + " damage.");
-    }
+
 
     public void takeDamage(int damage) {
         // Reduce HP by damage amount
@@ -129,12 +120,8 @@ public class Character {
         System.out.println(name + " - HP: " + hp + "/" + maxHp + ", Strength: " + strength + ", Intelligence: "
                 + intelligence + "Agility: " + agility + ", Defense: " + defense);
     }
-    public void useRaceAbility(Character target) {
-        // Default ability: basic attack
-        attack(target);
-    }
+
     public void useClassAbility(Character target) {
         characterClass.useClassAbility(this, target);
-        attack(target);
     }
 }

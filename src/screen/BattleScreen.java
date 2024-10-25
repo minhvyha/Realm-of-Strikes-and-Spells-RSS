@@ -78,8 +78,8 @@ public class BattleScreen extends JPanel {
             leftCharacterPanel.add(allyLabel); // Add ally label to left panel
             alliesLabel[i] = allyLabel;
 
-            JProgressBar allyHealthBar = new JProgressBar(0, 100);
-            allyHealthBar.setValue(100); // Set full health initially
+            JProgressBar allyHealthBar = new JProgressBar(0, listener.getAllyHp(i));
+            allyHealthBar.setValue(listener.getAllyHp(i)); // Set full health initially
             allyHealthBar.setBounds(x + 20, y + 105, 80, 10); // Position health bar under ally
             allyHealthBar.setForeground(Color.GREEN); // Set bar color to green
             allyHealthBar.setBackground(Color.BLACK);
@@ -106,8 +106,8 @@ public class BattleScreen extends JPanel {
             rightCharacterPanel.add(enemyLabel);
             enemiesLabel[i] = enemyLabel;
 
-            JProgressBar healthBar = new JProgressBar(0, 100);
-            healthBar.setValue(100); // Set full health initially
+            JProgressBar healthBar = new JProgressBar(0, listener.getEnemyHp(i));
+            healthBar.setValue(listener.getEnemyHp(i)); // Set full health initially
             healthBar.setBounds(x + 20, y + 105, 80, 10); // Position under enemyLabel
             healthBar.setForeground(Color.GREEN); // colour to green
 
@@ -220,6 +220,10 @@ public class BattleScreen extends JPanel {
         attackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(isPlayerTurn == false) {
+                    return;
+                }
+                isPlayerTurn = false;
                 turn += 1;
 
                 logPanel.addMessage("Player attacks!");
@@ -228,33 +232,46 @@ public class BattleScreen extends JPanel {
                 int leftRoll = rollDice();
 
                 int rightRoll = rollDice();
+                int dmg = listener.onCharacterAttack(source, target, leftRoll, rightRoll);
 
-                listener.onCharacterAttack(source, target, leftRoll, rightRoll);
+                new SwingWorker<Void, Void>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        Thread.sleep(1100); // Delay for 1 second
+                        return null;
+                    }
+            
+                    @Override
+                    protected void done() {
 
-                // Example damage calculation and panel actions (as before)
-                int currentHealth = enemyHealthBars[target].getValue();
-                enemiesLabel[target].setState("hurt");
-                alliesLabel[source].setState("attack");
-                int baseDamage = 10;
-                int totalDamage = baseDamage + leftRoll - rightRoll;
+                        
+                        alliesLabel[source].setState("attack");
+        
+                        enemyHealthBars[target].setValue(listener.getEnemyHp(target));
+        
+                        if (listener.getEnemyHp(target) <= 0) {
+                            logPanel.addMessage("Enemy defeated!");
+                            enemiesLabel[target].setState("die");
+                        } else {
+                            logPanel.addMessage("Enemy takes " + dmg + " damage.");
+                            enemiesLabel[target].setState("hurt");
 
-                int newHealth = currentHealth - totalDamage;
-                newHealth = Math.max(newHealth, 0);
+                        }
+                        updateGame();
+                    }
+                }.execute();
 
-                enemyHealthBars[target].setValue(newHealth);
 
-                if (newHealth <= 0) {
-                    logPanel.addMessage("Enemy defeated!");
-                } else {
-                    logPanel.addMessage("Enemy takes " + totalDamage + " damage.");
-                }
-                updateGame();
             }
         });
 
         defendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(isPlayerTurn == false) {
+                    return;
+                }
+                isPlayerTurn = false;
                 logPanel.addMessage("Player defends!");
             }
         });
@@ -262,15 +279,19 @@ public class BattleScreen extends JPanel {
         specialButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(isPlayerTurn == false) {
+                    return;
+                }
+                isPlayerTurn = false;
                 logPanel.addMessage("Player uses special ability!");
-            }
+            } 
         });
         updateGame();
     }
 
     private void updateGame() {
         if (turn % 6 == 0) {
-            logPanel.addMessage("Turn " + turn / 6);
+            logPanel.addMessage("Turn " + ((turn / 6) + 1));
             listener.resetAgility();
         }
         int characterTurn = listener.getCharacterTurn();
@@ -284,31 +305,57 @@ public class BattleScreen extends JPanel {
         }
 
         if (characterTurn < 3) {
+            System.out.println("Player turn");
             isPlayerTurn = true;
             allyNameLabels[characterTurn].setForeground(Color.GREEN);
             source = characterTurn;
             target = random.nextInt(3);
+            while(listener.getEnemyHp(target) <= 0) {
+                target = random.nextInt(3);
+            }
             updateInfoPanel();
             enemyNameLabels[target].setForeground(Color.RED);
         } else {
             isPlayerTurn = false;
             source = characterTurn - 3;
-            enemyNameLabels[characterTurn - 3].setForeground(Color.GREEN);
+
             target = random.nextInt(3);
+            while(listener.getAllyHp(target) <= 0) {
+                target = random.nextInt(3);
+            }
+            enemyNameLabels[characterTurn - 3].setForeground(Color.GREEN);
             allyNameLabels[target].setForeground(Color.RED);
+
             logPanel.addMessage("Enemy turn");
             updateInfoPanel();
+
             new SwingWorker<Void, Void>() {
                 @Override
                 protected Void doInBackground() throws Exception {
-                    Thread.sleep(5000); // Delay for 1 second
+                    Thread.sleep(2000); // Delay for 1 second
                     return null;
                 }
 
                 @Override
                 protected void done() {
-   
-                    System.out.println("enemy turn");
+                    int leftRoll = rollDice();
+
+                    int rightRoll = rollDice();
+                    int dmg = listener.onCharacterAttack(source + 3, target, leftRoll, rightRoll);
+                    
+                    enemiesLabel[source].setState("attack");
+                    
+                    logPanel.addMessage("Enemy attacks!");
+                    logPanel.addMessage("Enemy deals " + dmg + " damage.");
+                    allyHealthBars[target].setValue(listener.getAllyHp(target));
+                    if (listener.getAllyHp(target) <= 0) {
+                        logPanel.addMessage("Ally defeated!");
+                        alliesLabel[target].setState("die");
+                    }
+                    else{
+                        alliesLabel[target].setState("hurt");
+                    }
+                    updateGame();
                 }
             }.execute();
 
