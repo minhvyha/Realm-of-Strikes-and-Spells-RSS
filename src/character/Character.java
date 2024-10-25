@@ -8,6 +8,7 @@ public class Character {
     private int strength;
     private int agility;
     private int maxAgility;
+    private int maxDefense;
     private int intelligence;
     private int defense;
     private CharacterClass characterClass;
@@ -19,6 +20,7 @@ public class Character {
         this.maxHp = hp; // Set max HP equal to initial HP
         this.strength = strength;
         this.intelligence = intelligence;
+        this.maxDefense = defense;
         this.maxAgility = agility;
         this.agility = agility;
         this.defense = defense;
@@ -82,6 +84,9 @@ public class Character {
         this.characterClass = characterClass;
     }
 
+    public void resetDefense() {
+        this.defense = maxDefense;
+    }
 
 
     public void takeDamage(int damage) {

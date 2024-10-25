@@ -41,4 +41,3 @@ Characters in the game are divided into races and classes. Each character has un
 1. **Character Selection**: Choose your allies by selecting their race and class.
 2. **Map Selection**: Choose the battle map.
 3. **Battle**: Engage in battles, using different abilities and strategies to defeat your enemies.
-1. character

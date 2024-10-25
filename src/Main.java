@@ -10,6 +10,7 @@ import screen.LoadingOverlay;
 import screen.MainMenu;
 import screen.SelectionListener;
 import screen.BeginOverlay;
+import screen.GameEnd;
 
 import screen.menu.GuideMenu;
 import screen.menu.CharacterSelection;
@@ -33,8 +34,6 @@ public class Main extends JFrame implements SelectionListener {
     private boolean start = false;
     private int map = 1;
 
-    private String[] races = { "Angel", "Orc", "Minotaur" };
-    private String[] classes = { "Warrior", "Mage", "Rogue" };
     private Character[] allies;
     private Character[] enemies;
     private int[] selectedRace = { 0, 1, 2 }; // Initial
@@ -42,11 +41,11 @@ public class Main extends JFrame implements SelectionListener {
     private int[] enemyRace; // Initial
     private int[] enemyClass; // Initial
 
+
     private CharacterSelection selectionMenu;
     private MapSelection mapSelection;
     private GuideMenu guideMenu;
     private MainMenu mainMenu;
-
 
     private Image backgroundImage;
     private BattleScreen battleScreen;
@@ -54,6 +53,7 @@ public class Main extends JFrame implements SelectionListener {
     private LoadingOverlay loadingOverlay; // Loading overlay instance
     private DiceOverlay DiceOverlay;
     private BeginOverlay beginOverlay;
+    private GameEnd gameEnd;
 
 
     @Override
@@ -217,45 +217,54 @@ public class Main extends JFrame implements SelectionListener {
             if(dmg > 0){
                 enemies[target].takeDamage(dmg);
             }
+            else{
+                dmg = 0;
+            }
         }
         else{
              dmg = enemies[source - 3].getStrength() * dice2 - allies[target].getDefense() * dice1;
-
-            System.out.println("Character " + source + " attacks character " + target + " for " + dmg + " damage!");
-            System.out.println(enemies[source - 3].getName() + " attacks " + enemies[source - 3].getStrength());
             if(dmg > 0){
                 allies[target].takeDamage(dmg);
             }
+            else{
+                dmg = 0;
+            }
         }
-        System.out.println("damgage "+ dmg);
         return dmg;
     }
 
     @Override
-    public void onCharacterDefend(int source, int dice1) {
-        System.out.println("Character " + source + " defends");
+    public int onCharacterDefend(int source, int dice) {
+        if(source < 3){
+            allies[source].setDefense(allies[source].getDefense() + dice);
+            return enemies[source].getDefense();
+        }
+        else{
+            enemies[source - 3].setDefense(enemies[source - 3].getDefense() + dice);
+            return allies[source].getDefense();
+        }
     }
 
     @Override
-
-    public void onCharacterUseAbility(int source, int target, int dice1, int dice2) {
+    public int onCharacterUseAbility(int source, int target, int dice1, int dice2) {
         System.out.println("Character " + source + " uses ability on character " + target);
+        return 0;
     }
 
     @Override
     public int getCharacterTurn(){
-        // Implement character turn logic here
-        // For now, just simulate a random character turn
         int target = 0;
         int highestAgility = Integer.MIN_VALUE;
 
         for (int i = 0; i < allies.length; i++) {
+            System.out.println(allies[i].getAgility());
             if (allies[i].getAgility() > highestAgility && allies[i].isAlive()) {
                 target = i;
                 highestAgility = allies[i].getAgility();
             }
         }
         for (int i = 0; i < enemies.length; i++) {
+            System.out.println(enemies[i].getAgility());
             if (enemies[i].getAgility() > highestAgility && enemies[i].isAlive()) {
                 target = i + 3;
                 highestAgility = enemies[i].getAgility();
@@ -266,6 +275,16 @@ public class Main extends JFrame implements SelectionListener {
         }
         else{
             enemies[target - 3].setAgility(-1);
+        }
+        for(int i = 0; i < allies.length; i++){
+            if(allies[i].isAlive()){
+                allies[i].setAgility(1);
+            }
+        }
+        for(int i = 0; i < enemies.length; i++){
+            if(enemies[i].isAlive()){
+                enemies[i].setAgility(1);
+            }
         }
         return target;
     }
@@ -310,11 +329,43 @@ public class Main extends JFrame implements SelectionListener {
         return enemies[index].getHp();
     }
 
+    @Override
+    public void gameEnd() {
+        gameEnd.turnOn();
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(8000); // Delay for 1 second
+                return null;
+            }
+    
+            @Override
+            protected void done() {
+
+                updateMenuScreen();
+                gameEnd.turnOff();
+            }
+        }.execute();
+        
+    }
+
+    @Override
+    public void resetDefense(int source) {
+        if(source < 3){
+            allies[source].resetDefense();
+        }
+        else{
+            enemies[source - 3].resetDefense();
+        }
+    }
+
+
     public Main() {
         // Initialize the loading overlay
         loadingOverlay = new LoadingOverlay();
         DiceOverlay = new DiceOverlay();
         beginOverlay = new BeginOverlay();
+        gameEnd = new GameEnd();
 
         setTitle("Masters of MQ RPG");
         setSize(1000, 700);
@@ -345,6 +396,9 @@ public class Main extends JFrame implements SelectionListener {
         getLayeredPane().add(loadingOverlay, JLayeredPane.POPUP_LAYER);
         getLayeredPane().add(DiceOverlay, JLayeredPane.POPUP_LAYER);
         getLayeredPane().add(beginOverlay, JLayeredPane.POPUP_LAYER);
+        getLayeredPane().add(gameEnd, JLayeredPane.POPUP_LAYER);
+        gameEnd.setBounds(0, 0, getWidth(), getHeight());
+        gameEnd.turnOff();
         DiceOverlay.setBounds(0, 0, getWidth(), getHeight());
         DiceOverlay.turnOff();
         loadingOverlay.setBounds(0, 0, getWidth(), getHeight());

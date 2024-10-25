@@ -7,14 +7,16 @@ import java.net.URL;
 
 public class DiceOverlay extends JPanel {
     private Image dice1, dice2;
-    private int x1, y1, x2, y2;  // Coordinates for dice positions
+    private int x1, y1, x2, y2; // Coordinates for dice positions
 
     public DiceOverlay() {
         setOpaque(false); // Make the panel transparent except for its content
 
         // Add a mouse listener to consume all mouse events and block interaction
-        addMouseListener(new MouseAdapter() {});
-        addMouseMotionListener(new MouseAdapter() {});
+        addMouseListener(new MouseAdapter() {
+        });
+        addMouseMotionListener(new MouseAdapter() {
+        });
 
         // Set default positions for the dice
         x1 = 250;
@@ -43,20 +45,19 @@ public class DiceOverlay extends JPanel {
 
     // Load dice images based on the rolled numbers
     public void setDice(int roll1, int roll2) {
-      System.out.println("Setting dice to " + roll1 + " and " + roll2);
         URL resource1 = getClass().getResource("/assets/dice/" + roll1 + ".png");
         if (resource1 != null) {
-          dice1 = new ImageIcon(resource1).getImage();
+            dice1 = new ImageIcon(resource1).getImage();
         } else {
             System.out.println("Error: Background image not found at " + "/assets/dice/" + roll1 + ".png");
         }
-          URL resource = getClass().getResource("/assets/dice/" + roll2 + ".png");
+        URL resource = getClass().getResource("/assets/dice/" + roll2 + ".png");
         if (resource != null) {
-          dice2 = new ImageIcon(resource).getImage();
+            dice2 = new ImageIcon(resource).getImage();
         } else {
             System.out.println("Error: Background image not found at " + "/assets/dice/" + roll2 + ".png");
         }
-        repaint();  // Redraw the overlay to show the dice
+        repaint(); // Redraw the overlay to show the dice
     }
 
     // Turn on the dice overlay

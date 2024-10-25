@@ -5,7 +5,7 @@ import character.CharacterClass;
 
 public class Angel extends Character {
   public Angel(String name, CharacterClass characterClass) {
-      super(name, 100, 10, 20,25, 15, characterClass); // Elves have higher intelligence and defense but lower HP
+      super(name, 100,175, 20,25, 15, characterClass); // Elves have higher intelligence and defense but lower HP
   }
 
   @Override
