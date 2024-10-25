@@ -12,25 +12,26 @@ import character.EnemyLabel;
 public class BattleScreen extends JPanel {
     private JPanel topPanel, bottomPanel;
     private JPanel leftCharacterPanel, rightCharacterPanel;
+    private Random random;
     private SelectionListener listener;
-    private JProgressBar[] enemyHealthBars; // Add health bars for enemies
-    private CharacterLabel orcLabel; // Replace JLabel with CharacterLabel
-    private EnemyLabel[] enemyLabels;
     private Image backgroundImage;
-    private Character[] allies;
 
+    private int source, target;
+    
+    private JProgressBar[] enemyHealthBars, allyHealthBars; // Add health bars for enemies
     private CharacterLabel[] alliesLabel;
     private EnemyLabel[] enemiesLabel;
-    private Character[] enemies;
-    private Random random;
+    private JLabel[] allyNameLabels, enemyNameLabels;
+
     private int[] selectedRace, selectedClass, enemyRace, enemyClass;
     private String[] allyRaces = { "angel", "orc", "minotaur" };
     private String[] enemyRaces = { "zombie", "golem", "reaper" };
     private String[] classes = { "warrior", "mage", "rogue" };
 
-
     // Declare Log instance
     private Log logPanel;
+
+    private double turn = 0;
 
     public BattleScreen(Image backgroundImage, int[] selectedRace, int[] selectedClass, int[] enemyRace,
             int[] enemyClass, SelectionListener listener) {
@@ -46,8 +47,8 @@ public class BattleScreen extends JPanel {
         // Initialize panels
         initializePanels();
 
-
     }
+
 
     private void initializePanels() {
         // Initialize the top panel with character sections
@@ -65,8 +66,9 @@ public class BattleScreen extends JPanel {
         rightCharacterPanel = new JPanel(null);
         rightCharacterPanel.setOpaque(false); // Transparent right character panel
 
-        enemyHealthBars = new JProgressBar[3]; // Initialize array of health bars for enemies
+        allyHealthBars = new JProgressBar[3]; // Initialize array of health bars for allies
         alliesLabel = new CharacterLabel[3];
+        allyNameLabels = new JLabel[3];
         for (int i = 0; i < 3; i++) {
             int x = 150 + (i % 2) * 90;
             int y = 210 + (i * 60);
@@ -81,14 +83,19 @@ public class BattleScreen extends JPanel {
             allyHealthBar.setForeground(Color.GREEN); // Set bar color to green
             allyHealthBar.setBackground(Color.BLACK);
             leftCharacterPanel.add(allyHealthBar); // Add health bar to left panel for allies
-
-            JLabel allyNameLabel = new JLabel(allyRaces[selectedRace[i]]); // Set ally name
-            allyNameLabel.setBounds(x + 20, y + 110, 80, 20); // Position under the health bar
+            allyHealthBars[i] = allyHealthBar;
+            
+            JLabel allyNameLabel = new JLabel(allyRaces[selectedRace[i]] + " " + classes[selectedClass[i]]); // Set ally name
+            allyNameLabel.setBounds(x + 20, y + 110, 120, 20); // Position under the health bar
             allyNameLabel.setForeground(Color.WHITE); // text white
             leftCharacterPanel.add(allyNameLabel); // Add name label to the panel
+            allyNameLabels[i] = allyNameLabel;
+
         }
 
+        enemyHealthBars = new JProgressBar[3]; // Initialize array of health bars for enemies
         enemiesLabel = new EnemyLabel[3];
+        enemyNameLabels = new JLabel[3];
         for (int i = 0; i < 3; i++) {
             int x = 240 - (i % 2) * 90;
             int y = 210 + (i * 60);
@@ -105,10 +112,12 @@ public class BattleScreen extends JPanel {
             enemyHealthBars[i] = healthBar; // Store health bar
             rightCharacterPanel.add(healthBar); // health bar to panel
 
-            JLabel enemyNameLabel = new JLabel(enemyRaces[enemyRace[i]]);
-            enemyNameLabel.setBounds(x + 20, y + 110, 80, 20); // Position
+            JLabel enemyNameLabel = new JLabel(enemyRaces[enemyRace[i]] + " " +classes[enemyClass[i]]); // Set enemy name);
+            enemyNameLabel.setBounds(x + 20, y + 110, 120, 20); // Position
             enemyNameLabel.setForeground(Color.WHITE); // text white
             rightCharacterPanel.add(enemyNameLabel); // Add name label to the panel
+            enemyNameLabels[i] = enemyNameLabel;
+
         }
 
         // Add character panels to top panel
@@ -117,6 +126,7 @@ public class BattleScreen extends JPanel {
 
         // Initialize log panel
         logPanel = new Log("Battle started!", null);
+        logPanel.addMessage("Turn " + (int) Math.floor(turn));
 
         // Add log panel to the left side of the bottom panel without scroll bars
         bottomPanel.add(logPanel, BorderLayout.WEST);
@@ -164,20 +174,19 @@ public class BattleScreen extends JPanel {
 
                 int rightRoll = rollDice();
         
-                listener.onCharacterAttack(1, 2, leftRoll, rightRoll);
+                listener.onCharacterAttack(source, target, leftRoll, rightRoll);
 
 
                 // Example damage calculation and panel actions (as before)
-                int enemyIndex = 0;
-                int currentHealth = enemyHealthBars[enemyIndex].getValue();
-                enemiesLabel[enemyIndex].setState("hurt");
+                int currentHealth = enemyHealthBars[target].getValue();
+                enemiesLabel[target].setState("hurt");
                 int baseDamage = 10;
                 int totalDamage = baseDamage + leftRoll - rightRoll;
 
                 int newHealth = currentHealth - totalDamage;
                 newHealth = Math.max(newHealth, 0);
 
-                enemyHealthBars[enemyIndex].setValue(newHealth);
+                enemyHealthBars[target].setValue(newHealth);
 
                 if (newHealth <= 0) {
                     logPanel.addMessage("Enemy defeated!");
@@ -200,11 +209,32 @@ public class BattleScreen extends JPanel {
                 logPanel.addMessage("Player uses special ability!");
             }
         });
+        updateGame();
+    }
+
+    private void updateGame() {
+        turn += 1/6;
+        if(turn % 1 == 0) {
+            logPanel.addMessage("Turn " + (int) Math.floor(turn));
+        }
+        int characterTurn = listener.getCharacterTurn();
+        if(characterTurn < 3){
+            allyNameLabels[characterTurn].setForeground(Color.GREEN);
+            source = characterTurn;
+            target = random.nextInt(3);
+        }
+        else{
+            enemyNameLabels[characterTurn - 3].setForeground(Color.GREEN);
+        }
+        // Update game state here
+        // For example, update health bars, check for victory conditions, etc.
     }
 
     private int rollDice() {
         return random.nextInt(6) + 1; // Roll dice (1-6)
     }
+
+    
 
     @Override
     protected void paintComponent(Graphics g) {

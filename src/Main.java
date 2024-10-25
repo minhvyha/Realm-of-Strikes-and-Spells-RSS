@@ -199,6 +199,60 @@ public class Main extends JFrame implements SelectionListener {
         System.out.println("Character " + source + " uses ability on character " + target);
     }
 
+    @Override
+    public int getCharacterTurn(){
+        // Implement character turn logic here
+        // For now, just simulate a random character turn
+        int target = 1;
+        int lowestAgility = Integer.MAX_VALUE;
+
+        for (int i = 0; i < allies.length; i++) {
+            if (allies[i].getAgility() < lowestAgility && allies[i].isAlive()) {
+                target = i;
+                lowestAgility = allies[i].getAgility();
+            }
+        }
+        for (int i = 0; i < enemies.length; i++) {
+            if (enemies[i].getAgility() < lowestAgility && enemies[i].isAlive()) {
+                target = i + 3;
+                lowestAgility = enemies[i].getAgility();
+            }
+        }
+        for (int i = 0; i < allies.length; i++) {
+            allies[i].setAgility(allies[i].getAgility() - lowestAgility);
+            if(allies[i].getAgility() <= 0 && allies[i].isAlive()){
+                allies[i].setAgility(allies[i].getMaxAgility());
+            }
+        }
+        for (int i = 0; i < enemies.length; i++) {
+            enemies[i].setAgility(enemies[i].getAgility() - lowestAgility);
+            if(enemies[i].getAgility() <= 0 && enemies[i].isAlive()){
+                enemies[i].setAgility(enemies[i].getMaxAgility());
+            }
+        }
+        return target;
+    }
+    
+    @Override
+    public boolean isGameOn(){
+        boolean alliesAlive = false;
+        boolean enemiesAlive = false;
+        for (int i = 0; i < allies.length; i++) {
+            if (allies[i].isAlive()) {
+                alliesAlive = true;
+                break;
+            }
+        }
+        for (int i = 0; i < enemies.length; i++) {
+            if (enemies[i].isAlive()) {
+                enemiesAlive = true;
+                break;
+            }
+        }
+        return alliesAlive && enemiesAlive;
+    }
+
+
     public Main() {
         // Initialize the loading overlay
         loadingOverlay = new LoadingOverlay();
@@ -379,6 +433,7 @@ public class Main extends JFrame implements SelectionListener {
             }
         }
     }
+
 
     private int generateRandomNumber() {
         Random rand = new Random();
