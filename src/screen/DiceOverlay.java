@@ -19,12 +19,13 @@ public class DiceOverlay extends JPanel {
         });
 
         // Set default positions for the dice
-        x1 = 250;
-        y1 = 350;
-        x2 = 750;
-        y2 = 350;
+        x1 = 200;
+        y1 = 300;
+        x2 = 700;
+        y2 = 300;
     }
 
+    // Override the paintComponent method to draw the dice overlay
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -45,18 +46,22 @@ public class DiceOverlay extends JPanel {
 
     // Load dice images based on the rolled numbers
     public void setDice(int roll1, int roll2) {
+        // Load the dice image based on the roll
         URL resource1 = getClass().getResource("/assets/dice/" + roll1 + ".png");
         if (resource1 != null) {
             dice1 = new ImageIcon(resource1).getImage();
         } else {
             System.out.println("Error: Background image not found at " + "/assets/dice/" + roll1 + ".png");
         }
+
+        // Load the dice image based on the roll
         URL resource = getClass().getResource("/assets/dice/" + roll2 + ".png");
         if (resource != null) {
             dice2 = new ImageIcon(resource).getImage();
         } else {
             System.out.println("Error: Background image not found at " + "/assets/dice/" + roll2 + ".png");
         }
+
         repaint(); // Redraw the overlay to show the dice
     }
 

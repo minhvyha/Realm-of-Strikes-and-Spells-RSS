@@ -16,6 +16,7 @@ public class GameEnd extends JPanel {
         });
     }
 
+    // Override the paintComponent method to draw the loading overlay
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

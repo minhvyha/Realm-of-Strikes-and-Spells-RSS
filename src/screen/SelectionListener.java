@@ -1,20 +1,27 @@
 package screen;
 
+// Listener interface for the main menu
 public interface SelectionListener {
-    void onMapSelected(int map);
-    void onCharacterSelected(int[] characters, int[] classes);
-    void onMenuMapSelected();
-    void onMenuCharacterSelected();
-    void onMenuGuideSelected();
-    void onMenuPlaySelected();
-    int onCharacterAttack(int source, int target, int dice1, int dice2);
-    int onCharacterDefend(int source, int dice1);
-    int onCharacterUseAbility(int source, int target, int dice1, int dice2);
-    int getCharacterTurn();
-    boolean isGameOn(); 
-    void resetAgility();
-    int getAllyHp(int index);
-    int getEnemyHp(int index);
-    void gameEnd();
-    void resetDefense(int source);
+    void onMenuPlaySelected(); // Called when the play button is pressed
+    void onMenuMapSelected(); // Called when the choose map button is pressed
+    void onMenuCharacterSelected(); // Called when the choose allies button is pressed
+    void onMenuGuideSelected(); // Called when the guide button is pressed
+
+    void onMapSelected(int map); // Called when a map is selected
+    void onCharacterSelected(int[] characters, int[] classes); // Called when characters are selected
+    void onGuideBack(); // Called when the back button is pressed in the guide
+
+    int getCharacterTurn(); // Get the current character turn as an index
+    int onCharacterAttack(int source, int target, int dice1, int dice2); // Called when a character attacks
+    int onCharacterDefend(int source, int dice1); // Called when a character defends
+    int onCharacterUseAbility(int source, int target, int dice1, int dice2); // Called when a character uses an ability
+
+    int getAllyHp(int index); // Get the HP of an ally character
+    int getEnemyHp(int index); // Get the HP of an enemy character
+
+    void resetAgility(); // Reset the agility of all characters on new turn
+    void resetDefense(int source); // Reset the defense of a character
+
+    boolean isGameOn(); // Check if the game is still running
+    void gameEnd(); // Called when the game ends
 }

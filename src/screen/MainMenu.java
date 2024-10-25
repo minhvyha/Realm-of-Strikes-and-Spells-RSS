@@ -6,24 +6,19 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class MainMenu extends JPanel {
-
     public MainMenu(SelectionListener listener) {
+        setLayout(new BorderLayout()); // Use BorderLayout for the main panel
 
-        // Set layout and properties for the panel
-        setLayout(new BorderLayout());
-
-        // Create and configure the title label
+        // Create a title label
         JLabel titleLabel = new JLabel("Realm of Strikes and Spells", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Serif", Font.BOLD, 36));
         titleLabel.setForeground(Color.WHITE); // Title color
 
         // Add padding using EmptyBorder (top, left, bottom, right)
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(140, 10, 0, 10)); // Add 20px padding top/bottom, 10px
-                                                                               // left/right
-
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(140, 10, 0, 10));
         add(titleLabel, BorderLayout.NORTH);
 
-        // Create a panel for the buttons
+        // Create a panel for the menu buttons
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setOpaque(false); // Make the button panel transparent
@@ -32,23 +27,11 @@ public class MainMenu extends JPanel {
         buttonPanel.add(Box.createVerticalStrut(50));
 
         // Create and configure buttons
-        JButton playButton = createMenuButton("Play");
-        JButton chooseAlliesButton = createMenuButton("Choose Allies");
-        JButton chooseMapButton = createMenuButton("Choose Map");
-        JButton guideButton = createMenuButton("Guide");
-        JButton quitButton = createMenuButton("Quit"); // New Quit button
-
-        playButton.setBorder(BorderFactory.createEmptyBorder(10, 95, 10, 95));
-        chooseAlliesButton.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40));
-        chooseMapButton.setBorder(BorderFactory.createEmptyBorder(10, 48, 10, 48));
-        guideButton.setBorder(BorderFactory.createEmptyBorder(10, 85, 10, 85));
-        quitButton.setBorder(BorderFactory.createEmptyBorder(10, 95, 10, 95));
-        // Center-align the buttons and add some spacing between them
-        playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        chooseAlliesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        chooseMapButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        guideButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        quitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton playButton = createMenuButton("Play", 95, 95);
+        JButton chooseAlliesButton = createMenuButton("Choose Allies", 40, 40);
+        JButton chooseMapButton = createMenuButton("Choose Map", 48, 48);
+        JButton guideButton = createMenuButton("Guide", 85, 85);
+        JButton quitButton = createMenuButton("Quit", 95, 95); // New Quit button
 
         // Add buttons to the button panel with spacing
         buttonPanel.add(playButton);
@@ -68,44 +51,42 @@ public class MainMenu extends JPanel {
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setOpaque(false); // Transparent background
-        centerPanel.add(Box.createVerticalGlue()); // Pushes the buttons to the vertical center
-        centerPanel.add(buttonPanel);
-        centerPanel.add(Box.createVerticalGlue()); // Pushes the buttons to the vertical center
+        centerPanel.add(Box.createVerticalGlue());
+        centerPanel.add(Box.createVerticalGlue());
 
+        // Add the button panel to the center panel as wrapper
+        centerPanel.add(buttonPanel);
+
+        // Add the center panel to the main panel
         add(centerPanel, BorderLayout.CENTER);
 
-        // Add action listeners to buttons (optional)
+        // Add action listeners to the buttons
         playButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Play button pressed");
-                listener.onMenuPlaySelected();
+                listener.onMenuPlaySelected(); // call the listener method for playing
             }
         });
 
         chooseAlliesButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Choose Allies button pressed");
-                listener.onMenuCharacterSelected();
-
+                listener.onMenuCharacterSelected(); // call the listener method for choosing allies
             }
         });
+
         guideButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Guide button pressed");
-                listener.onMenuGuideSelected();
-
+                listener.onMenuGuideSelected(); // call the listener method for the guide
             }
         });
+
         chooseMapButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Choose Map button pressed");
-                listener.onMenuMapSelected();
-
+                listener.onMenuMapSelected(); // call the listener method for choosing a map
             }
         });
+
         quitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
                 // Load the custom icon
                 ImageIcon originalIcon = new ImageIcon(getClass().getResource("/assets/logo.png"));
 
@@ -133,7 +114,8 @@ public class MainMenu extends JPanel {
 
     }
 
-    private JButton createMenuButton(String text) {
+    // Create a custom button with rounded corners
+    private JButton createMenuButton(String text, int paddingLeft, int paddingRight) {
         JButton button = new JButton(text) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -172,6 +154,8 @@ public class MainMenu extends JPanel {
         button.setFocusPainted(false); // Remove focus border
         button.setPreferredSize(new Dimension(200, 50)); // Set a preferred size for the buttons
         button.setOpaque(false); // Make sure it's transparent to show the custom background
+        button.setBorder(BorderFactory.createEmptyBorder(10, paddingLeft, 10, paddingRight)); // Add padding
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Add mouse listener to change cursor on hover
         button.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -185,11 +169,10 @@ public class MainMenu extends JPanel {
                 button.setCursor(Cursor.getDefaultCursor()); // Set back to default cursor when not hovering
             }
         });
-
         return button;
     }
 
-    // Override the paintComponent method to draw the background and darken it
+    // Override the paintComponent method to draw the background image and darken it
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

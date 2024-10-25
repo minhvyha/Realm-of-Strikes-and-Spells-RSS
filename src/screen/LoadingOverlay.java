@@ -13,6 +13,7 @@ public class LoadingOverlay extends JPanel {
         addMouseMotionListener(new MouseAdapter() {});
     }
 
+    // Override the paintComponent method to draw the loading overlay
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -33,7 +34,6 @@ public class LoadingOverlay extends JPanel {
         int y = (getHeight() - fm.getHeight()) / 2 + fm.getAscent();
 
         g2d.drawString(loadingText, x, y);
-
         g2d.dispose();
     }
 

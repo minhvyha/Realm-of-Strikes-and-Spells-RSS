@@ -58,7 +58,7 @@ public class GuideMenu extends JPanel {
         backButton.addActionListener(e -> {
             System.out.println("Back button clicked!");
             if (listener != null) {
-                listener.onMapSelected(-1); // Notify listener
+                listener.onGuideBack(); // Notify listener
             }
         });
 
