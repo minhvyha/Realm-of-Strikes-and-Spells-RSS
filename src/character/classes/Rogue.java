@@ -16,8 +16,5 @@ public class Rogue implements CharacterClass {
         return damage;
     }
 
-    @Override
-    public String getClassName() {
-        return "Rogue";
-    }
+
 }

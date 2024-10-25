@@ -16,8 +16,4 @@ public class Warrior implements CharacterClass {
         return damage;
     }
 
-    @Override
-    public String getClassName() {
-        return "Warrior";
-    }
 }

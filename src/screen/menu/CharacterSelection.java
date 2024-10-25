@@ -11,15 +11,12 @@ import java.net.URL;
 public class CharacterSelection extends JPanel {
     private JLabel titleLabel = new JLabel("Select Your Allies", SwingConstants.CENTER);
     private JPanel buttonPanel = new JPanel();
-    private int[] selectedRace, selectedClass ; // Initial
-
     // Arrays to store races and classes
     private String[] races = { "Angel", "Orc", "Minotaur" };
     private String[] classes = { "Warrior", "Mage", "Rogue" };
 
     public CharacterSelection(SelectionListener listener, int[] selectedRace, int[] selectedClass) {
-        this.selectedRace = selectedRace;
-        this.selectedClass = selectedClass;
+
         // Set the layout to BorderLayout to support NORTH, CENTER, etc.
         setLayout(new BorderLayout());
 
@@ -83,11 +80,11 @@ public class CharacterSelection extends JPanel {
             raceComboBoxPanel.setBackground(Color.DARK_GRAY);
             JComboBox<String> raceComboBox = new JComboBox<>(races);
             raceComboBox.setSelectedIndex(selectedRace[i]);
-            final int finalI = i;
+            final int FINAL_INDEX = i;
             raceComboBox.addActionListener(e -> {
-                selectedRace[finalI] = raceComboBox.getSelectedIndex();
-                raceLabel.setText(races[selectedRace[finalI]]);
-                loadImage(raceImageLabel, "/assets/" + races[selectedRace[finalI]].toLowerCase() + "/idle/" + "0.png",
+                selectedRace[FINAL_INDEX] = raceComboBox.getSelectedIndex();
+                raceLabel.setText(races[selectedRace[FINAL_INDEX]]);
+                loadImage(raceImageLabel, "/assets/" + races[selectedRace[FINAL_INDEX]].toLowerCase() + "/idle/" + "0.png",
                         150, 150);
             });
             raceComboBoxPanel.add(raceComboBox);
@@ -98,9 +95,9 @@ public class CharacterSelection extends JPanel {
             JComboBox<String> classComboBox = new JComboBox<>(classes);
             classComboBox.setSelectedIndex(selectedClass[i]);
             classComboBox.addActionListener(e -> {
-                selectedClass[finalI] = classComboBox.getSelectedIndex();
-                classLabel.setText(classes[selectedClass[finalI]]);
-                loadImage(classImageLabel, "/assets/weapon/" + classes[selectedClass[finalI]].toLowerCase() + ".png",
+                selectedClass[FINAL_INDEX] = classComboBox.getSelectedIndex();
+                classLabel.setText(classes[selectedClass[FINAL_INDEX]]);
+                loadImage(classImageLabel, "/assets/weapon/" + classes[selectedClass[FINAL_INDEX]].toLowerCase() + ".png",
                         40, 40);
             });
             classComboBoxPanel.add(classComboBox);

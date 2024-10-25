@@ -95,11 +95,11 @@ public class MapSelection extends JPanel {
             buttonPanel.add(layeredPane);
 
             // ActionListener for button
-            final int finalI = i;
+            final int FINAL_INDEX = i;
             button.addActionListener(e -> {
-                System.out.println("New Option " + finalI + " selected");
-                this.map = finalI;
-                selectedMapLabel.setText("Selected Map: " + battleMapNames[finalI - 1]); // Update the label with selected map
+                System.out.println("New Option " + FINAL_INDEX + " selected");
+                this.map = FINAL_INDEX;
+                selectedMapLabel.setText("Selected Map: " + battleMapNames[FINAL_INDEX - 1]); // Update the label with selected map
             });
         }
 

@@ -17,10 +17,10 @@ public class EnemyLabel extends JLabel {
     private Timer animationTimer;
     private String currentState;
 
-    // Desired aspect ratio (2000:1050) and height
-    private final int desiredWidth = 1050;
-    private final int desiredHeight = 1050;
-    private final int targetHeight = 120; // Scale down to this height
+    // Desired aspect ratio of a square image (1050:1050) and height
+    private final int DESIRED_WIDTH = 1050;
+    private final int DESIRED_HEIGHT = 1050;
+    private final int TARGET_HEIGHT = 120; // Scale down to this height
 
     public EnemyLabel(String name, int maxIdleFrame, int maxAttackFrame, int maxDieFrame, int maxHurtFrame,
             int xPosition, int yPosition) {
@@ -35,7 +35,7 @@ public class EnemyLabel extends JLabel {
         for (int i = 0; i < maxIdleFrame; i++) {
             URL imageURL = getClass().getResource("/assets/" + name + "/Idle/" + i + ".png");
             if (imageURL != null) {
-                this.idle[i] = flipImageIcon(resizeImageIcon(new ImageIcon(imageURL), targetHeight));
+                this.idle[i] = flipImageIcon(resizeImageIcon(new ImageIcon(imageURL), TARGET_HEIGHT));
             } else {
                 System.err.println("Image not found (idle): " + imageURL);
             }
@@ -44,7 +44,7 @@ public class EnemyLabel extends JLabel {
         for (int i = 0; i < maxAttackFrame; i++) {
             URL imageURL = getClass().getResource("/assets/" + name + "/Attack/" + i + ".png");
             if (imageURL != null) {
-                this.attack[i] = flipImageIcon(resizeImageIcon(new ImageIcon(imageURL), targetHeight));
+                this.attack[i] = flipImageIcon(resizeImageIcon(new ImageIcon(imageURL), TARGET_HEIGHT));
             } else {
                 System.err.println("Image not found (attack): " + imageURL);
             }
@@ -53,7 +53,7 @@ public class EnemyLabel extends JLabel {
         for (int i = 0; i < maxDieFrame; i++) {
             URL imageURL = getClass().getResource("/assets/" + name + "/Die/" + i + ".png");
             if (imageURL != null) {
-                this.die[i] = flipImageIcon(resizeImageIcon(new ImageIcon(imageURL), targetHeight));
+                this.die[i] = flipImageIcon(resizeImageIcon(new ImageIcon(imageURL), TARGET_HEIGHT));
             } else {
                 System.err.println("Image not found (die): " + imageURL);
             }
@@ -62,7 +62,7 @@ public class EnemyLabel extends JLabel {
         for (int i = 0; i < maxHurtFrame; i++) {
             URL imageURL = getClass().getResource("/assets/" + name + "/Hurt/" + i + ".png");
             if (imageURL != null) {
-                this.hurt[i] = flipImageIcon(resizeImageIcon(new ImageIcon(imageURL), targetHeight));
+                this.hurt[i] = flipImageIcon(resizeImageIcon(new ImageIcon(imageURL), TARGET_HEIGHT));
             } else {
                 System.err.println("Image not found (hurt): " + imageURL);
             }
@@ -78,7 +78,7 @@ public class EnemyLabel extends JLabel {
     // Method to resize ImageIcon to target height while keeping aspect ratio
     private ImageIcon resizeImageIcon(ImageIcon icon, int targetHeight) {
         Image img = icon.getImage();
-        int width = (int) (targetHeight * ((double) desiredWidth / desiredHeight)); // Maintain aspect ratio 2000:1050
+        int width = (int) (targetHeight * ((double) DESIRED_WIDTH / DESIRED_HEIGHT)); // Maintain aspect ratio 2000:1050
         Image scaledImg = img.getScaledInstance(width, targetHeight, Image.SCALE_SMOOTH);
         return new ImageIcon(scaledImg);
     }

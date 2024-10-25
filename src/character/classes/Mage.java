@@ -16,8 +16,4 @@ public class Mage implements CharacterClass {
         return damage;
     }
 
-    @Override
-    public String getClassName() {
-        return "Mage";
-    }
 }
