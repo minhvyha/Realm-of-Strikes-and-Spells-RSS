@@ -27,40 +27,45 @@ import character.enemyRace.Zombie;
 import character.race.Angel;
 import character.race.Minotaur;
 import character.race.Orc;
+
 public class Main extends JFrame implements SelectionListener {
 
+    // Declare the main panel
     private JPanel mainPanel;
 
-    private boolean start = false;
+    // Initialize the map variable
     private int map = 1;
 
+    // Declare the characters and their classes
     private Character[] allies;
     private Character[] enemies;
-    private int[] selectedRace = { 0, 1, 2 }; // Initial
-    private int[] selectedClass = { 1, 2, 0 }; // Initial
-    private int[] enemyRace; // Initial
-    private int[] enemyClass; // Initial
+    private int[] selectedRace = { 0, 1, 2 };
+    private int[] selectedClass = { 1, 2, 0 };
+    private int[] enemyRace;
+    private int[] enemyClass;
 
-
+    // Declare the menu screens and its components
     private CharacterSelection selectionMenu;
     private MapSelection mapSelection;
     private GuideMenu guideMenu;
     private MainMenu mainMenu;
 
-    private Image backgroundImage;
+    // Declare the battle screen components
+    private Image battlebackImage;
     private BattleScreen battleScreen;
 
-    private LoadingOverlay loadingOverlay; // Loading overlay instance
+    // Declare the screen overlays
+    private LoadingOverlay loadingOverlay; 
     private DiceOverlay DiceOverlay;
     private BeginOverlay beginOverlay;
     private GameEnd gameEnd;
 
 
+
     @Override
     public void onMapSelected(int map) {
-
         loadingOverlay.turnOn();
-        new SwingWorker<Void, Void>() {
+        new SwingWorker<Void, Void>() {  // Create a new SwingWorker to handle the delay
             @Override
             protected Void doInBackground() throws Exception {
                 Thread.sleep(1000); // Delay for 1 second
@@ -69,22 +74,19 @@ public class Main extends JFrame implements SelectionListener {
     
             @Override
             protected void done() {
-
-                updateMenuScreen();
+                updateMenuScreen(); // Update the menu screen, bring back the main menu
                 loadingOverlay.turnOff();
             }
         }.execute();
         if(map >= 1){
-            this.map = map;
+            this.map = map; // Set the map to the selected map
         }
     }
 
     @Override
     public void onCharacterSelected(int[] characters, int[] classes) {
         loadingOverlay.turnOn();
-
-                
-        new SwingWorker<Void, Void>() {
+        new SwingWorker<Void, Void>() { // Create a new SwingWorker to handle the delay
             @Override
             protected Void doInBackground() throws Exception {
                 Thread.sleep(1000); // Delay for 1 second
@@ -93,9 +95,7 @@ public class Main extends JFrame implements SelectionListener {
     
             @Override
             protected void done() {
-
                 for (int i = 0; i < characters.length; i++) {
-    
                 }
                 if (characters.length > 0 && classes.length > 0) {
                     selectedRace = characters;
@@ -403,11 +403,9 @@ public class Main extends JFrame implements SelectionListener {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                if (!start) {
                     g.setColor(Color.BLACK);
 
                     g.fillRect(0, 0, getWidth(), getHeight());
-                }
             }
         };
         mainPanel.setLayout(new BorderLayout());
@@ -470,13 +468,13 @@ public class Main extends JFrame implements SelectionListener {
 
         URL resource = getClass().getResource(backgroundPath);
         if (resource != null) {
-            backgroundImage = new ImageIcon(resource).getImage();
+            battlebackImage = new ImageIcon(resource).getImage();
         } else {
             System.out.println("Error: Background image not found at " + backgroundPath);
         }
         // Create and add the BattleScreen instance
         updateCharacters();
-        battleScreen = new BattleScreen(backgroundImage, selectedRace, selectedClass, enemyRace, enemyClass, this);
+        battleScreen = new BattleScreen(battlebackImage, selectedRace, selectedClass, enemyRace, enemyClass, this);
         mainPanel.add(battleScreen, BorderLayout.CENTER);
 
         beginOverlay.turnOn();

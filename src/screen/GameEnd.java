@@ -3,14 +3,17 @@ package screen;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
+
 public class GameEnd extends JPanel {
 
     public GameEnd() {
         setOpaque(false); // Make the panel transparent except for its content
 
         // Add a mouse listener to consume all mouse events and block interaction
-        addMouseListener(new MouseAdapter() {});
-        addMouseMotionListener(new MouseAdapter() {});
+        addMouseListener(new MouseAdapter() {
+        });
+        addMouseMotionListener(new MouseAdapter() {
+        });
     }
 
     @Override
@@ -39,11 +42,11 @@ public class GameEnd extends JPanel {
 
     // Turn on the loading overlay
     public void turnOn() {
-        setVisible(true);  // Make sure it's visible
+        setVisible(true); // Make sure it's visible
     }
 
     // Turn off the loading overlay
     public void turnOff() {
-        setVisible(false);  // Make it invisible
+        setVisible(false); // Make it invisible
     }
 }
