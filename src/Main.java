@@ -37,7 +37,7 @@ public class Main extends JFrame implements SelectionListener {
     private Character[] allies;
     private Character[] enemies;
     private int[] selectedRace = { 0, 1, 2 }; // Initial
-    private int[] selectedClass = { 0, 1, 2 }; // Initial
+    private int[] selectedClass = { 1, 2, 0 }; // Initial
     private int[] enemyRace; // Initial
     private int[] enemyClass; // Initial
 
@@ -237,18 +237,38 @@ public class Main extends JFrame implements SelectionListener {
     public int onCharacterDefend(int source, int dice) {
         if(source < 3){
             allies[source].setDefense(allies[source].getDefense() + dice);
-            return enemies[source].getDefense();
+            return allies[source].getDefense();
         }
         else{
             enemies[source - 3].setDefense(enemies[source - 3].getDefense() + dice);
-            return allies[source].getDefense();
+            return enemies[source - 3].getDefense();
         }
     }
 
     @Override
     public int onCharacterUseAbility(int source, int target, int dice1, int dice2) {
-        System.out.println("Character " + source + " uses ability on character " + target);
-        return 0;
+        DiceOverlay.turnOn();
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(1000); // Delay for 1 second
+                return null;
+            }
+    
+            @Override
+            protected void done() {
+                DiceOverlay.turnOff();
+
+            }
+        }.execute();
+        if(source < 3){
+            int dmg = allies[source].useClassAbility(enemies[target]);
+            return dmg;
+        }
+        else{
+            int dmg = enemies[source - 3].useClassAbility(allies[target]);
+            return dmg;
+        }
     }
 
     @Override
@@ -257,19 +277,29 @@ public class Main extends JFrame implements SelectionListener {
         int highestAgility = Integer.MIN_VALUE;
 
         for (int i = 0; i < allies.length; i++) {
-            System.out.println(allies[i].getAgility());
             if (allies[i].getAgility() > highestAgility && allies[i].isAlive()) {
                 target = i;
                 highestAgility = allies[i].getAgility();
             }
         }
         for (int i = 0; i < enemies.length; i++) {
-            System.out.println(enemies[i].getAgility());
             if (enemies[i].getAgility() > highestAgility && enemies[i].isAlive()) {
                 target = i + 3;
                 highestAgility = enemies[i].getAgility();
             }
         }
+
+        for(int i = 0; i < allies.length; i++){
+            if(allies[i].isAlive()){
+                System.out.println("Ally " + i + " agility: " + allies[i].getAgility());
+            }
+        }
+        for(int i = 0; i < enemies.length; i++){
+            if(enemies[i].isAlive()){
+                System.out.println("Enemy " + i + " agility: " + enemies[i].getAgility());
+            }
+        }
+
         if(target < 3){
             allies[target].setAgility(-1);
         }

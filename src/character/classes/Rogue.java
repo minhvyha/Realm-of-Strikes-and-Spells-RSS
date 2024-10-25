@@ -5,7 +5,7 @@ import character.CharacterClass;
 
 public class Rogue implements CharacterClass {
     @Override
-    public void useClassAbility(Character character, Character target) {
+    public int useClassAbility(Character character, Character target) {
         int damage = character.getStrength() * 3 - target.getDefense();
         if (target.getHp() < target.getMaxHp() / 2) {
             damage *= 2; // Double damage if target's HP is less than half
@@ -13,6 +13,7 @@ public class Rogue implements CharacterClass {
         damage = Math.max(damage, 1);
         target.takeDamage(damage);
         System.out.println(character.getName() + " uses Backstab and deals " + damage + " damage to " + target.getName() + "!");
+        return damage;
     }
 
     @Override

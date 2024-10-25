@@ -126,7 +126,7 @@ public class Character {
                 + intelligence + "Agility: " + agility + ", Defense: " + defense);
     }
 
-    public void useClassAbility(Character target) {
-        characterClass.useClassAbility(this, target);
+    public int useClassAbility(Character target) {
+        return characterClass.useClassAbility(this, target);
     }
 }
