@@ -21,12 +21,12 @@ import character.CharacterClass;
 import character.classes.Mage;
 import character.classes.Rogue;
 import character.classes.Warrior;
-import character.enemyRace.Golem;
-import character.enemyRace.Reaper;
-import character.enemyRace.Zombie;
-import character.race.Angel;
-import character.race.Minotaur;
-import character.race.Orc;
+import character.enemyRaces.Golem;
+import character.enemyRaces.Reaper;
+import character.enemyRaces.Zombie;
+import character.races.Angel;
+import character.races.Minotaur;
+import character.races.Orc;
 
 public class Main extends JFrame implements SelectionListener {
 

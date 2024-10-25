@@ -1,5 +1,5 @@
 // Orc.java
-package character.race;
+package character.races;
 
 import character.Character;
 import character.CharacterClass;

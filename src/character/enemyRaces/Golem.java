@@ -1,4 +1,4 @@
-package character.enemyRace;
+package character.enemyRaces;
 
 import character.Character;
 import character.CharacterClass;
