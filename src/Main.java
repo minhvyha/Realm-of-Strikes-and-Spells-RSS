@@ -276,16 +276,6 @@ public class Main extends JFrame implements SelectionListener {
         else{
             enemies[target - 3].setAgility(-1);
         }
-        for(int i = 0; i < allies.length; i++){
-            if(allies[i].isAlive()){
-                allies[i].setAgility(1);
-            }
-        }
-        for(int i = 0; i < enemies.length; i++){
-            if(enemies[i].isAlive()){
-                enemies[i].setAgility(1);
-            }
-        }
         return target;
     }
     
@@ -310,6 +300,7 @@ public class Main extends JFrame implements SelectionListener {
 
     @Override
     public void resetAgility(){
+        System.out.println("Resetting agility");
         for (int i = 0; i < allies.length; i++) {
             allies[i].setAgility(allies[i].getMaxAgility());
         }

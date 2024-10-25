@@ -265,6 +265,7 @@ public class BattleScreen extends JPanel {
                             logPanel.addMessage("* " + enemyRaces[enemyRace[target]] + " defeated! *");
                             enemiesLabel[target].setState("die");
                             dead += 1;
+                            wasPlayerTurn = true;
                             updateTurn();
                         } else {
                             enemiesLabel[target].setState("hurt");
@@ -293,6 +294,7 @@ public class BattleScreen extends JPanel {
                         + "'s defense increase by " + defense + " for 2 round.");
                 allyWithDefenseStand[source] = 2;
                 turn += 1;
+                wasPlayerTurn = true;
                 updateGame();
             }
         });
@@ -304,6 +306,7 @@ public class BattleScreen extends JPanel {
                     return;
                 }
                 isPlayerTurn = false;
+                wasPlayerTurn = true;
                 logPanel.addMessage("Player uses special ability!");
             }
         });
@@ -316,13 +319,11 @@ public class BattleScreen extends JPanel {
             listener.gameEnd();
             return;
         }
-        int characterTurn = listener.getCharacterTurn();
 
         if (turn % (6 - dead) == 0) {
 
             System.out.println("Turn " + turn);
             logPanel.addMessage("--- Turn " + ((turn / (6 - dead)) + 1) + " ---");
-            logPanel.addMessage("");
 
             listener.resetAgility();
             for (int i : allyWithDefenseStand) {
@@ -351,8 +352,14 @@ public class BattleScreen extends JPanel {
         for (JLabel label : enemyNameLabels) {
             label.setForeground(Color.WHITE);
         }
-        if(turn != 0){
-            wasPlayerTurn = isPlayerTurn;
+        int characterTurn = listener.getCharacterTurn();
+
+        if (turn == 0) {
+            if (characterTurn < 3) {
+                wasPlayerTurn = false;
+            } else {
+                wasPlayerTurn = true;
+            }
         }
         if (characterTurn < 3) {
             isPlayerTurn = true;
@@ -365,11 +372,15 @@ public class BattleScreen extends JPanel {
             updateInfoPanel();
             enemyNameLabels[target].setForeground(Color.RED);
             if (!wasPlayerTurn) {
+                logPanel.addMessage(" ");
+
                 logPanel.addMessage("[Ally’s Turn]");
             }
         } else {
             isPlayerTurn = false;
             if (wasPlayerTurn) {
+                logPanel.addMessage(" ");
+
                 logPanel.addMessage("[Enemy’s Turn]");
             }
             source = characterTurn - 3;
@@ -381,7 +392,6 @@ public class BattleScreen extends JPanel {
             enemyNameLabels[characterTurn - 3].setForeground(Color.GREEN);
             allyNameLabels[target].setForeground(Color.RED);
 
-            
             updateInfoPanel();
             int leftRoll = rollDice();
 
@@ -409,18 +419,19 @@ public class BattleScreen extends JPanel {
                         protected void done() {
 
                             enemiesLabel[source].setState("attack");
-
-                            logPanel.addMessage("Enemy attacks!");
-                            logPanel.addMessage("Enemy deals " + dmg + " damage.");
+                            String name = enemyRaces[enemyRace[source]].substring(0, 1).toUpperCase()
+                                    + enemyRaces[enemyRace[source]].substring(1);
+                            logPanel.addMessage("- " + name + " attacks! Deals " + dmg + " damage.");
                             allyHealthBars[target].setValue(listener.getAllyHp(target));
                             if (listener.getAllyHp(target) <= 0) {
-                                logPanel.addMessage("Ally defeated!");
+                                logPanel.addMessage("* Ally defeated! *");
                                 alliesLabel[target].setState("die");
                                 dead += 1;
                                 updateTurn();
                             } else {
                                 alliesLabel[target].setState("hurt");
                             }
+                            wasPlayerTurn = false;
                             updateGame();
                         }
                     }.execute();
