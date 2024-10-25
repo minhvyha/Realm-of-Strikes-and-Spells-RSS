@@ -1,10 +1,10 @@
 package screen.menu;
 
+import java.awt.*;
+import java.net.URL;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import screen.SelectionListener;
-import java.awt.*;
-import java.net.URL;
 
 public class MapSelection extends JPanel {
     private JLabel titleLabel = new JLabel("Select Your Allies", SwingConstants.CENTER);
@@ -50,7 +50,7 @@ public class MapSelection extends JPanel {
             JButton button = new JButton();
             button.setFocusPainted(false);
             button.setBorderPainted(false);
-            button.setBounds(0, 0, buttonSize.width, buttonSize.height);
+            button.setBounds(30, 0, buttonSize.width, buttonSize.height);
             button.setHorizontalAlignment(SwingConstants.CENTER);
 
             // Load image and scale it
@@ -77,14 +77,14 @@ public class MapSelection extends JPanel {
                     g2d.fillRect(0, 0, getWidth(), getHeight());
                 }
             };
-            overlayPanel.setBounds(0, 0, buttonSize.width, buttonSize.height);
+            overlayPanel.setBounds(30, 0, buttonSize.width, buttonSize.height);
             overlayPanel.setOpaque(false);
 
             // Text label
             JLabel textLabel = new JLabel(battleMapNames[i - 1], SwingConstants.CENTER);
             textLabel.setForeground(Color.WHITE);
             textLabel.setFont(new Font("Arial", Font.BOLD, 18));
-            textLabel.setBounds(0, -40, buttonSize.width, buttonSize.height);
+            textLabel.setBounds(30, -40, buttonSize.width, buttonSize.height);
 
             // Add components to the layered pane
             layeredPane.add(button, Integer.valueOf(0));

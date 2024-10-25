@@ -89,7 +89,7 @@ public class BattleScreen extends JPanel {
 
             JProgressBar allyHealthBar = new JProgressBar(0, listener.getAllyHp(i));
             allyHealthBar.setValue(listener.getAllyHp(i)); // Set full health initially
-            allyHealthBar.setBounds(x + 20, y + 105, 80, 10); // Position health bar under ally
+            allyHealthBar.setBounds(x + 20, y + 110, 80, 10); // Position health bar under ally
             allyHealthBar.setForeground(Color.GREEN); // Set bar color to green
             allyHealthBar.setBackground(Color.BLACK);
             leftCharacterPanel.add(allyHealthBar); // Add health bar to left panel for allies
@@ -99,7 +99,7 @@ public class BattleScreen extends JPanel {
                     + allyRaces[selectedRace[i]].substring(1);
             JLabel allyNameLabel = new JLabel(name + " " + classes[selectedClass[i]]); // Set ally
                                                                                        // name
-            allyNameLabel.setBounds(x + 20, y + 110, 120, 20); // Position under the health bar
+            allyNameLabel.setBounds(x + 20, y + 120, 120, 20); // Position under the health bar
             allyNameLabel.setForeground(Color.WHITE); // text white
             leftCharacterPanel.add(allyNameLabel); // Add name label to the panel
             allyNameLabels[i] = allyNameLabel;
@@ -119,7 +119,7 @@ public class BattleScreen extends JPanel {
 
             JProgressBar healthBar = new JProgressBar(0, listener.getEnemyHp(i));
             healthBar.setValue(listener.getEnemyHp(i)); // Set full health initially
-            healthBar.setBounds(x + 20, y + 105, 80, 10); // Position under enemyLabel
+            healthBar.setBounds(x + 20, y + 110, 80, 10); // Position under enemyLabel
             healthBar.setForeground(Color.GREEN); // colour to green
 
             enemyHealthBars[i] = healthBar; // Store health bar
@@ -128,7 +128,7 @@ public class BattleScreen extends JPanel {
                     + enemyRaces[enemyRace[i]].substring(1);
             JLabel enemyNameLabel = new JLabel(name + " " + classes[enemyClass[i]]); // Set enemy
                                                                                      // name);
-            enemyNameLabel.setBounds(x + 20, y + 110, 120, 20); // Position
+            enemyNameLabel.setBounds(x + 20, y + 120, 120, 20); // Position
             enemyNameLabel.setForeground(Color.WHITE); // text white
             rightCharacterPanel.add(enemyNameLabel); // Add name label to the panel
             enemyNameLabels[i] = enemyNameLabel;
@@ -625,9 +625,18 @@ public class BattleScreen extends JPanel {
         }
     }
 
-    private boolean checkGameEnd() {
+    private boolean checkGameEnd() {// Check game end
         if (!listener.isGameOn()) {
-            logPanel.addMessage("=== Game Over ===");
+            // Check if allies are defeated
+            if (dead >= alliesLabel.length) { // or alliesLabel.length if defined
+                logPanel.addMessage("=== Enemies Win! ===");
+                JOptionPane.showMessageDialog(null, "Enemies Win!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                logPanel.addMessage("=== Allies Win! ===");
+                JOptionPane.showMessageDialog(null, "Allies Win!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+            // Call to the end of the game
             listener.gameEnd();
             return true;
         }
