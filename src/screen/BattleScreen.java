@@ -92,7 +92,9 @@ public class BattleScreen extends JPanel {
             leftCharacterPanel.add(allyHealthBar); // Add health bar to left panel for allies
             allyHealthBars[i] = allyHealthBar;
 
-            JLabel allyNameLabel = new JLabel(allyRaces[selectedRace[i]] + " " + classes[selectedClass[i]]); // Set ally
+            String name = allyRaces[selectedRace[i]].substring(0, 1).toUpperCase()
+                    + allyRaces[selectedRace[i]].substring(1);
+            JLabel allyNameLabel = new JLabel(name + " " + classes[selectedClass[i]]); // Set ally
                                                                                                              // name
             allyNameLabel.setBounds(x + 20, y + 110, 120, 20); // Position under the health bar
             allyNameLabel.setForeground(Color.WHITE); // text white
@@ -119,8 +121,9 @@ public class BattleScreen extends JPanel {
 
             enemyHealthBars[i] = healthBar; // Store health bar
             rightCharacterPanel.add(healthBar); // health bar to panel
-
-            JLabel enemyNameLabel = new JLabel(enemyRaces[enemyRace[i]] + " " + classes[enemyClass[i]]); // Set enemy
+            String name = enemyRaces[enemyRace[i]].substring(0, 1).toUpperCase()
+                    + enemyRaces[enemyRace[i]].substring(1);
+            JLabel enemyNameLabel = new JLabel(name + " " + classes[enemyClass[i]]); // Set enemy
                                                                                                          // name);
             enemyNameLabel.setBounds(x + 20, y + 110, 120, 20); // Position
             enemyNameLabel.setForeground(Color.WHITE); // text white
