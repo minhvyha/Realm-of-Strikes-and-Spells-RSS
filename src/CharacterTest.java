@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Test;
 import character.Character;
 import character.classes.Warrior; // Import your concrete subclass
 
-public class Unitest{
+public class CharacterTest {
 
     private Character character;
 
