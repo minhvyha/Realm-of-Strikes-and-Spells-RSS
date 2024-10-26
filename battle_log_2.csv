@@ -1,0 +1,101 @@
+Line,Message
+1,=== Battle Log ===
+2,Battle started!
+3, 
+4,--- Turn 1 ---
+5, 
+6,[Ally’s Turn]
+7,- Angel attacks! Zombie takes 0 damage.
+8,- Orc defends! Orc's defense increases by 12 for 2 rounds.
+9, 
+10,[Enemy’s Turn]
+11,- Golem defends! Golem's defense increases by 30 for 2 rounds.
+12, 
+13,[Ally’s Turn]
+14,- Minotaur attacks! Zombie takes 115 damage.
+15, 
+16,[Enemy’s Turn]
+17,- Zombie attacks! Deals 27 damage.
+18,- Zombie defends! Zombie's defense increases by 14 for 2 rounds.
+19, 
+20,--- Turn 2 ---
+21, 
+22,[Ally’s Turn]
+23,- Angel uses Celestial Torrent! Golem takes 135 damage.
+24,- Orc attacks! Golem takes 0 damage.
+25, 
+26,[Enemy’s Turn]
+27,- Golem attacks! Deals 0 damage.
+28, 
+29,[Ally’s Turn]
+30,- Minotaur attacks! Zombie takes 83 damage.
+31, 
+32,[Enemy’s Turn]
+33,- Zombie defends! Zombie's defense increases by 15 for 2 rounds.
+34,- Zombie defends! Zombie's defense increases by 17 for 2 rounds.
+35, 
+36,--- Turn 3 ---
+37, 
+38,[Ally’s Turn]
+39,Special ability is on cooldown for 2 rounds.
+40,- Angel defends! Angel's defense increases by 16 for 2 rounds.
+41,- Orc attacks! Golem takes 0 damage.
+42, 
+43,[Enemy’s Turn]
+44,- Golem uses Blazing Valor! Deals 20 damage.
+45, 
+46,[Ally’s Turn]
+47,- Minotaur attacks! Zombie takes 85 damage.
+48,* zombie defeated! *
+49, 
+50,[Enemy’s Turn]
+51,- Zombie uses Celestial Torrent! Deals 24 damage.
+52, 
+53,--- Turn 4 ---
+54, 
+55,[Ally’s Turn]
+56,- Angel attacks! Golem takes 0 damage.
+57,- Orc attacks! Golem takes 0 damage.
+58, 
+59,[Enemy’s Turn]
+60,- Golem attacks! Deals 0 damage.
+61, 
+62,[Ally’s Turn]
+63,- Minotaur attacks! Zombie takes 65 damage.
+64, 
+65,[Enemy’s Turn]
+66,- Zombie defends! Zombie's defense increases by 19 for 2 rounds.
+67, 
+68,--- Turn 5 ---
+69, 
+70,[Ally’s Turn]
+71,- Angel attacks! Golem takes 0 damage.
+72,- Orc attacks! Golem takes 0 damage.
+73, 
+74,[Enemy’s Turn]
+75,- Golem defends! Golem's defense increases by 36 for 2 rounds.
+76, 
+77,[Ally’s Turn]
+78,- Minotaur uses Blazing Valor! Golem takes 59 damage.
+79, 
+80,[Enemy’s Turn]
+81,- Zombie attacks! Deals 66 damage.
+82, 
+83,--- Turn 6 ---
+84, 
+85,[Ally’s Turn]
+86,- Angel attacks! Zombie takes 22 damage.
+87,- Orc attacks! Golem takes 144 damage.
+88,* golem defeated! *
+89,- Minotaur attacks! Zombie takes 0 damage.
+90, 
+91,[Enemy’s Turn]
+92,- Zombie attacks! Deals 18 damage.
+93, 
+94,--- Turn 7 ---
+95, 
+96,[Ally’s Turn]
+97,- Angel attacks! Zombie takes 0 damage.
+98,- Orc uses Shadow Dance! Zombie takes 142 damage.
+99,* zombie defeated! *
+100,=== Allies Win! ===
