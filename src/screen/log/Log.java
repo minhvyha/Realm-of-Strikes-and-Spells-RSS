@@ -1,7 +1,7 @@
 package screen.log;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class Log extends JPanel {
 
@@ -24,13 +24,13 @@ public class Log extends JPanel {
         head = new LogNode(initialMessage, next);
 
         // Initialize the JTextArea to display messages with black background and white text
-        logArea = new JTextArea(10, 23);
+        logArea = new JTextArea(10, 26);
         logArea.setEditable(false);
         logArea.setLineWrap(true);
         logArea.setWrapStyleWord(true);
         logArea.setBackground(Color.BLACK); // Set background to black
         logArea.setForeground(Color.WHITE); // Set text color to white
-        logArea.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // Padding for readability
+        logArea.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 43)); // Padding for readability
 
         // Customize the scroll pane with hidden scroll bars
         JScrollPane scrollPane = new JScrollPane(logArea);

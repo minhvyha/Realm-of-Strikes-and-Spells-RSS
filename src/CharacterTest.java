@@ -1,5 +1,5 @@
 import character.Character;
-import character.classes.Warrior; // Import your concrete subclass
+import character.classes.Warrior;
 
 public class CharacterTest {
 
@@ -32,7 +32,7 @@ public class CharacterTest {
             System.out.println("testTakeDamage failed: Expected HP 0, got " + character.getHp());
         }
     }
-
+ 
     public void testDisplayStatus() {
         System.out.println("Displaying character status:");
         character.displayStatus(); // Assuming this method prints the status
