@@ -1,0 +1,59 @@
+Line,Message
+1,=== Battle Log ===
+2,Battle started!
+3, 
+4,--- Turn 1 ---
+5, 
+6,[Ally’s Turn]
+7,- Angel uses Celestial Torrent! Zombie takes 165 damage.
+8,- Orc attacks! Zombie takes 0 damage.
+9,- Minotaur uses Blazing Valor! Zombie takes 32 damage.
+10,* zombie defeated! *
+11, 
+12,[Enemy’s Turn]
+13,- Zombie defends! Zombie's defense increases by 14 for 2 rounds.
+14,- Zombie uses Blazing Valor! Deals 28 damage.
+15, 
+16,--- Turn 2 ---
+17, 
+18,[Ally’s Turn]
+19,Special ability is on cooldown for 1 rounds.
+20,- Angel attacks! Zombie takes 80 damage.
+21,- Orc attacks! Zombie takes 0 damage.
+22,Special ability is on cooldown for 1 rounds.
+23,- Minotaur attacks! Zombie takes 35 damage.
+24, 
+25,[Enemy’s Turn]
+26,- Zombie defends! Zombie's defense increases by 17 for 2 rounds.
+27,- Zombie defends! Zombie's defense increases by 13 for 2 rounds.
+28, 
+29,--- Turn 3 ---
+30, 
+31,[Ally’s Turn]
+32,- Angel uses Celestial Torrent! Zombie takes 107 damage.
+33,* zombie defeated! *
+34,- Orc uses Shadow Dance! Zombie takes 28 damage.
+35,- Minotaur uses Blazing Valor! Zombie takes 25 damage.
+36, 
+37,[Enemy’s Turn]
+38,- Zombie defends! Zombie's defense increases by 19 for 2 rounds.
+39, 
+40,--- Turn 4 ---
+41, 
+42,[Ally’s Turn]
+43,- Angel attacks! Zombie takes 0 damage.
+44,- Orc attacks! Zombie takes 0 damage.
+45,Special ability is on cooldown for 1 rounds.
+46,- Minotaur attacks! Zombie takes 0 damage.
+47, 
+48,[Enemy’s Turn]
+49,- Zombie uses Celestial Torrent! Deals 30 damage.
+50, 
+51,--- Turn 5 ---
+52, 
+53,[Ally’s Turn]
+54,- Angel uses Celestial Torrent! Zombie takes 101 damage.
+55,- Orc attacks! Zombie takes 0 damage.
+56,- Minotaur attacks! Zombie takes 52 damage.
+57,* zombie defeated! *
+58,=== Allies Win! ===

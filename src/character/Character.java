@@ -96,13 +96,19 @@ public class Character {
         hp = Math.max(hp - damage, 0);
     }
 
-
     public boolean isAlive() {
         return hp > 0;
     }
 
     public void reduceDefense(int amount) {
         defense = Math.max(defense - amount, 0);
+    }
+
+    public int attack(Character target, int dice1, int dice2) {
+        int totalDamge = this.getStrength() * dice1 - target.getDefense() * dice2; // Calculate the total damage
+        totalDamge = Math.max(totalDamge, 0); // Ensure that the total damage is at least 0
+        target.takeDamage(totalDamge); // Apply the damage to the target
+        return totalDamge; // Return the total damage
     }
 
     // Display character status

@@ -7,7 +7,6 @@ import javax.swing.text.*;
 import screen.SelectionListener;
 
 public class GuideMenu extends JPanel {
-    private JLabel titleLabel = new JLabel("Realm of Strikes and Spells", SwingConstants.CENTER);
 
     public GuideMenu(SelectionListener listener) {
         setLayout(new BorderLayout());

@@ -1,0 +1,137 @@
+Line,Message
+1,=== Battle Log ===
+2,Battle started!
+3, 
+4,--- Turn 1 ---
+5, 
+6,[Ally’s Turn]
+7,- Angel uses Celestial Torrent! Zombie takes 165 damage.
+8,- Orc attacks! Golem takes 0 damage.
+9,- Minotaur uses Blazing Valor! Reaper takes 34 damage.
+10, 
+11,[Enemy’s Turn]
+12,- Reaper attacks! Deals 28 damage.
+13,- Golem attacks! Deals 0 damage.
+14,- Zombie defends! Zombie's defense increases by 15 for 2 rounds.
+15, 
+16,--- Turn 2 ---
+17, 
+18,[Ally’s Turn]
+19,- Angel defends! Angel's defense increases by 16 for 2 rounds.
+20,- Orc defends! Orc's defense increases by 15 for 2 rounds.
+21,- Minotaur defends! Minotaur's defense increases by 18 for 2 rounds.
+22, 
+23,[Enemy’s Turn]
+24,- Reaper uses Celestial Torrent! Deals 66 damage.
+25,- Golem attacks! Deals 0 damage.
+26,- Zombie uses Blazing Valor! Deals 43 damage.
+27, 
+28,--- Turn 3 ---
+29, 
+30,[Ally’s Turn]
+31,Special ability is on cooldown for 1 rounds.
+32,- Angel attacks! Reaper takes 0 damage.
+33,- Orc attacks! Zombie takes 30 damage.
+34,* zombie defeated! *
+35,- Minotaur attacks! Reaper takes 36 damage.
+36, 
+37,[Enemy’s Turn]
+38,- Reaper attacks! Deals 44 damage.
+39,- Golem uses Blazing Valor! Deals 29 damage.
+40,* Ally defeated! *
+41, 
+42,--- Turn 4 ---
+43, 
+44,[Ally’s Turn]
+45,- Orc attacks! Reaper takes 58 damage.
+46,- Minotaur attacks! Golem takes 0 damage.
+47, 
+48,[Enemy’s Turn]
+49,- Reaper attacks! Deals 102 damage.
+50,* Ally defeated! *
+51, 
+52,--- Turn 5 ---
+53, 
+54,[Ally’s Turn]
+55,- Orc attacks! Golem takes 0 damage.
+56, 
+57,[Enemy’s Turn]
+58,- Reaper attacks! Deals 10 damage.
+59,- Golem attacks! Deals 0 damage.
+60, 
+61,--- Turn 6 ---
+62, 
+63,[Ally’s Turn]
+64,- Orc attacks! Golem takes 0 damage.
+65, 
+66,[Enemy’s Turn]
+67,- Reaper defends! Reaper's defense increases by 9 for 2 rounds.
+68,- Golem attacks! Deals 0 damage.
+69, 
+70,--- Turn 7 ---
+71, 
+72,[Ally’s Turn]
+73,- Orc uses Shadow Dance! Reaper takes 72 damage.
+74,* reaper defeated! *
+75, 
+76,[Enemy’s Turn]
+77,- Golem uses Blazing Valor! Deals 30 damage.
+78, 
+79,--- Turn 8 ---
+80, 
+81,[Ally’s Turn]
+82,- Orc attacks! Golem takes 0 damage.
+83, 
+84,[Enemy’s Turn]
+85,- Golem attacks! Deals 0 damage.
+86, 
+87,--- Turn 9 ---
+88, 
+89,[Ally’s Turn]
+90,- Orc attacks! Golem takes 15 damage.
+91, 
+92,[Enemy’s Turn]
+93,- Golem attacks! Deals 30 damage.
+94, 
+95,--- Turn 10 ---
+96, 
+97,[Ally’s Turn]
+98,- Orc attacks! Golem takes 0 damage.
+99, 
+100,[Enemy’s Turn]
+101,- Golem attacks! Deals 10 damage.
+102, 
+103,--- Turn 11 ---
+104, 
+105,[Ally’s Turn]
+106,- Orc uses Shadow Dance! Golem takes 20 damage.
+107, 
+108,[Enemy’s Turn]
+109,- Golem uses Blazing Valor! Deals 30 damage.
+110, 
+111,--- Turn 12 ---
+112, 
+113,[Ally’s Turn]
+114,Special ability is on cooldown for 2 rounds.
+115,- Orc defends! Orc's defense increases by 16 for 2 rounds.
+116, 
+117,[Enemy’s Turn]
+118,- Golem defends! Golem's defense increases by 29 for 2 rounds.
+119, 
+120,--- Turn 13 ---
+121, 
+122,[Ally’s Turn]
+123,- Orc attacks! Golem takes 0 damage.
+124, 
+125,[Enemy’s Turn]
+126,- Golem defends! Golem's defense increases by 31 for 2 rounds.
+127, 
+128,--- Turn 14 ---
+129, 
+130,[Ally’s Turn]
+131,- Orc attacks! Golem takes 59 damage.
+132, 
+133,[Enemy’s Turn]
+134,- Golem uses Blazing Valor! Deals 35 damage.
+135,* Ally defeated! *
+136,=== Enemies Win! ===

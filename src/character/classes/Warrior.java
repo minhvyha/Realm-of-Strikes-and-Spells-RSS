@@ -10,7 +10,7 @@ public class Warrior implements CharacterClass {
         if (character.getHp() < character.getMaxHp() / 4) {
             damage *= 1.5; // 50% more damage if the Warrior's HP is below 25%
         }
-        damage = Math.max(damage, 1);
+        damage = Math.max(damage, 0);
         target.takeDamage(damage);
         return damage;
     }
