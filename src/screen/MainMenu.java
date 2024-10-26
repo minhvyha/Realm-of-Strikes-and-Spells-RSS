@@ -66,8 +66,7 @@ public class MainMenu extends JPanel {
         // Add action listeners to the buttons
         playButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                listener.onMenuMapSelected(); 
-                //listener.onMenuPlaySelected(); // call the listener method for playing
+                listener.onMenuPlaySelected(); // call the listener method for playing
             }
         });
 

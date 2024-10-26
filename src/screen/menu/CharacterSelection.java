@@ -8,11 +8,11 @@ import screen.SelectionListener;
 
 public class CharacterSelection extends JPanel {
     private JLabel titleLabel = new JLabel("Select Your Allies", SwingConstants.CENTER);
-    private JPanel buttonPanel = new JPanel();
-    private JPanel navbar = new JPanel();
+    private JPanel buttonPanel = new JPanel();// Panel for character selection buttons
+    private JPanel navbar = new JPanel();// Navigation bar
     private String[] races = { "Angel", "Orc", "Minotaur" }; // Available character races
     private String[] classes = { "Warrior", "Mage", "Rogue" }; // Available character classes
-
+    // Labels for displaying race and class names
     private JLabel[] raceTextLabels = new JLabel[3];
     private JLabel[] classTextLabels = new JLabel[3];
 
@@ -33,7 +33,7 @@ public class CharacterSelection extends JPanel {
         navbar.setLayout(new FlowLayout(FlowLayout.LEFT));
         navbar.setBackground(Color.DARK_GRAY);
 
-        String[] navItems = {"Home", "Map", "Characters", "Exit"};
+        String[] navItems = {"Home", "Map", "Characters", "Exit"}; // Navigation item labels
         for (String currentItem : navItems) {
             JButton navButton = new JButton(currentItem);
             navButton.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -45,20 +45,20 @@ public class CharacterSelection extends JPanel {
             navButton.addActionListener(e -> {
                 switch (currentItem) {
                     case "Home":
-                        listener.onGuideBack();
+                        listener.onGuideBack();//to guide
                         break;
                     case "Map":
-                        listener.onMenuMapSelected();
+                        listener.onMenuMapSelected();//to map
                         break;
                     case "Characters":
-                        listener.onMenuCharacterSelected();
+                        listener.onMenuCharacterSelected();//to character
                         break;
                     case "Exit":
                         ImageIcon originalIcon = new ImageIcon(getClass().getResource("/assets/logo.png"));
                         Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
                         ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
-                        int confirm = JOptionPane.showOptionDialog(
+                        int confirm = JOptionPane.showOptionDialog(// Confirmation message
                                 null,
                                 "Are you sure you want to quit?",
                                 "Quit Confirmation",
@@ -69,12 +69,12 @@ public class CharacterSelection extends JPanel {
                                 null
                         );
                         if (confirm == JOptionPane.YES_OPTION) {
-                            System.exit(0);
+                            System.exit(0);// Exit the application
                         }
                         break;
                 }
             });
-            navbar.add(navButton);
+            navbar.add(navButton);// Add button to the navigation bar
         }
     }
     
@@ -161,9 +161,9 @@ public class CharacterSelection extends JPanel {
         JPanel comboBoxPanel = new JPanel();
         comboBoxPanel.setBackground(Color.DARK_GRAY);
 
-        JComboBox<String> comboBox = new JComboBox<>(options);
-        comboBox.setSelectedIndex(selected[index]);
-        comboBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        JComboBox<String> comboBox = new JComboBox<>(options); // Create JComboBox with options
+        comboBox.setSelectedIndex(selected[index]); // Set selected index
+        comboBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Change cursor on hover
 
         comboBox.addActionListener(e -> {
             selected[index] = comboBox.getSelectedIndex();
@@ -189,7 +189,7 @@ public class CharacterSelection extends JPanel {
     private void addNavigationButtons(SelectionListener listener, int[] selectedRace, int[] selectedClass) {
         JButton nextButton = createNavigationButton("Next", e -> {
             if (listener != null) {
-                listener.onMenuGuideSelected();
+                listener.onMenuGuideSelected();// Navigate to the guide
             }
         });
 
