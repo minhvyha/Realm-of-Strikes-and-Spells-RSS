@@ -12,13 +12,16 @@ public class CharacterSelection extends JPanel {
     private String[] races = { "Angel", "Orc", "Minotaur" }; // Available character races
     private String[] classes = { "Warrior", "Mage", "Rogue" }; // Available character classes
 
+    private JLabel[] raceTextLabels = new JLabel[3];
+    private JLabel[] classTextLabels = new JLabel[3];
+
     public CharacterSelection(SelectionListener listener, int[] selectedRace, int[] selectedClass) {
         setLayout(new BorderLayout()); // Set panel layout as BorderLayout
-        configureTitleLabel();         // Configure title label
-        configureButtonPanel();        // Set up the button panel layout
+        configureTitleLabel(); // Configure title label
+        configureButtonPanel(); // Set up the button panel layout
 
-        add(titleLabel, BorderLayout.NORTH);    // Add title to NORTH position
-        add(buttonPanel, BorderLayout.CENTER);  // Add character selection panel to CENTER
+        add(titleLabel, BorderLayout.NORTH); // Add title to NORTH position
+        add(buttonPanel, BorderLayout.CENTER); // Add character selection panel to CENTER
 
         addCharacterSelectionColumns(selectedRace, selectedClass); // Add character selection UI
 
@@ -65,12 +68,13 @@ public class CharacterSelection extends JPanel {
         JLabel classImageLabel = new JLabel();
         loadImage(classImageLabel, "/assets/weapon/" + classes[selectedClass[index]].toLowerCase() + ".png", 40, 40);
 
-        columnPanel.add(createImagePanel(raceImageLabel));             // Add race image panel
-        columnPanel.add(createImagePanel(classImageLabel));            // Add class image panel
-        columnPanel.add(createLabelPanel(races[selectedRace[index]], 16)); // Add race name label
-        columnPanel.add(createLabelPanel(classes[selectedClass[index]], 14)); // Add class name label
-        columnPanel.add(createComboBoxPanel(races, selectedRace, index, raceImageLabel)); // Add race JComboBox
-        columnPanel.add(createComboBoxPanel(classes, selectedClass, index, classImageLabel)); // Add class JComboBox
+        columnPanel.add(createImagePanel(raceImageLabel)); // Add race image panel
+        columnPanel.add(createImagePanel(classImageLabel)); // Add class image panel
+        columnPanel.add(createLabelPanel(races[selectedRace[index]], index, true, 16)); // Add race name label
+        columnPanel.add(createLabelPanel(classes[selectedClass[index]], index, false, 14)); // Add class name label
+        columnPanel.add(createComboBoxPanel(races, selectedRace, index, raceImageLabel, true)); // Add race JComboBox
+        columnPanel.add(createComboBoxPanel(classes, selectedClass, index, classImageLabel, false)); // Add class
+                                                                                                     // JComboBox
 
         return columnPanel;
     }
@@ -84,18 +88,25 @@ public class CharacterSelection extends JPanel {
     }
 
     // Create a panel to display a label with the specified text and font size
-    private JPanel createLabelPanel(String text, int fontSize) {
+    private JPanel createLabelPanel(String text, int index, boolean isRace, int fontSize) {
         JPanel labelPanel = new JPanel();
         labelPanel.setBackground(Color.DARK_GRAY);
         JLabel label = new JLabel(text, SwingConstants.CENTER);
         label.setFont(new Font("Arial", Font.BOLD, fontSize));
         label.setForeground(Color.WHITE);
         labelPanel.add(label);
+        if (isRace) {
+            raceTextLabels[index] = label;
+        } else {
+            classTextLabels[index] = label;
+        }
+
         return labelPanel;
     }
 
-    // Create a JComboBox panel to select race/class, with image update functionality
-    private JPanel createComboBoxPanel(String[] options, int[] selected, int index, JLabel imageLabel) {
+    // Create a JComboBox panel to select race/class, with image update
+    // functionality
+    private JPanel createComboBoxPanel(String[] options, int[] selected, int index, JLabel imageLabel, boolean isRace) {
         JPanel comboBoxPanel = new JPanel();
         comboBoxPanel.setBackground(Color.DARK_GRAY);
 
@@ -105,11 +116,20 @@ public class CharacterSelection extends JPanel {
 
         comboBox.addActionListener(e -> {
             selected[index] = comboBox.getSelectedIndex();
-            imageLabel.setText(options[selected[index]]);
-            loadImage(imageLabel, "/assets/" + options[selected[index]].toLowerCase() + (options == races ? "/idle/0.png" : ".png"),
-                    options == races ? 180 : 40, options == races ? 180 : 40);
+            if (isRace) {
+                raceTextLabels[index].setText(options[selected[index]]);
+                loadImage(imageLabel,
+                        "/assets/" + options[selected[index]].toLowerCase()
+                                + (options == races ? "/idle/0.png" : ".png"),
+                        options == races ? 180 : 40, options == races ? 180 : 40);
+            } else {
+                classTextLabels[index].setText(options[selected[index]]);
+                loadImage(imageLabel,
+                        "/assets/weapon/" + options[selected[index]].toLowerCase()
+                                + (options == races ? "/idle/0.png" : ".png"),
+                        options == races ? 180 : 40, options == races ? 180 : 40);
+            }
         });
-
         comboBoxPanel.add(comboBox);
         return comboBoxPanel;
     }
@@ -124,7 +144,7 @@ public class CharacterSelection extends JPanel {
 
         JButton backButton = createNavigationButton("Back", e -> {
             if (listener != null) {
-                listener.onCharacterSelected(new int[]{}, new int[]{});
+                listener.onCharacterSelected(new int[] {}, new int[] {});
             }
         });
 
@@ -153,8 +173,7 @@ public class CharacterSelection extends JPanel {
             Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
             label.setIcon(new ImageIcon(image));
         } else {
-            System.out.println("Error: Image not found at " + imagePath);
-            label.setText("Image Not Found");
+            System.out.println("not found" + imagePath);
         }
     }
 }
