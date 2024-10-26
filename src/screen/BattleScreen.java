@@ -720,11 +720,11 @@ public class BattleScreen extends JPanel {
             // Show message dialog with icon
             if (!isAllyWin) {
                 logPanel.addMessage("=== Enemies Win! ===");
-                JOptionPane.showMessageDialog(null, "Enemies Win!", "Game Over", JOptionPane.INFORMATION_MESSAGE,
+                JOptionPane.showMessageDialog(null, "Enemies Win! Outputing battle log.", "Game Over", JOptionPane.INFORMATION_MESSAGE,
                         scaledIcon);
             } else {
                 logPanel.addMessage("=== Allies Win! ===");
-                JOptionPane.showMessageDialog(null, "Allies Win!", "Game Over", JOptionPane.INFORMATION_MESSAGE,
+                JOptionPane.showMessageDialog(null, "Allies Win! Outputing battle log.", "Game Over", JOptionPane.INFORMATION_MESSAGE,
                         scaledIcon);
             }
 

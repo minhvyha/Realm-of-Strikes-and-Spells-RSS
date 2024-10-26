@@ -16,6 +16,7 @@ import screen.GameEnd;
 import screen.menu.GuideMenu;
 import screen.menu.CharacterSelection;
 import screen.menu.MapSelection;
+import screen.menu.BattleLogReader;
 
 import character.Character;
 import character.CharacterClass;
@@ -177,7 +178,44 @@ public class Main extends JFrame implements SelectionListener {
     }
 
     @Override
-    public void onGuideBack() {
+    public void onMenuBattleLogReaderSelected() { // Method to handle battle log reader option selection on the main menu
+        loadingOverlay.turnOn();
+        new SwingWorker<Void, Void>() { // Create a new SwingWorker to handle the delay
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(1000); // Delay for 1 second
+                return null;
+            }
+
+            @Override
+            protected void done() {
+                updateBattleLogReader();
+                loadingOverlay.turnOff();
+            }
+        }.execute();
+
+    }
+
+    @Override
+    public void onGuideBack() { // Method to handle the back button in the guide screen
+        loadingOverlay.turnOn();
+        new SwingWorker<Void, Void>() { // Create a new SwingWorker to handle the delay
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(1000); // Delay for 1 second
+                return null;
+            }
+
+            @Override
+            protected void done() {
+                updateMenuScreen(); // Update the menu screen, bring back the main menu
+                loadingOverlay.turnOff();
+            }
+        }.execute();
+    }
+
+    @Override
+    public void onBattleLogReaderBack() { // Method to handle the back button in the battle log reader screen
         loadingOverlay.turnOn();
         new SwingWorker<Void, Void>() { // Create a new SwingWorker to handle the delay
             @Override
@@ -198,20 +236,20 @@ public class Main extends JFrame implements SelectionListener {
     public int onCharacterAttack(int source, int target, int dice1, int dice2) {
         // Set the dice images and turn on the overlay
         DiceOverlay.setDice(dice1, dice2);
-                DiceOverlay.turnOn();// Turn off the overlay after the delay
+        DiceOverlay.turnOn();// Turn off the overlay after the delay
 
-                new SwingWorker<Void, Void>() { // Create a new SwingWorker to handle the delay
-                    @Override
-                    protected Void doInBackground() throws Exception {
-                        Thread.sleep(1000); // Delay for 1 second
-                        return null;
-                    }
+        new SwingWorker<Void, Void>() { // Create a new SwingWorker to handle the delay
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(1000); // Delay for 1 second
+                return null;
+            }
 
-                    @Override
-                    protected void done() {
-                        DiceOverlay.turnOff(); // Turn off the overlay after the delay
-                    }
-                }.execute();
+            @Override
+            protected void done() {
+                DiceOverlay.turnOff(); // Turn off the overlay after the delay
+            }
+        }.execute();
 
         int totalDamge; // Total damage dealt
         if (source < 3) { // Check if the source is an ally
@@ -252,10 +290,12 @@ public class Main extends JFrame implements SelectionListener {
         }.execute();
         int totalDamage = 0; // Total damage dealt
         if (source < 3) {
-            totalDamage = allies.get(source).useClassAbility(enemies.get(target)); // Use the class ability on the target
+            totalDamage = allies.get(source).useClassAbility(enemies.get(target)); // Use the class ability on the
+                                                                                   // target
         } else {
             System.out.println("source: " + source + " target: " + target);
-            totalDamage = enemies.get(source - 3).useClassAbility(allies.get(target)); // Use the class ability on the target
+            totalDamage = enemies.get(source - 3).useClassAbility(allies.get(target)); // Use the class ability on the
+                                                                                       // target
         }
         return totalDamage;
     }
@@ -280,10 +320,11 @@ public class Main extends JFrame implements SelectionListener {
 
         if (highestAgilityCharacter < 3) { // Check if the character is an ally
             allies.get(highestAgilityCharacter).setAgility(-1); // Set the agility to -1 to prevent the character from
-                                                            // moving again
+            // moving again
         } else {
-            enemies.get(highestAgilityCharacter - 3).setAgility(-1); // Set the agility to -1 to prevent the character from
-                                                                 // moving again
+            enemies.get(highestAgilityCharacter - 3).setAgility(-1); // Set the agility to -1 to prevent the character
+                                                                     // from
+            // moving again
         }
         return highestAgilityCharacter; // Return the character with the highest agility
     }
@@ -443,6 +484,14 @@ public class Main extends JFrame implements SelectionListener {
         mainPanel.repaint();
     }
 
+    private void updateBattleLogReader() {
+        mainPanel.removeAll(); // Remove all components from the main panel
+        BattleLogReader battleLogReader = new BattleLogReader(this);
+        mainPanel.add(battleLogReader, BorderLayout.CENTER); // Add the battle log reader screen to the main panel
+        mainPanel.revalidate();
+        mainPanel.repaint();
+    }
+
     private void updateGameScreen() {
         mainPanel.removeAll(); // Remove all components from the main panel
 
@@ -503,16 +552,16 @@ public class Main extends JFrame implements SelectionListener {
             }
             switch (selectedRace[i]) {
                 case 0:
-                    allies.add( new Angel("Angle", currClass));
+                    allies.add(new Angel("Angle", currClass));
                     break;
                 case 1:
-                    allies.add( new Angel("Orc", currClass));
+                    allies.add(new Orc("Orc", currClass));
                     break;
                 case 2:
-                    allies.add( new Angel("Minotaur", currClass));
+                    allies.add(new Minotaur("Minotaur", currClass));
                     break;
                 default:
-                    allies.add( new Angel("Angle", currClass));
+                    allies.add(new Angel("Angle", currClass));
                     break;
             }
         }
@@ -542,16 +591,16 @@ public class Main extends JFrame implements SelectionListener {
             }
             switch (enemyRace[i]) {
                 case 0:
-                    enemies.add( new Zombie("Zombie", currClass)) ;
+                    enemies.add(new Zombie("Zombie", currClass));
                     break;
                 case 1:
-                    enemies.add( new Golem("Golem", currClass)) ;
+                    enemies.add(new Golem("Golem", currClass));
                     break;
                 case 2:
-                    enemies.add( new Reaper("Reaper", currClass)) ;
+                    enemies.add(new Reaper("Reaper", currClass));
                     break;
                 default:
-                    enemies.add( new Zombie("Zombie", currClass)) ;
+                    enemies.add(new Zombie("Zombie", currClass));
                     break;
             }
         }

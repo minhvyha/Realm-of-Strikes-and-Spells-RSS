@@ -6,10 +6,12 @@ public interface SelectionListener {
     void onMenuMapSelected(); // Called when the choose map button is pressed
     void onMenuCharacterSelected(); // Called when the choose allies button is pressed
     void onMenuGuideSelected(); // Called when the guide button is pressed
+    void onMenuBattleLogReaderSelected(); // Called when the battle log reader button is pressed
 
     void onMapSelected(int map); // Called when a map is selected
     void onCharacterSelected(int[] characters, int[] classes); // Called when characters are selected
     void onGuideBack(); // Called when the back button is pressed in the guide
+    void onBattleLogReaderBack(); // Called when the back button is pressed in the battle log reader
 
     int getCharacterTurn(); // Get the current character turn as an index
     int onCharacterAttack(int source, int target, int dice1, int dice2); // Called when a character attacks

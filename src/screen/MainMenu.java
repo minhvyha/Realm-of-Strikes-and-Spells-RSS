@@ -31,17 +31,20 @@ public class MainMenu extends JPanel {
         JButton chooseAlliesButton = createMenuButton("Choose Allies", 40, 40);
         JButton chooseMapButton = createMenuButton("Choose Map", 48, 48);
         JButton guideButton = createMenuButton("Guide", 85, 85);
+        JButton battleLogReaderButton = createMenuButton("Battle Log Reader", 17, 17);
         JButton quitButton = createMenuButton("Quit", 95, 95); // New Quit button
 
         // Add buttons to the button panel with spacing
         buttonPanel.add(playButton);
-        buttonPanel.add(Box.createVerticalStrut(15)); // Add space between buttons
+        buttonPanel.add(Box.createVerticalStrut(10)); // Add space between buttons
         buttonPanel.add(chooseAlliesButton);
-        buttonPanel.add(Box.createVerticalStrut(15)); // Add space between buttons
+        buttonPanel.add(Box.createVerticalStrut(10)); // Add space between buttons
         buttonPanel.add(chooseMapButton);
-        buttonPanel.add(Box.createVerticalStrut(15)); // Add space between buttons
+        buttonPanel.add(Box.createVerticalStrut(10)); // Add space between buttons
         buttonPanel.add(guideButton);
-        buttonPanel.add(Box.createVerticalStrut(15)); // Add space between buttons
+buttonPanel.add(Box.createVerticalStrut(10)); // Add space between buttons
+        buttonPanel.add(battleLogReaderButton);
+        buttonPanel.add(Box.createVerticalStrut(10)); // Add space between buttons
         buttonPanel.add(quitButton);
 
         // Add some spacing at the bottom of the button panel
@@ -82,6 +85,12 @@ public class MainMenu extends JPanel {
         chooseMapButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 listener.onMenuMapSelected(); // call the listener method for choosing a map
+            }
+        });
+
+        battleLogReaderButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                listener.onMenuBattleLogReaderSelected(); // call the listener method for the battle log reader
             }
         });
 

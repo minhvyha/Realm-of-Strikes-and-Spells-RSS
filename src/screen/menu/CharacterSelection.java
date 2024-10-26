@@ -148,6 +148,9 @@ public class CharacterSelection extends JPanel {
             }
         });
 
+        nextButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
         JPanel buttonPanelWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20));
         buttonPanelWrapper.setBackground(Color.BLACK);
         buttonPanelWrapper.add(backButton);

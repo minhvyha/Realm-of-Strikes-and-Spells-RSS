@@ -93,6 +93,9 @@ public class MapSelection extends JPanel {
         JButton nextButton = createButton("Next"); // "Next" button
         JButton backButton = createButton("Back"); // "Back" button
 
+        nextButton.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Hand cursor for interaction
+        backButton.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Hand cursor for interaction
+
         buttonPanelWrapper.add(backButton);
         buttonPanelWrapper.add(nextButton);
 

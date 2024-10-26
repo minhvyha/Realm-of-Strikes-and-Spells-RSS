@@ -15,44 +15,58 @@ public class GuideMenu extends JPanel {
         JPanel navbar = new JPanel(new FlowLayout(FlowLayout.LEFT));
         navbar.setBackground(Color.DARK_GRAY);
 
-        String[] navItems = {"Home", "Map", "Characters", "Exit"};
-for (String item : navItems) {
-    JButton navButton = new JButton(item);
-    navButton.setForeground(Color.WHITE);
-    navButton.setBackground(Color.DARK_GRAY);
-    navButton.setBorderPainted(false);
-    navButton.setFocusPainted(false);
-    navbar.add(navButton);
+        String[] navItems = { "Home", "Map", "Characters", "Exit" };
+        for (String item : navItems) {
+            JButton navButton = new JButton(item);
+            navButton.setForeground(Color.WHITE);
+            navButton.setBackground(Color.DARK_GRAY);
+            navButton.setBorderPainted(false);
+            navButton.setFocusPainted(false);
+            navButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            navbar.add(navButton);
 
-    // Capture the current item in a final variable for the action listener
-    final String currentItem = item;
-    
-    // Adding an action for each navigation item
-    navButton.addActionListener(e -> {
-        switch (currentItem) {
-            case "Home":
-                listener.onGuideBack();
-                break;
-            case "Map":
-                listener.onMenuMapSelected();
-                break;
-            case "Characters":
-                listener.onMenuCharacterSelected();
-                break;
-            case "Exit":
-                int confirmExit = JOptionPane.showConfirmDialog(
-                        null, "Are you sure you want to exit?", "Confirm Exit",
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (confirmExit == JOptionPane.YES_OPTION) {
-                    System.exit(0);
+            // Capture the current item in a final variable for the action listener
+            final String currentItem = item;
+
+            // Adding an action for each navigation item
+            navButton.addActionListener(e -> {
+                switch (currentItem) {
+                    case "Home":
+                        listener.onGuideBack();
+                        break;
+                    case "Map":
+                        listener.onMenuMapSelected();
+                        break;
+                    case "Characters":
+                        listener.onMenuCharacterSelected();
+                        break;
+                    case "Exit":
+                        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/assets/logo.png"));
+
+                        // Scale the image to 50x50 pixels
+                        Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+                        int confirm = JOptionPane.showOptionDialog(
+                                null, // Parent component
+                                "Are you sure you want to quit?", // Message
+                                "Quit Confirmation", // Title
+                                JOptionPane.YES_NO_OPTION, // Option type (Yes/No)
+                                JOptionPane.QUESTION_MESSAGE, // Message type
+                                scaledIcon, // Custom icon
+                                null, // No custom button options
+                                null); // Default button option
+                        if (confirm == JOptionPane.YES_OPTION) {
+                            System.exit(0);
+                        }
+                        break;
                 }
-                break;
+            });
         }
-    });
-}
         add(navbar, BorderLayout.NORTH);
 
-        JTextArea sideDescription = new JTextArea("Realm of Strikes and Spells (RSS) is a turn-based RPG where strategy and stats determine victory.");
+        JTextArea sideDescription = new JTextArea(
+                "Realm of Strikes and Spells (RSS) is a turn-based RPG where strategy and stats determine victory.");
         sideDescription.setWrapStyleWord(true);
         sideDescription.setLineWrap(true);
         sideDescription.setEditable(false);
@@ -93,7 +107,9 @@ for (String item : navItems) {
 
         try {
             doc.insertString(doc.getLength(), "Game Overview\n", sectionTitleStyle);
-            doc.insertString(doc.getLength(), "Realm of Strikes and Spells (RSS) is a turn-based RPG where players control a team of allies to battle against enemies. Use character stats, abilities, and dice rolls to gain an advantage!\n\n", bodyStyle);
+            doc.insertString(doc.getLength(),
+                    "Realm of Strikes and Spells (RSS) is a turn-based RPG where players control a team of allies to battle against enemies. Use character stats, abilities, and dice rolls to gain an advantage!\n\n",
+                    bodyStyle);
 
             doc.insertString(doc.getLength(), "Character Stats\n", sectionTitleStyle);
             doc.insertString(doc.getLength(), "Each character has five core stats:\n" +
@@ -105,27 +121,37 @@ for (String item : navItems) {
 
             doc.insertString(doc.getLength(), "Races\n", sectionTitleStyle);
             doc.insertString(doc.getLength(), "Allies:\n", bodyStyle);
-            doc.insertString(doc.getLength(), "- Minotaur HP 160 Attack 18 Defense 15 Agility 10 Intelligence 8\n", bodyStyle);
-            doc.insertString(doc.getLength(), "- Orc HP 170 Attack 22 Defense 12 Agility 10 Intelligence 7\n", bodyStyle);
-            doc.insertString(doc.getLength(), "- Angel HP 120 Attack 12 Defense 18 Agility 25 Intelligence 20\n\n", bodyStyle);
+            doc.insertString(doc.getLength(), "- Minotaur HP 160 Attack 18 Defense 15 Agility 10 Intelligence 8\n",
+                    bodyStyle);
+            doc.insertString(doc.getLength(), "- Orc HP 170 Attack 22 Defense 12 Agility 10 Intelligence 7\n",
+                    bodyStyle);
+            doc.insertString(doc.getLength(), "- Angel HP 120 Attack 12 Defense 18 Agility 25 Intelligence 20\n\n",
+                    bodyStyle);
 
             doc.insertString(doc.getLength(), "Enemies:\n", bodyStyle);
-            doc.insertString(doc.getLength(), "- Golem HP 200 Attack 16 Defense 25 Agility 8 Intelligence 6\n", bodyStyle);
-            doc.insertString(doc.getLength(), "- Reaper HP 110 Attack 20 Defense 10 Agility 18 Intelligence 12\n", bodyStyle);
-            doc.insertString(doc.getLength(), "- Zombie HP 120 Attack 12 Defense 8 Agility 6 Intelligence 5\n\n", bodyStyle);
+            doc.insertString(doc.getLength(), "- Golem HP 200 Attack 16 Defense 25 Agility 8 Intelligence 6\n",
+                    bodyStyle);
+            doc.insertString(doc.getLength(), "- Reaper HP 110 Attack 20 Defense 10 Agility 18 Intelligence 12\n",
+                    bodyStyle);
+            doc.insertString(doc.getLength(), "- Zombie HP 120 Attack 12 Defense 8 Agility 6 Intelligence 5\n\n",
+                    bodyStyle);
 
             doc.insertString(doc.getLength(), "Classes and Special Abilities\n", sectionTitleStyle);
             doc.insertString(doc.getLength(), "- Warrior Power Strike 150% attack damage.\n", bodyStyle);
-            doc.insertString(doc.getLength(), "- Mage Fireball Deals Intelligence x 2 damage and bypasses defense.\n", bodyStyle);
+            doc.insertString(doc.getLength(), "- Mage Fireball Deals Intelligence x 2 damage and bypasses defense.\n",
+                    bodyStyle);
             doc.insertString(doc.getLength(), "- Rogue Shadow Step Boosts agility by 50% for 3 turns.\n\n", bodyStyle);
 
             doc.insertString(doc.getLength(), "Combat System\n", sectionTitleStyle);
-            doc.insertString(doc.getLength(), "Turns are determined by agility. Players can choose to Strike, Defend, or use a Special Ability. Dice rolls impact attack and defense.\n\n", bodyStyle);
+            doc.insertString(doc.getLength(),
+                    "Turns are determined by agility. Players can choose to Strike, Defend, or use a Special Ability. Dice rolls impact attack and defense.\n\n",
+                    bodyStyle);
 
             doc.insertString(doc.getLength(), "Strategy Tips\n", sectionTitleStyle);
             doc.insertString(doc.getLength(), "- High agility enables quicker actions.\n", bodyStyle);
             doc.insertString(doc.getLength(), "- Use Defense Stand for durability.\n", bodyStyle);
-            doc.insertString(doc.getLength(), "- Build strong synergies between characters to maximize effectiveness.\n", bodyStyle);
+            doc.insertString(doc.getLength(),
+                    "- Build strong synergies between characters to maximize effectiveness.\n", bodyStyle);
         } catch (BadLocationException e) {
             e.printStackTrace();
         }
