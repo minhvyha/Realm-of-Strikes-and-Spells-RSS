@@ -80,7 +80,7 @@ public class Log extends JPanel {
         logArea.setCaretPosition(logArea.getDocument().getLength()); // Auto-scroll to bottom
     }
 
-    public void exportToCSV(String filePath) {
+    public String exportToCSV(String filePath) {
         String uniqueFilePath = getUniqueFilePath(filePath);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(uniqueFilePath))) {
@@ -94,12 +94,12 @@ public class Log extends JPanel {
                 line++;
                 current = current.next;
             }
-
-            System.out.println("Log exported successfully to " + uniqueFilePath);
+            return uniqueFilePath;
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error exporting log to CSV file.");
         }
+return uniqueFilePath;
     }
 
     // Helper method to generate a unique file path if the file already exists
