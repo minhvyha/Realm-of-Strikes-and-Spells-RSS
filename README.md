@@ -46,7 +46,12 @@ RSS provides interactive UI screens for different phases of gameplay:
 - **Overlays**: Screens like `LoadingOverlay`, `BeginOverlay`, and `DiceOverlay` enhance visual transitions and effects.
 - **End Game Screen**: Displays the outcome when the battle ends.
 
-## How to Run the Game
+## Technologies Used
+- **Java**: Core programming language.
+- **Java Swing**: Used for creating graphical user interface components.
+- **JUnit**: For unit testing game components.
+- 
+## How to Run the Program
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/minhvyha/Realm-of-Strikes-and-Spells-RSS.git

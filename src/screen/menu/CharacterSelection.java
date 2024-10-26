@@ -36,7 +36,7 @@ public class CharacterSelection extends JPanel {
         String[] navItems = {"Home", "Map", "Characters", "Exit"};
         for (String currentItem : navItems) {
             JButton navButton = new JButton(currentItem);
-            navButton.setFont(new Font("Arial", Font.PLAIN, 12));
+            navButton.setFont(new Font("Arial", Font.PLAIN, 16));
             navButton.setForeground(Color.WHITE);
             navButton.setBackground(Color.GRAY);
             navButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -77,7 +77,8 @@ public class CharacterSelection extends JPanel {
             navbar.add(navButton);
         }
     }
-
+    
+    
     // Configure the title label settings
     private void configureTitleLabel() {
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
