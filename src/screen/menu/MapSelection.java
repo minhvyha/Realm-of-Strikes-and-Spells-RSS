@@ -28,11 +28,12 @@ public class MapSelection extends JPanel {
         this.mapUnlocked[0] = true; // Unlock the first map by default
         setLayout(new BorderLayout());
 
-        configureTitleLabel(); //  title label
-        configureButtonPanel(); //map button panel
-        addTitleLabel(); //  title label to layout
-        addButtonPanel(); //  button panel to layout
+        configureTitleLabel(); // Configure title label
+        configureButtonPanel(); // Configure map button panel
+        addTitleLabel(); // Add title label to layout
+        addButtonPanel(); // Add button panel to layout
         addSouthPanel(); // Add the South panel (map selection status and navigation buttons)
+        addNavBar(); // Add the navigation bar
 
         revalidate();
         repaint();
@@ -90,6 +91,64 @@ public class MapSelection extends JPanel {
         selectedMapLabel.setBackground(Color.BLACK);
         selectedMapLabel.setBorder(BorderFactory.createEmptyBorder(30, 20, 10, 20));
         selectedMapLabel.setText("Selected Map: " + battleMapNames[map - 1]);
+    }
+
+    // Create navigation bar
+    private void addNavBar() {
+        JPanel navbar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        navbar.setBackground(Color.DARK_GRAY);
+
+        String[] navItems = { "Home", "Map", "Characters", "Exit" };
+        for (String item : navItems) {
+            JButton navButton = new JButton(item);
+            navButton.setForeground(Color.WHITE);
+            navButton.setBackground(Color.DARK_GRAY);
+            navButton.setBorderPainted(false);
+            navButton.setFocusPainted(false);
+            navButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            navbar.add(navButton);
+
+            // Capture the current item in a final variable for the action listener
+            final String currentItem = item;
+
+            // Adding an action for each navigation item
+            navButton.addActionListener(e -> {
+                switch (currentItem) {
+                    case "Home":
+                        listener.onGuideBack();
+                        break;
+                    case "Map":
+                        listener.onMenuMapSelected();
+                        break;
+                    case "Characters":
+                        listener.onMenuCharacterSelected();
+                        break;
+                    case "Exit":
+                        ImageIcon originalIcon = new ImageIcon(
+                                getClass().getResource("/assets/logo.png"));
+
+                        // Scale the image to 50x50 pixels
+                        Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50,
+                                Image.SCALE_SMOOTH);
+                        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+                        int confirm = JOptionPane.showOptionDialog(
+                                null, // Parent component
+                                "Are you sure you want to quit?", // Message
+                                "Quit Confirmation", // Title
+                                JOptionPane.YES_NO_OPTION, // Option type (Yes/No)
+                                JOptionPane.QUESTION_MESSAGE, // Message type
+                                scaledIcon, // Custom icon
+                                null, // No custom button options
+                                null); // Default button option
+                        if (confirm == JOptionPane.YES_OPTION) {
+                            System.exit(0);
+                        }
+                        break;
+                }
+            });
+        }
+        add(navbar, BorderLayout.NORTH);
     }
 
     // Create navigation buttons for Next and Back
@@ -167,7 +226,7 @@ public class MapSelection extends JPanel {
         overlayPanel.setOpaque(false);
         return overlayPanel;
     }
-
+    
     // Create a label with map name for each button
     private JLabel createMapLabel(int mapIndex, Dimension buttonSize) {
         JLabel textLabel = new JLabel(battleMapNames[mapIndex - 1], SwingConstants.CENTER);
