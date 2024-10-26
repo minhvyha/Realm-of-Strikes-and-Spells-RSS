@@ -19,7 +19,7 @@ Characters in the game are divided into races and classes. Each character has un
 ## Key Files
 ### Characters
 - **Character.java**: Base class for all characters, containing common attributes and methods.
--**CharacterClass.java**: Interface for character classes, defining the useClassAbility method. This method is called to execute the special ability of the character class.
+- **CharacterClass.java**: Interface for character classes, defining the useClassAbility method. This method is called to execute the special ability of the character class.
 - **Elf.java, Orc.java, Human.java**: Implementations of different races.
 - **Mage.java, Rogue.java, Warrior.java**: Implementations of different classes.
 - **BattleSimulator.java**: To simulate battles between characters.
@@ -30,7 +30,7 @@ Characters in the game are divided into races and classes. Each character has un
 - **MapSelection.java**: UI for selecting the battle map.
 - **SelectionListener.java**: Interface for handling selection events.
 - **Main.java**: Main entry point of the application, handling the overall game flow and screen transitions.
-## How to Run
+## How to Run the Program
 1. **Clone the repository**:
  git clone https://github.com/minhvyha/Realm-of-Strikes-and-Spells-RSS.git
 2. **Compile the project**:
