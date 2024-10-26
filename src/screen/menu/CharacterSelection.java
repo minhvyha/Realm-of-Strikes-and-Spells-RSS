@@ -1,14 +1,15 @@
 package screen.menu;
 
+import java.awt.*;
+import java.net.URL;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import screen.SelectionListener;
-import java.awt.*;
-import java.net.URL;
 
 public class CharacterSelection extends JPanel {
     private JLabel titleLabel = new JLabel("Select Your Allies", SwingConstants.CENTER);
     private JPanel buttonPanel = new JPanel();
+    private JPanel navbar = new JPanel();
     private String[] races = { "Angel", "Orc", "Minotaur" }; // Available character races
     private String[] classes = { "Warrior", "Mage", "Rogue" }; // Available character classes
 
@@ -22,10 +23,59 @@ public class CharacterSelection extends JPanel {
 
         add(titleLabel, BorderLayout.NORTH); // Add title to NORTH position
         add(buttonPanel, BorderLayout.CENTER); // Add character selection panel to CENTER
-
+        
         addCharacterSelectionColumns(selectedRace, selectedClass); // Add character selection UI
-
         addNavigationButtons(listener, selectedRace, selectedClass); // Add navigation buttons
+        createNavbar(listener); // Initialize navbar
+        add(navbar, BorderLayout.NORTH); // Add navbar to the NORTH position
+    }
+    private void createNavbar(SelectionListener listener) {
+        navbar.setLayout(new FlowLayout(FlowLayout.LEFT));
+        navbar.setBackground(Color.DARK_GRAY);
+
+        String[] navItems = {"Home", "Map", "Characters", "Exit"};
+        for (String currentItem : navItems) {
+            JButton navButton = new JButton(currentItem);
+            navButton.setFont(new Font("Arial", Font.PLAIN, 12));
+            navButton.setForeground(Color.WHITE);
+            navButton.setBackground(Color.GRAY);
+            navButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+            // Adding an action for each navigation item
+            navButton.addActionListener(e -> {
+                switch (currentItem) {
+                    case "Home":
+                        listener.onGuideBack();
+                        break;
+                    case "Map":
+                        listener.onMenuMapSelected();
+                        break;
+                    case "Characters":
+                        listener.onMenuCharacterSelected();
+                        break;
+                    case "Exit":
+                        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/assets/logo.png"));
+                        Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+                        int confirm = JOptionPane.showOptionDialog(
+                                null,
+                                "Are you sure you want to quit?",
+                                "Quit Confirmation",
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE,
+                                scaledIcon,
+                                null,
+                                null
+                        );
+                        if (confirm == JOptionPane.YES_OPTION) {
+                            System.exit(0);
+                        }
+                        break;
+                }
+            });
+            navbar.add(navButton);
+        }
     }
 
     // Configure the title label settings
@@ -167,7 +217,6 @@ public class CharacterSelection extends JPanel {
         button.addActionListener(action);
         return button;
     }
-
     // Helper method to load and scale images, with a fallback message if not found
     private void loadImage(JLabel label, String imagePath, int width, int height) {
         URL resource = getClass().getResource(imagePath);
@@ -176,7 +225,7 @@ public class CharacterSelection extends JPanel {
             Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
             label.setIcon(new ImageIcon(image));
         } else {
-            System.out.println("not found" + imagePath);
+            System.out.println("Image not found: " + imagePath);
         }
     }
 }
