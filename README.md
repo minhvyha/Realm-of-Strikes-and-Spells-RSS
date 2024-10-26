@@ -47,5 +47,12 @@ RSS provides interactive UI screens for different phases of gameplay:
 - **End Game Screen**: Displays the outcome when the battle ends.
 
 ## How to Run the Game
-1. **Compile the project**: javac -d bin src/**/*.java
-2. **Run the main class**: java -cp bin Main
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/minhvyha/Realm-of-Strikes-and-Spells-RSS.git
+1. **Compile the project:**
+   ```bash
+   javac -d bin src/**/*.java
+3. **Run the main class:**
+   ```bash
+   java -cp bin Main
