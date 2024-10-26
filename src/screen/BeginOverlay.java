@@ -13,6 +13,7 @@ public class BeginOverlay extends JPanel {
         addMouseMotionListener(new MouseAdapter() {});
     }
 
+    // Override the paintComponent method to draw the begin overlay
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
