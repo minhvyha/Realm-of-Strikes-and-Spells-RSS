@@ -3,16 +3,13 @@ package screen.menu;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.dnd.*;
-
 import java.io.*;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-
-import screen.SelectionListener;
-
-import java.util.List;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import screen.SelectionListener;
 
 public class BattleLogReader extends JPanel {
 
@@ -54,7 +51,7 @@ public class BattleLogReader extends JPanel {
                             null, // No custom button options
                             null); // Default button option
                     if (confirm == JOptionPane.YES_OPTION) {
-                        System.exit(0);
+                        System.exit(0);// Exit the application if confirmed
                     }
                 } else if ("Open File".equals(item)) {
                     openFileChooser();
@@ -92,7 +89,7 @@ public class BattleLogReader extends JPanel {
                     ex.printStackTrace();
                 }
             }
-
+            // // Empty implementations for unused methods of DropTargetListener
             public void dragEnter(DropTargetDragEvent dtde) {
             }
 
@@ -124,7 +121,7 @@ public class BattleLogReader extends JPanel {
             readCSVFile(file);
         }
     }
-
+    // // Method to read and display data from the selected CSV file
     private void readCSVFile(File file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             DefaultTableModel tableModel = new DefaultTableModel();
@@ -137,23 +134,25 @@ public class BattleLogReader extends JPanel {
                     for (String header : data) {
                         tableModel.addColumn(header.trim());
                     }
-                    isHeader = false;
+                    isHeader = false;// false after header is processed
                 } else {
-                    tableModel.addRow(data);
+                    tableModel.addRow(data);//// Add data rows to the table model
                 }
             }
 
+            // If table is not initialized, create a new table
             if (table == null) {
-                table = new JTable(tableModel);
-                JScrollPane scrollPane = new JScrollPane(table);
-                add(scrollPane, BorderLayout.CENTER);
+                table = new JTable(tableModel); // Create the table with the data model
+                JScrollPane scrollPane = new JScrollPane(table); // Add table to scroll pane
+                add(scrollPane, BorderLayout.CENTER); // Add scroll pane to center
             } else {
-                table.setModel(tableModel);
+                table.setModel(tableModel); // Update existing table with new data model
             }
             revalidate();
-            repaint();
+            repaint();//reflect changes
 
-        } catch (IOException e) {
+        }catch (IOException e) {
+            // Show error message if file reading fails
             JOptionPane.showMessageDialog(this, "Failed to read file: " + e.getMessage(), "Error",
                     JOptionPane.ERROR_MESSAGE);
         }

@@ -59,14 +59,15 @@ public class GuideMenu extends JPanel {
                                 null, // No custom button options
                                 null); // Default button option
                         if (confirm == JOptionPane.YES_OPTION) {
-                            System.exit(0);
+                            System.exit(0); // Exit the application if confirmed
                         }
                         break;
                 }
             });
         }
-        add(navbar, BorderLayout.NORTH);
+        add(navbar, BorderLayout.NORTH);// Add the navbar to the top of the menu
 
+        // Create a JTextArea for a brief description of the game
         JTextArea sideDescription = new JTextArea(
                 "Realm of Strikes and Spells (RSS) is a turn-based RPG where strategy and stats determine victory.");
         sideDescription.setWrapStyleWord(true);
@@ -74,31 +75,32 @@ public class GuideMenu extends JPanel {
         sideDescription.setEditable(false);
         sideDescription.setBackground(new Color(241, 241, 241));
 
+        // Create a JTextPane for styled content text
         JTextPane contentTextPane = new JTextPane();
         contentTextPane.setEditable(false);
         contentTextPane.setBackground(Color.WHITE);
         contentTextPane.setBorder(new EmptyBorder(20, 20, 20, 20));
-
+        // Insert styled text into the content text pane
         insertStyledText(contentTextPane);
 
+        // Create a scroll pane to contain the text pane
         JScrollPane scrollPane = new JScrollPane(contentTextPane);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         // Add the Next button to the footer
         JButton nextButton = new JButton("Next");
-        nextButton.addActionListener(e -> listener.onMenuPlaySelected());
+        nextButton.addActionListener(e -> listener.onMenuPlaySelected()); // Action to proceed to the next menu
         contentTextPane.setLayout(new BorderLayout());
-        contentTextPane.add(nextButton, BorderLayout.EAST);
+        contentTextPane.add(nextButton, BorderLayout.EAST); // Add the Next button to the right side of the content pane
         
 
 
+        // Create a footer with copyright information
         JPanel footer = new JPanel();
         footer.setBackground(Color.LIGHT_GRAY);
         footer.add(new JLabel("Realm of Strikes and Spells © 2024"));
-        add(footer, BorderLayout.SOUTH);
-
-        add(scrollPane, BorderLayout.CENTER);
-
-        
+        add(footer, BorderLayout.SOUTH); // Add the footer to the bottom of the menu
+ 
+        add(scrollPane, BorderLayout.CENTER); // Add the scroll pane to the center of the men
     }
 
     private void insertStyledText(JTextPane textPane) {
