@@ -3,6 +3,7 @@ import java.awt.*;
 import java.net.URL;
 import java.util.Random;
 import javax.swing.*;
+import java.util.ArrayList;
 
 import screen.BattleScreen;
 import screen.DiceOverlay;
@@ -37,8 +38,8 @@ public class Main extends JFrame implements SelectionListener {
     private int map = 1;
 
     // Declare the characters and their classes
-    private Character[] allies;
-    private Character[] enemies;
+    private ArrayList<Character> allies;
+    private ArrayList<Character> enemies;
     private int[] selectedRace = { 0, 1, 2 };
     private int[] selectedClass = { 1, 2, 0 };
     private int[] enemyRace;
@@ -176,7 +177,7 @@ public class Main extends JFrame implements SelectionListener {
     }
 
     @Override
-    public void onGuideBack(){
+    public void onGuideBack() {
         loadingOverlay.turnOn();
         new SwingWorker<Void, Void>() { // Create a new SwingWorker to handle the delay
             @Override
@@ -197,39 +198,26 @@ public class Main extends JFrame implements SelectionListener {
     public int onCharacterAttack(int source, int target, int dice1, int dice2) {
         // Set the dice images and turn on the overlay
         DiceOverlay.setDice(dice1, dice2);
-        DiceOverlay.turnOn();
+                DiceOverlay.turnOn();// Turn off the overlay after the delay
 
-        new SwingWorker<Void, Void>() { // Create a new SwingWorker to handle the delay
-            @Override
-            protected Void doInBackground() throws Exception {
-                Thread.sleep(1000); // Delay for 1 second
-                return null;
-            }
+                new SwingWorker<Void, Void>() { // Create a new SwingWorker to handle the delay
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        Thread.sleep(1000); // Delay for 1 second
+                        return null;
+                    }
 
-            @Override
-            protected void done() {
-                DiceOverlay.turnOff(); // Turn off the overlay after the delay
-            }
-        }.execute();
+                    @Override
+                    protected void done() {
+                        DiceOverlay.turnOff(); // Turn off the overlay after the delay
+                    }
+                }.execute();
 
         int totalDamge; // Total damage dealt
         if (source < 3) { // Check if the source is an ally
-            totalDamge = allies[source].getStrength() * dice1 - enemies[target].getDefense() * dice2; // Calculate the
-                                                                                                      // total damage
-            if (totalDamge > 0) {
-                enemies[target].takeDamage(totalDamge);
-            } else {
-                totalDamge = 0;
-            }
+            totalDamge = allies.get(source).attack(enemies.get(target), dice1, dice2); // Calculate the total damage
         } else { // If the source is an enemy
-            totalDamge = enemies[source - 3].getStrength() * dice2 - allies[target].getDefense() * dice1; // Calculate
-                                                                                                          // the total
-                                                                                                          // damage
-            if (totalDamge > 0) {
-                allies[target].takeDamage(totalDamge);
-            } else {
-                totalDamge = 0;
-            }
+            totalDamge = enemies.get(source - 3).attack(allies.get(target), dice1, dice2); // Calculate the total damage
         }
         return totalDamge; // Return the total damage dealt
     }
@@ -237,13 +225,13 @@ public class Main extends JFrame implements SelectionListener {
     @Override
     public int onCharacterDefend(int source, int dice) {
         if (source < 3) { // Check if the source is an ally
-            int newDefense = allies[source].getDefense() + dice; // Increase the defense by the dice roll
-            allies[source].setDefense(newDefense);
-            return allies[source].getDefense();
+            int newDefense = allies.get(source).getDefense() + dice; // Increase the defense by the dice roll
+            allies.get(source).setDefense(newDefense);
+            return allies.get(source).getDefense();
         } else { // If the source is an enemy
-            int newDefense = enemies[source - 3].getDefense() + dice; // Increase the defense by the dice roll
-            enemies[source - 3].setDefense(newDefense);
-            return enemies[source - 3].getDefense();
+            int newDefense = enemies.get(source - 3).getDefense() + dice; // Increase the defense by the dice roll
+            enemies.get(source - 3).setDefense(newDefense);
+            return enemies.get(source - 3).getDefense();
         }
     }
 
@@ -264,9 +252,10 @@ public class Main extends JFrame implements SelectionListener {
         }.execute();
         int totalDamage = 0; // Total damage dealt
         if (source < 3) {
-            totalDamage = allies[source].useClassAbility(enemies[target]); // Use the class ability on the target
+            totalDamage = allies.get(source).useClassAbility(enemies.get(target)); // Use the class ability on the target
         } else {
-            totalDamage = enemies[source - 3].useClassAbility(allies[target]); // Use the class ability on the target
+            System.out.println("source: " + source + " target: " + target);
+            totalDamage = enemies.get(source - 3).useClassAbility(allies.get(target)); // Use the class ability on the target
         }
         return totalDamage;
     }
@@ -276,24 +265,24 @@ public class Main extends JFrame implements SelectionListener {
         int highestAgilityCharacter = 0; // Set the character with the highest agility to the first character
         int highestAgility = Integer.MIN_VALUE; // Set the highest agility to the lowest possible value
 
-        for (int i = 0; i < allies.length; i++) {
-            if (allies[i].getAgility() > highestAgility && allies[i].isAlive()) {
+        for (int i = 0; i < allies.size(); i++) {
+            if (allies.get(i).getAgility() > highestAgility && allies.get(i).isAlive()) {
                 highestAgilityCharacter = i;
-                highestAgility = allies[i].getAgility();
+                highestAgility = allies.get(i).getAgility();
             }
         }
-        for (int i = 0; i < enemies.length; i++) {
-            if (enemies[i].getAgility() > highestAgility && enemies[i].isAlive()) {
+        for (int i = 0; i < enemies.size(); i++) {
+            if (enemies.get(i).getAgility() > highestAgility && enemies.get(i).isAlive()) {
                 highestAgilityCharacter = i + 3;
-                highestAgility = enemies[i].getAgility();
+                highestAgility = enemies.get(i).getAgility();
             }
         }
 
         if (highestAgilityCharacter < 3) { // Check if the character is an ally
-            allies[highestAgilityCharacter].setAgility(-1); // Set the agility to -1 to prevent the character from
+            allies.get(highestAgilityCharacter).setAgility(-1); // Set the agility to -1 to prevent the character from
                                                             // moving again
         } else {
-            enemies[highestAgilityCharacter - 3].setAgility(-1); // Set the agility to -1 to prevent the character from
+            enemies.get(highestAgilityCharacter - 3).setAgility(-1); // Set the agility to -1 to prevent the character from
                                                                  // moving again
         }
         return highestAgilityCharacter; // Return the character with the highest agility
@@ -303,14 +292,14 @@ public class Main extends JFrame implements SelectionListener {
     public boolean isGameOn() { // Check if the game is still running
         boolean alliesAlive = false;
         boolean enemiesAlive = false;
-        for (int i = 0; i < allies.length; i++) { // Check if any allies are still alive
-            if (allies[i].isAlive()) {
+        for (int i = 0; i < allies.size(); i++) { // Check if any allies are still alive
+            if (allies.get(i).isAlive()) {
                 alliesAlive = true;
                 break;
             }
         }
-        for (int i = 0; i < enemies.length; i++) { // Check if any enemies are still alive
-            if (enemies[i].isAlive()) {
+        for (int i = 0; i < enemies.size(); i++) { // Check if any enemies are still alive
+            if (enemies.get(i).isAlive()) {
                 enemiesAlive = true;
                 break;
             }
@@ -320,21 +309,22 @@ public class Main extends JFrame implements SelectionListener {
 
     @Override
     public int getAllyHp(int index) { // Helper method to get the HP of an ally
-        return allies[index].getHp();
+        return allies.get(index).getHp();
     }
 
     @Override
     public int getEnemyHp(int index) { // Helper method to get the HP of an enemy
-        return enemies[index].getHp();
+        return enemies.get(index).getHp();
     }
 
     @Override
     public void resetAgility() { // Reset the agility of all characters on new turn
-        for (int i = 0; i < allies.length; i++) {
-            allies[i].setAgility(allies[i].getMaxAgility());
+        for (int i = 0; i < allies.size(); i++) {
+            int maxAgility = allies.get(i).getMaxAgility();
+            allies.get(i).setAgility(maxAgility);
         }
-        for (int i = 0; i < enemies.length; i++) {
-            enemies[i].setAgility(enemies[i].getMaxAgility());
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i).setAgility(enemies.get(i).getMaxAgility());
         }
     }
 
@@ -360,9 +350,9 @@ public class Main extends JFrame implements SelectionListener {
     @Override
     public void resetDefense(int source) { // Reset the defense of a character
         if (source < 3) {
-            allies[source].resetDefense();
+            allies.get(source).resetDefense();
         } else {
-            enemies[source - 3].resetDefense();
+            enemies.get(source - 3).resetDefense();
         }
     }
 
@@ -478,6 +468,7 @@ public class Main extends JFrame implements SelectionListener {
                 Thread.sleep(3000); // Delay for 1 second
                 return null;
             }
+
             @Override
             protected void done() {
                 beginOverlay.turnOff();
@@ -491,8 +482,9 @@ public class Main extends JFrame implements SelectionListener {
 
     private void updateCharacters() {
         // Initialize the characters and their classes
-        allies = new Character[selectedRace.length];
-        enemies = new Character[selectedRace.length];
+        allies = new ArrayList<Character>();
+
+        enemies = new ArrayList<Character>();
         for (int i = 0; i < selectedRace.length; i++) {
             CharacterClass currClass;
             switch (selectedClass[i]) {
@@ -511,16 +503,16 @@ public class Main extends JFrame implements SelectionListener {
             }
             switch (selectedRace[i]) {
                 case 0:
-                    allies[i] = new Angel("Angle", currClass);
+                    allies.add( new Angel("Angle", currClass));
                     break;
                 case 1:
-                    allies[i] = new Orc("Orc", currClass);
+                    allies.add( new Angel("Orc", currClass));
                     break;
                 case 2:
-                    allies[i] = new Minotaur("Minotaur", currClass);
+                    allies.add( new Angel("Minotaur", currClass));
                     break;
                 default:
-                    allies[i] = new Angel("Angel", currClass);
+                    allies.add( new Angel("Angle", currClass));
                     break;
             }
         }
@@ -550,16 +542,16 @@ public class Main extends JFrame implements SelectionListener {
             }
             switch (enemyRace[i]) {
                 case 0:
-                    enemies[i] = new Zombie("name", currClass);
+                    enemies.add( new Zombie("Zombie", currClass)) ;
                     break;
                 case 1:
-                    enemies[i] = new Golem("name", currClass);
+                    enemies.add( new Golem("Golem", currClass)) ;
                     break;
                 case 2:
-                    enemies[i] = new Reaper("name", currClass);
+                    enemies.add( new Reaper("Reaper", currClass)) ;
                     break;
                 default:
-                    enemies[i] = new Zombie("name", currClass);
+                    enemies.add( new Zombie("Zombie", currClass)) ;
                     break;
             }
         }

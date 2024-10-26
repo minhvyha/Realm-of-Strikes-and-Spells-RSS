@@ -1,3 +1,4 @@
+package test;
 import screen.BeginOverlay;
 
 public class BeginOverlayTest {

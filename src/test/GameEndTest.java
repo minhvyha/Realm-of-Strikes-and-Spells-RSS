@@ -1,3 +1,4 @@
+package test;
 import screen.GameEnd;
 
 public class GameEndTest {

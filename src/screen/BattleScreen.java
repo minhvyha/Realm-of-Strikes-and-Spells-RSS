@@ -462,7 +462,7 @@ public class BattleScreen extends JPanel {
         logPanel.addMessage("- " + name + " defends! " + name
                 + "'s defense increases by " + defense + " for 2 rounds.");
 
-        allyWithDefenseStand[source] = 2; // Set defense duration
+        allyWithDefenseStand[source] = 3; // Set defense duration
         turn += 1;
         wasPlayerTurn = true;
         updateGame();
@@ -517,7 +517,7 @@ public class BattleScreen extends JPanel {
                     enemiesLabel[target].setState("hurt");
                 }
 
-                allyWithSpecialAbility[source] = 2; // Set cooldown duration
+                allyWithSpecialAbility[source] = 3; // Set cooldown duration
                 wasPlayerTurn = true;
                 updateGame();
             }
@@ -592,7 +592,7 @@ public class BattleScreen extends JPanel {
 
             @Override
             protected void done() {
-                enemyWithDefenseStand[source] = 2; // Set defense duration
+                enemyWithDefenseStand[source] = 3; // Set defense duration
                 wasPlayerTurn = false;
                 updateGame();
             }
@@ -647,7 +647,7 @@ public class BattleScreen extends JPanel {
                         }
 
                         // Mark enemy's special ability as used and update game state
-                        enemyWithSpecialAbility[source] = 2;
+                        enemyWithSpecialAbility[source] = 3;
                         wasPlayerTurn = false;
                         updateGame();
                     }
@@ -658,20 +658,14 @@ public class BattleScreen extends JPanel {
 
     // Method to decrement special ability counters and reset defenses if expired
     private void checkSpecialAbility() {
-        for (int i : allyWithSpecialAbility) {
-            if (i > 0) {
-                i -= 1;
-                if (i == 0) {
-                    listener.resetDefense(source);
-                }
+        for (int i = 0; i < allyWithSpecialAbility.length; i++) {
+            if (allyWithSpecialAbility[i] > 0) {
+                allyWithSpecialAbility[i] -= 1;
             }
         }
-        for (int i : enemyWithSpecialAbility) {
-            if (i > 0) {
-                i -= 1;
-                if (i == 0) {
-                    listener.resetDefense(source + 3);
-                }
+        for (int i = 0; i < enemyWithSpecialAbility.length; i++) {
+            if (enemyWithSpecialAbility[i] > 0) {
+                enemyWithSpecialAbility[i] -= 1;
             }
         }
     }
@@ -710,13 +704,32 @@ public class BattleScreen extends JPanel {
     private boolean checkGameEnd() {
         if (!listener.isGameOn()) {
             // Check if all allies are defeated
-            if (dead >= alliesLabel.length) {
+            boolean isAllyWin = false;
+            for (int i = 0; i < 3; i++) {
+                if (listener.getAllyHp(i) > 0) {
+                    isAllyWin = true;
+                    break;
+                }
+            }
+
+            ImageIcon originalIcon = new ImageIcon(getClass().getResource("/assets/logo.png"));
+
+            // Scale the image to 50x50 pixels
+            Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            // Show message dialog with icon
+            if (!isAllyWin) {
                 logPanel.addMessage("=== Enemies Win! ===");
-                JOptionPane.showMessageDialog(null, "Enemies Win!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Enemies Win!", "Game Over", JOptionPane.INFORMATION_MESSAGE,
+                        scaledIcon);
             } else {
                 logPanel.addMessage("=== Allies Win! ===");
-                JOptionPane.showMessageDialog(null, "Allies Win!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Allies Win!", "Game Over", JOptionPane.INFORMATION_MESSAGE,
+                        scaledIcon);
             }
+
+            // Export the battle log to a CSV file
+            exportLog();
 
             // Notify listener to handle end-of-game actions
             listener.gameEnd();
@@ -747,6 +760,10 @@ public class BattleScreen extends JPanel {
     // Method to simulate rolling a six-sided dice
     private int rollDice() {
         return random.nextInt(6) + 1; // Returns a random integer between 1 and 6
+    }
+
+    private void exportLog() {
+        logPanel.exportToCSV("./battle_log.csv");
     }
 
     // Override the paintComponent to draw the background image

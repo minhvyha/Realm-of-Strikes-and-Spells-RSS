@@ -10,7 +10,7 @@ public class Rogue implements CharacterClass {
         if (target.getHp() < target.getMaxHp() / 2) {
             damage *= 2; // Double damage if target's HP is less than half
         }
-        damage = Math.max(damage, 1);
+        damage = Math.max(damage, 0);
         target.takeDamage(damage);
         return damage;
     }
