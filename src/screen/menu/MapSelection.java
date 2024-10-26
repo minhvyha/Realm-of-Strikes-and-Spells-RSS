@@ -7,11 +7,12 @@ import javax.swing.border.EmptyBorder;
 import screen.SelectionListener;
 
 public class MapSelection extends JPanel {
+    // UI Components
     private JLabel titleLabel = new JLabel("Select Your Allies", SwingConstants.CENTER);
     private JPanel buttonPanel = new JPanel();
     private JLabel selectedMapLabel = new JLabel("", SwingConstants.CENTER);
-    private SelectionListener listener;
-    private String[] battleMapNames = {
+    private SelectionListener listener; // Listener to handle map selection events
+    private String[] battleMapNames = { // Array of map names
             "Enchanted Forest", "Frozen Tundra", "Desert Dunes", "Desert Oasis",
             "Cavern Depths", "Autumn Woods", "Mystic Grove", "Dungeon Chambers",
             "Rocky Plateau"
@@ -19,6 +20,7 @@ public class MapSelection extends JPanel {
     private int map; // Variable to store selected map
     private boolean[] mapUnlocked; // Array to track unlocked maps
 
+    // Constructor to set up MapSelection screen
     public MapSelection(SelectionListener listener, int map) {
         this.map = map;
         this.listener = listener;
@@ -26,16 +28,17 @@ public class MapSelection extends JPanel {
         this.mapUnlocked[0] = true; // Unlock the first map by default
         setLayout(new BorderLayout());
 
-        configureTitleLabel();
-        configureButtonPanel();
-        addTitleLabel();
-        addButtonPanel();
-        addSouthPanel();
+        configureTitleLabel(); //  title label
+        configureButtonPanel(); //map button panel
+        addTitleLabel(); //  title label to layout
+        addButtonPanel(); //  button panel to layout
+        addSouthPanel(); // Add the South panel (map selection status and navigation buttons)
 
         revalidate();
         repaint();
     }
 
+    // Configure title label appearance
     private void configureTitleLabel() {
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setForeground(Color.WHITE);
@@ -44,10 +47,12 @@ public class MapSelection extends JPanel {
         titleLabel.setBorder(BorderFactory.createEmptyBorder(30, 20, 10, 20));
     }
 
+    // Add title label to the top (North) of the layout
     private void addTitleLabel() {
         add(titleLabel, BorderLayout.NORTH);
     }
 
+    // Configure the panel for map selection buttons
     private void configureButtonPanel() {
         buttonPanel.setLayout(new GridLayout(3, 3, 40, 40));
         buttonPanel.setBackground(Color.BLACK);
@@ -60,21 +65,24 @@ public class MapSelection extends JPanel {
         }
     }
 
+    // Add button panel to the center of the layout
     private void addButtonPanel() {
         add(buttonPanel, BorderLayout.CENTER);
     }
 
+    // Add a panel at the bottom (South) for map status and navigation buttons
     private void addSouthPanel() {
         JPanel wrapper = new JPanel(new GridLayout(2, 1, 20, 0));
         wrapper.setBackground(Color.BLACK);
 
-        configureSelectedMapLabel();
+        configureSelectedMapLabel(); // Configure map status label
         wrapper.add(selectedMapLabel);
-        wrapper.add(createButtonPanel());
+        wrapper.add(createButtonPanel()); // Add navigation buttons
 
         add(wrapper, BorderLayout.SOUTH);
     }
 
+    // Set up the label that shows the selected map name
     private void configureSelectedMapLabel() {
         selectedMapLabel.setFont(new Font("Arial", Font.BOLD, 14));
         selectedMapLabel.setForeground(Color.WHITE);
@@ -84,6 +92,7 @@ public class MapSelection extends JPanel {
         selectedMapLabel.setText("Selected Map: " + battleMapNames[map - 1]);
     }
 
+    // Create navigation buttons for Next and Back
     private JPanel createButtonPanel() {
         JPanel buttonPanelWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         buttonPanelWrapper.setBackground(Color.BLACK);
@@ -91,15 +100,13 @@ public class MapSelection extends JPanel {
         JButton nextButton = createButton("Next");
         JButton backButton = createButton("Back");
 
-        nextButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
         buttonPanelWrapper.add(backButton);
         buttonPanelWrapper.add(nextButton);
 
         return buttonPanelWrapper;
     }
 
+    // Create a map selection button with overlay and label
     private JLayeredPane createMapButton(int mapIndex, Dimension buttonSize) {
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(buttonSize);
@@ -116,6 +123,7 @@ public class MapSelection extends JPanel {
         return layeredPane;
     }
 
+    // Create an image button for each map
     private JButton createMapImageButton(int mapIndex, Dimension buttonSize) {
         JButton button = new JButton();
         button.setFocusPainted(false);
@@ -123,7 +131,7 @@ public class MapSelection extends JPanel {
         button.setBounds(30, 0, buttonSize.width, buttonSize.height);
         button.setHorizontalAlignment(SwingConstants.CENTER);
 
-        button.addActionListener(e -> {
+        button.addActionListener(e -> { // Update map selection on click
             this.map = mapIndex;
             selectedMapLabel.setText("Selected Map: " + battleMapNames[mapIndex - 1]);
         });
@@ -132,8 +140,7 @@ public class MapSelection extends JPanel {
         URL resource = getClass().getResource(imagePath);
         if (resource != null) {
             ImageIcon originalIcon = new ImageIcon(resource);
-            Image scaledImage = originalIcon.getImage().getScaledInstance(buttonSize.width, buttonSize.height,
-                    Image.SCALE_SMOOTH);
+            Image scaledImage = originalIcon.getImage().getScaledInstance(buttonSize.width, buttonSize.height, Image.SCALE_SMOOTH);
             button.setIcon(new ImageIcon(scaledImage));
         } else {
             button.setText("New Option " + mapIndex);
@@ -143,6 +150,7 @@ public class MapSelection extends JPanel {
         return button;
     }
 
+    // Create an overlay panel for semi-transparent dark overlay effect
     private JPanel createOverlayPanel(Dimension buttonSize) {
         JPanel overlayPanel = new JPanel() {
             @Override
@@ -159,6 +167,7 @@ public class MapSelection extends JPanel {
         return overlayPanel;
     }
 
+    // Create a label with map name for each button
     private JLabel createMapLabel(int mapIndex, Dimension buttonSize) {
         JLabel textLabel = new JLabel(battleMapNames[mapIndex - 1], SwingConstants.CENTER);
         textLabel.setForeground(Color.WHITE);
@@ -167,18 +176,19 @@ public class MapSelection extends JPanel {
         return textLabel;
     }
 
+    // Create navigation button for Next/Back functionality
     private JButton createButton(String text) {
         JButton button = new JButton(text);
         button.setFont(new Font("Arial", Font.BOLD, 12));
         button.setPreferredSize(new Dimension(100, 30));
 
+        // Define button action
         button.addActionListener(e -> {
             if (text.equals("Next")) {
                 if (mapUnlocked[map - 1]) { // Check if the current map is unlocked
                     listener.onMapSelected(map);
                 } else {
-                    JOptionPane.showMessageDialog(this, "You need to complete the previous map to unlock the next one.",
-                            "Map Locked", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "You need to complete the previous map to unlock the next one.", "Map Locked", JOptionPane.WARNING_MESSAGE);
                 }
             } else if (text.equals("Back")) {
                 listener.onMapSelected(-1);
