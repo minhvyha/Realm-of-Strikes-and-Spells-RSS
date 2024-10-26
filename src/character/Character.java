@@ -112,8 +112,8 @@ public class Character {
     }
 
     // Display character status
-    public void displayStatus() {
-        System.out.printf("%s - HP: %d/%d, Strength: %d, Intelligence: %d, Agility: %d, Defense: %d%n",
+    public String displayStatus() {
+        return String.format("%s - HP: %d/%d, Strength: %d, Intelligence: %d, Agility: %d, Defense: %d%n",
                 name, hp, maxHp, strength, intelligence, agility, defense);
     }
 

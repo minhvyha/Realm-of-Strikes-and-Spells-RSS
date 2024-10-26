@@ -5,7 +5,7 @@ import character.CharacterClass;
 
 public class Golem extends Character {
     public Golem(String name, CharacterClass characterClass) {
-        super(name, 280, 3, 10, 15, 25, characterClass);
+        super(name, 280, 6, 10, 15, 25, characterClass);
 
     }
 }

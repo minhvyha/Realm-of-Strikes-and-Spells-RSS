@@ -1,0 +1,53 @@
+Line,Message
+1,=== Battle Log ===
+2,Battle started!
+3, 
+4,--- Turn 1 ---
+5, 
+6,[Ally’s Turn]
+7,- Angel uses Celestial Torrent! Reaper takes 168 damage.
+8,* reaper defeated! *
+9,- Orc uses Shadow Dance! Zombie takes 80 damage.
+10, 
+11,[Enemy’s Turn]
+12,- Golem attacks! Deals 0 damage.
+13, 
+14,[Ally’s Turn]
+15,- Minotaur uses Blazing Valor! Golem takes 70 damage.
+16, 
+17,[Enemy’s Turn]
+18,- Zombie uses Blazing Valor! Deals 30 damage.
+19, 
+20,--- Turn 2 ---
+21, 
+22,[Ally’s Turn]
+23,Special ability is on cooldown for 2 rounds.
+24,- Angel attacks! Zombie takes 80 damage.
+25,- Orc attacks! Zombie takes 160 damage.
+26,* zombie defeated! *
+27, 
+28,[Enemy’s Turn]
+29,- Golem defends! Golem's defense increases by 28 for 2 rounds.
+30, 
+31,[Ally’s Turn]
+32,- Minotaur attacks! Golem takes 16 damage.
+33, 
+34,--- Turn 3 ---
+35, 
+36,[Ally’s Turn]
+37,- Angel attacks! Golem takes 0 damage.
+38,- Orc attacks! Golem takes 0 damage.
+39, 
+40,[Enemy’s Turn]
+41,- Golem attacks! Deals 0 damage.
+42, 
+43,[Ally’s Turn]
+44,- Minotaur attacks! Golem takes 97 damage.
+45, 
+46,--- Turn 4 ---
+47, 
+48,[Ally’s Turn]
+49,- Angel attacks! Golem takes 19 damage.
+50,- Orc attacks! Golem takes 92 damage.
+51,* golem defeated! *
+52,=== Allies Win! ===

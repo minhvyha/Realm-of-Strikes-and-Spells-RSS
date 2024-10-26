@@ -144,6 +144,38 @@ public class BattleScreen extends JPanel {
         allyNameLabel.setBounds(x + 20, y + 120, 120, 20); // Position under the health bar
         allyNameLabel.setForeground(Color.WHITE); // text white
 
+        String infoText = listener.getAllyStatus(index);
+
+        // Add a mouse listener to the ally name label
+        allyLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        allyHealthBar.setCursor(new Cursor(Cursor.HAND_CURSOR));   
+        allyNameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        allyLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if(isPlayerTurn) {
+                    return;
+                }
+                logPanel.addMessage("- " + name + " - " + infoText);
+            }
+        });
+        allyHealthBar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if(isPlayerTurn) {
+                    return;
+                }
+                logPanel.addMessage("- " + name + " - " + infoText);
+            }
+        });
+        allyNameLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if(isPlayerTurn) {
+                    return;
+                }
+                logPanel.addMessage("- " + name + " - " + infoText);
+            }
+        });
+
         // Store the ally label, name label, and health bar
         alliesLabel[index] = allyLabel;
         allyNameLabels[index] = allyNameLabel;
@@ -172,6 +204,36 @@ public class BattleScreen extends JPanel {
         enemiesLabel[index] = enemyLabel;
         enemyHealthBars[index] = healthBar; // Store health bar
         enemyNameLabels[index] = enemyNameLabel;
+
+        enemyLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        healthBar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        enemyNameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        enemyLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if(!isPlayerTurn) {
+                    return;
+                }
+                logPanel.addMessage("- " + name + " - " + listener.getEnemyStatus(index));
+            }
+        });
+        healthBar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if(!isPlayerTurn) {
+                    return;
+                }
+                logPanel.addMessage("- " + name + " - " + listener.getEnemyStatus(index));
+            }
+        });
+        enemyNameLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if(!isPlayerTurn) {
+                    return;
+                }
+                logPanel.addMessage("- " + name + " - " + listener.getEnemyStatus(index));
+            }
+        });
+
 
         rightCharacterPanel.add(enemyNameLabel); // Add name label to the panel
         rightCharacterPanel.add(healthBar); // health bar to panel
@@ -209,6 +271,10 @@ public class BattleScreen extends JPanel {
                 allySpecialAbility();
             }
         });
+
+        attackButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        defendButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        specialButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         // Add action buttons to the button panel
         buttonPanel.add(attackButton);
@@ -720,14 +786,18 @@ public class BattleScreen extends JPanel {
             // Show message dialog with icon
             if (!isAllyWin) {
                 logPanel.addMessage("=== Enemies Win! ===");
-                JOptionPane.showMessageDialog(null, "Enemies Win! Outputting battle log.", "Game Over",
+                JOptionPane.showMessageDialog(null, "Enemies Win! Outputting Battle Log.",
+                        "Game Over",
                         JOptionPane.INFORMATION_MESSAGE,
                         scaledIcon);
+                listener.unlockMap();
             } else {
                 logPanel.addMessage("=== Allies Win! ===");
-                JOptionPane.showMessageDialog(null, "Allies Win! Outputting battle log.", "Game Over",
+                JOptionPane.showMessageDialog(null, "Allies Win! Outputting battle log and Unlock New Map.", "Game Over",
                         JOptionPane.INFORMATION_MESSAGE,
                         scaledIcon);
+                listener.unlockMap();
+
             }
 
             // Export the battle log to a CSV file

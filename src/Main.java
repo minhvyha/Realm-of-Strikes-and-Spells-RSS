@@ -45,6 +45,7 @@ public class Main extends JFrame implements SelectionListener {
     private int[] selectedClass = { 1, 2, 0 };
     private int[] enemyRace;
     private int[] enemyClass;
+    private boolean[] unlockMaps = { true, false, false, false, false, false, false, false, false, false };
 
     // Declare the menu screens and its components
     private CharacterSelection selectionMenu;
@@ -178,8 +179,7 @@ public class Main extends JFrame implements SelectionListener {
     }
 
     @Override
-    public void onMenuBattleLogReaderSelected() { // Method to handle battle log reader option selection on the main
-                                                  // menu
+    public void onMenuBattleLogReaderSelected() { // Method to handle battle log reader option selection on the main menu
         loadingOverlay.turnOn();
         new SwingWorker<Void, Void>() { // Create a new SwingWorker to handle the delay
             @Override
@@ -291,12 +291,9 @@ public class Main extends JFrame implements SelectionListener {
         }.execute();
         int totalDamage = 0; // Total damage dealt
         if (source < 3) {
-            totalDamage = allies.get(source).useClassAbility(enemies.get(target)); // Use the class ability on the
-                                                                                   // target
+            totalDamage = allies.get(source).useClassAbility(enemies.get(target)); // Use the class ability on the target
         } else {
-            System.out.println("source: " + source + " target: " + target);
-            totalDamage = enemies.get(source - 3).useClassAbility(allies.get(target)); // Use the class ability on the
-                                                                                       // target
+            totalDamage = enemies.get(source - 3).useClassAbility(allies.get(target)); // Use the class ability on the target
         }
         return totalDamage;
     }
@@ -320,12 +317,9 @@ public class Main extends JFrame implements SelectionListener {
         }
 
         if (highestAgilityCharacter < 3) { // Check if the character is an ally
-            allies.get(highestAgilityCharacter).setAgility(-1); // Set the agility to -1 to prevent the character from
-            // moving again
+            allies.get(highestAgilityCharacter).setAgility(-1); // Set the agility to -1 
         } else {
-            enemies.get(highestAgilityCharacter - 3).setAgility(-1); // Set the agility to -1 to prevent the character
-                                                                     // from
-            // moving again
+            enemies.get(highestAgilityCharacter - 3).setAgility(-1); // Set the agility to -1 
         }
         return highestAgilityCharacter; // Return the character with the highest agility
     }
@@ -396,6 +390,31 @@ public class Main extends JFrame implements SelectionListener {
         } else {
             enemies.get(source - 3).resetDefense();
         }
+    }
+
+    @Override
+    public boolean isUnlocked(int index) { // Check if a map is unlocked
+        return unlockMaps[index];
+    }
+
+    @Override
+    public void unlockMap() { // Unlock a map
+        for (int i = 0; i < unlockMaps.length; i++) {
+            if(unlockMaps[i] == false){
+                unlockMaps[i] = true;
+                break;
+            }
+        }
+    }
+
+    @Override
+    public String getAllyStatus(int index) {
+        return allies.get(index).displayStatus();
+    }
+
+    @Override
+    public String getEnemyStatus(int index) {
+        return enemies.get(index).displayStatus();
     }
 
     public Main() { // Constructor

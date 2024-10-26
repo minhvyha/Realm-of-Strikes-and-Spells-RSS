@@ -20,10 +20,15 @@ public interface SelectionListener {
 
     int getAllyHp(int index); // Get the HP of an ally character
     int getEnemyHp(int index); // Get the HP of an enemy character
+    String getAllyStatus(int index); // Get the status of an ally character
+    String getEnemyStatus(int index); // Get the status of an enemy character
 
     void resetAgility(); // Reset the agility of all characters on new turn
     void resetDefense(int source); // Reset the defense of a character
 
     boolean isGameOn(); // Check if the game is still running
     void gameEnd(); // Called when the game ends
+    
+    boolean isUnlocked(int index); // Check if a map is unlocked
+    void unlockMap(); // Unlock a map
 }

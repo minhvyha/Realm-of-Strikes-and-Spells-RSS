@@ -23,62 +23,73 @@ public class CharacterSelection extends JPanel {
 
         add(titleLabel, BorderLayout.NORTH); // Add title to NORTH position
         add(buttonPanel, BorderLayout.CENTER); // Add character selection panel to CENTER
-        
+
         addCharacterSelectionColumns(selectedRace, selectedClass); // Add character selection UI
         addNavigationButtons(listener, selectedRace, selectedClass); // Add navigation buttons
         createNavbar(listener); // Initialize navbar
         add(navbar, BorderLayout.NORTH); // Add navbar to the NORTH position
     }
+
     private void createNavbar(SelectionListener listener) {
         navbar.setLayout(new FlowLayout(FlowLayout.LEFT));
         navbar.setBackground(Color.DARK_GRAY);
 
-        String[] navItems = {"Home", "Map", "Characters", "Exit"}; // Navigation item labels
-        for (String currentItem : navItems) {
-            JButton navButton = new JButton(currentItem);
-            navButton.setFont(new Font("Arial", Font.PLAIN, 16));
+                String[] navItems = { "Home", "Map", "Characters", "Battle Log Reader" , "Exit" };
+        for (String item : navItems) {
+            JButton navButton = new JButton(item);
             navButton.setForeground(Color.WHITE);
-            navButton.setBackground(Color.GRAY);
-            navButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            navButton.setBackground(Color.DARK_GRAY);
+            navButton.setBorderPainted(false);
+            navButton.setFocusPainted(false);
+            navButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            navbar.add(navButton);
+
+            // Capture the current item in a final variable for the action listener
+            final String currentItem = item;
 
             // Adding an action for each navigation item
             navButton.addActionListener(e -> {
                 switch (currentItem) {
                     case "Home":
-                        listener.onGuideBack();//to guide
+                        listener.onGuideBack();
                         break;
                     case "Map":
-                        listener.onMenuMapSelected();//to map
+                        listener.onMenuMapSelected();
                         break;
                     case "Characters":
-                        listener.onMenuCharacterSelected();//to character
+                        listener.onMenuCharacterSelected();
                         break;
+                        case "Battle Log Reader":
+                        listener.onMenuBattleLogReaderSelected();
                     case "Exit":
-                        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/assets/logo.png"));
-                        Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                        ImageIcon originalIcon = new ImageIcon(
+                                getClass().getResource("/assets/logo.png"));
+
+                        // Scale the image to 50x50 pixels
+                        Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50,
+                                Image.SCALE_SMOOTH);
                         ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
-                        int confirm = JOptionPane.showOptionDialog(// Confirmation message
-                                null,
-                                "Are you sure you want to quit?",
-                                "Quit Confirmation",
-                                JOptionPane.YES_NO_OPTION,
-                                JOptionPane.QUESTION_MESSAGE,
-                                scaledIcon,
-                                null,
-                                null
-                        );
+                        int confirm = JOptionPane.showOptionDialog(
+                                null, // Parent component
+                                "Are you sure you want to quit?", // Message
+                                "Quit Confirmation", // Title
+                                JOptionPane.YES_NO_OPTION, // Option type (Yes/No)
+                                JOptionPane.QUESTION_MESSAGE, // Message type
+                                scaledIcon, // Custom icon
+                                null, // No custom button options
+                                null); // Default button option
                         if (confirm == JOptionPane.YES_OPTION) {
-                            System.exit(0);// Exit the application
+                            System.exit(0); // Exit the application if confirmed
                         }
                         break;
                 }
             });
-            navbar.add(navButton);// Add button to the navigation bar
         }
+        add(navbar, BorderLayout.NORTH);// Add the navbar to the top of the menu
+
     }
-    
-    
+
     // Configure the title label settings
     private void configureTitleLabel() {
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
@@ -189,7 +200,7 @@ public class CharacterSelection extends JPanel {
     private void addNavigationButtons(SelectionListener listener, int[] selectedRace, int[] selectedClass) {
         JButton nextButton = createNavigationButton("Next", e -> {
             if (listener != null) {
-                listener.onMenuGuideSelected();// Navigate to the guide
+                listener.onCharacterSelected(selectedRace, selectedClass);
             }
         });
 
@@ -218,6 +229,7 @@ public class CharacterSelection extends JPanel {
         button.addActionListener(action);
         return button;
     }
+
     // Helper method to load and scale images, with a fallback message if not found
     private void loadImage(JLabel label, String imagePath, int width, int height) {
         URL resource = getClass().getResource(imagePath);

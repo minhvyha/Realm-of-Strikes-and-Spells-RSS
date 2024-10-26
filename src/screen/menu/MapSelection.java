@@ -18,14 +18,12 @@ public class MapSelection extends JPanel {
             "Rocky Plateau"
     };
     private int map; // Variable to store selected map
-    private boolean[] mapUnlocked; // Array to track unlocked maps
 
     // Constructor to set up MapSelection screen
     public MapSelection(SelectionListener listener, int map) {
         this.map = map;
         this.listener = listener;
-        this.mapUnlocked = new boolean[battleMapNames.length]; // Initialize map lock array
-        this.mapUnlocked[0] = true; // Unlock the first map by default
+
         setLayout(new BorderLayout());
 
         configureTitleLabel(); // Configure title label
@@ -81,6 +79,9 @@ public class MapSelection extends JPanel {
         wrapper.add(createButtonPanel()); // Add navigation buttons
 
         add(wrapper, BorderLayout.SOUTH);
+
+        repaint();
+        revalidate();
     }
 
     // Set up the label that shows the selected map name
@@ -98,7 +99,7 @@ public class MapSelection extends JPanel {
         JPanel navbar = new JPanel(new FlowLayout(FlowLayout.LEFT));
         navbar.setBackground(Color.DARK_GRAY);
 
-        String[] navItems = { "Home", "Map", "Characters", "Exit" };
+        String[] navItems = { "Home", "Map", "Characters", "Battle Log Reader", "Exit" };
         for (String item : navItems) {
             JButton navButton = new JButton(item);
             navButton.setForeground(Color.WHITE);
@@ -122,6 +123,9 @@ public class MapSelection extends JPanel {
                         break;
                     case "Characters":
                         listener.onMenuCharacterSelected();
+                        break;
+                    case "Battle Log Reader":
+                        listener.onMenuBattleLogReaderSelected();
                         break;
                     case "Exit":
                         ImageIcon originalIcon = new ImageIcon(
@@ -180,6 +184,9 @@ public class MapSelection extends JPanel {
         layeredPane.add(textLabel, Integer.valueOf(2));
 
         layeredPane.setCursor(new Cursor(Cursor.HAND_CURSOR));
+layeredPane.revalidate();
+layeredPane.repaint();
+
         return layeredPane;
     }
 
@@ -200,7 +207,8 @@ public class MapSelection extends JPanel {
         URL resource = getClass().getResource(imagePath);
         if (resource != null) {
             ImageIcon originalIcon = new ImageIcon(resource);
-            Image scaledImage = originalIcon.getImage().getScaledInstance(buttonSize.width, buttonSize.height, Image.SCALE_SMOOTH);
+            Image scaledImage = originalIcon.getImage().getScaledInstance(buttonSize.width, buttonSize.height,
+                    Image.SCALE_SMOOTH);
             button.setIcon(new ImageIcon(scaledImage));
         } else {
             button.setText("New Option " + mapIndex);
@@ -226,13 +234,16 @@ public class MapSelection extends JPanel {
         overlayPanel.setOpaque(false);
         return overlayPanel;
     }
-    
+
     // Create a label with map name for each button
     private JLabel createMapLabel(int mapIndex, Dimension buttonSize) {
         JLabel textLabel = new JLabel(battleMapNames[mapIndex - 1], SwingConstants.CENTER);
+        if(!listener.isUnlocked(mapIndex - 1)){
+            textLabel.setText("Locked");
+        }
         textLabel.setForeground(Color.WHITE);
         textLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        textLabel.setBounds(30, -40, buttonSize.width, buttonSize.height);
+        textLabel.setBounds(30, -30, buttonSize.width, buttonSize.height);
         return textLabel;
     }
 
@@ -245,24 +256,31 @@ public class MapSelection extends JPanel {
         // Define button action
         button.addActionListener(e -> {
             if (text.equals("Next")) {
-                if (mapUnlocked[map - 1]) { // Check if the current map is unlocked
-                    listener.onMenuCharacterSelected();
+                if (listener.isUnlocked(map - 1)) { // Check if the current map is unlocked
+                    listener.onMapSelected(map); // Notify listener with selected map
                 } else {
-                    JOptionPane.showMessageDialog(this, "You need to complete the previous map to unlock the next one.", "Map Locked", JOptionPane.WARNING_MESSAGE);
+                    // Load your custom icon
+                    ImageIcon originalIcon = new ImageIcon(getClass().getResource("/assets/logo.png"));
+
+                    // Scale the image to 50x50 pixels
+                    Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                    ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+                    // Use the custom icon in the JOptionPane
+                    JOptionPane.showMessageDialog(this,
+                            "You need to complete the previous map to unlock the next one.",
+                            "Map Locked",
+                            JOptionPane.WARNING_MESSAGE,
+                            scaledIcon); // Set the custom icon here
                 }
             } else if (text.equals("Back")) {
                 listener.onMapSelected(-1);
             }
         });
-        
 
         return button;
     }
 
-    // Call this method when a map is completed to unlock the next one
-    public void unlockNextMap(int completedMapIndex) {
-        if (completedMapIndex < mapUnlocked.length - 1) {
-            mapUnlocked[completedMapIndex + 1] = true; // Unlock the next map
-        }
-    }
+
+
 }

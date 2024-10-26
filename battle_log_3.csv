@@ -1,0 +1,32 @@
+Line,Message
+1,=== Battle Log ===
+2,Battle started!
+3, 
+4,--- Turn 1 ---
+5, 
+6,[Ally’s Turn]
+7,- Angel uses Celestial Torrent! Reaper takes 168 damage.
+8,* reaper defeated! *
+9,- Angel uses Celestial Torrent! Reaper takes 168 damage.
+10,* reaper defeated! *
+11, 
+12,[Enemy’s Turn]
+13,- Reaper defends! Reaper's defense increases by 13 for 2 rounds.
+14, 
+15,[Ally’s Turn]
+16,- Minotaur uses Blazing Valor! Reaper takes 82 damage.
+17, 
+18,--- Turn 2 ---
+19, 
+20,[Ally’s Turn]
+21,- Angel attacks! Reaper takes 0 damage.
+22,Special ability is on cooldown for 2 rounds.
+23,- Angel attacks! Reaper takes 0 damage.
+24, 
+25,[Enemy’s Turn]
+26,- Reaper uses Shadow Dance! Deals 48 damage.
+27, 
+28,[Ally’s Turn]
+29,- Minotaur attacks! Reaper takes 72 damage.
+30,* reaper defeated! *
+31,=== Allies Win! ===
