@@ -188,7 +188,7 @@ public class CharacterSelection extends JPanel {
     private void addNavigationButtons(SelectionListener listener, int[] selectedRace, int[] selectedClass) {
         JButton nextButton = createNavigationButton("Next", e -> {
             if (listener != null) {
-                listener.onCharacterSelected(selectedRace, selectedClass);
+                listener.onMenuGuideSelected();
             }
         });
 

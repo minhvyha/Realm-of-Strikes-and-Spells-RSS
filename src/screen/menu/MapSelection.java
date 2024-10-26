@@ -99,7 +99,8 @@ public class MapSelection extends JPanel {
 
         JButton nextButton = createButton("Next");
         JButton backButton = createButton("Back");
-
+        nextButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         buttonPanelWrapper.add(backButton);
         buttonPanelWrapper.add(nextButton);
 
@@ -186,7 +187,7 @@ public class MapSelection extends JPanel {
         button.addActionListener(e -> {
             if (text.equals("Next")) {
                 if (mapUnlocked[map - 1]) { // Check if the current map is unlocked
-                    listener.onMapSelected(map);
+                    listener.onMenuCharacterSelected();
                 } else {
                     JOptionPane.showMessageDialog(this, "You need to complete the previous map to unlock the next one.", "Map Locked", JOptionPane.WARNING_MESSAGE);
                 }
@@ -194,6 +195,7 @@ public class MapSelection extends JPanel {
                 listener.onMapSelected(-1);
             }
         });
+        
 
         return button;
     }

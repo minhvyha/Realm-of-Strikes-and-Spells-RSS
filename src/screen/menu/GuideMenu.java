@@ -83,6 +83,13 @@ public class GuideMenu extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(contentTextPane);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        // Add the Next button to the footer
+        JButton nextButton = new JButton("Next");
+        nextButton.addActionListener(e -> listener.onMenuPlaySelected());
+        contentTextPane.setLayout(new BorderLayout());
+        contentTextPane.add(nextButton, BorderLayout.EAST);
+        
+
 
         JPanel footer = new JPanel();
         footer.setBackground(Color.LIGHT_GRAY);
@@ -90,6 +97,8 @@ public class GuideMenu extends JPanel {
         add(footer, BorderLayout.SOUTH);
 
         add(scrollPane, BorderLayout.CENTER);
+
+        
     }
 
     private void insertStyledText(JTextPane textPane) {
