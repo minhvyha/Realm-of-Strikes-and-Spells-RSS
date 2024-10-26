@@ -10,21 +10,24 @@ import character.CharacterLabel;
 import character.EnemyLabel;
 
 public class BattleScreen extends JPanel {
-    private JPanel topPanel, bottomPanel;
-    private JPanel leftCharacterPanel, rightCharacterPanel;
-    private JLabel allyNameBox, allyStatus, enemyNameBox, enemyStatus;
     private Random random;
     private SelectionListener listener;
     private Image backgroundImage;
 
-    private int source, target;
-    private boolean isPlayerTurn = true;
+    private JPanel topPanel, bottomPanel;
+    private JPanel leftCharacterPanel, rightCharacterPanel;
 
-    private JProgressBar[] enemyHealthBars, allyHealthBars; // Add health bars for enemies
-    private CharacterLabel[] alliesLabel;
-    private EnemyLabel[] enemiesLabel;
+    private JLabel allyNameBox, allyStatus, enemyNameBox, enemyStatus;
     private JLabel[] allyNameLabels, enemyNameLabels;
 
+    // Declare character labels for allies and enemies
+    private CharacterLabel[] alliesLabel;
+    private EnemyLabel[] enemiesLabel;
+
+    // Declare health bars for allies and enemies
+    private JProgressBar[] enemyHealthBars, allyHealthBars; // Add health bars for enemies
+
+    // Declare variables for characters
     private int[] selectedRace, selectedClass, enemyRace, enemyClass;
     private String[] allyRaces = { "angel", "orc", "minotaur" };
     private String[] enemyRaces = { "zombie", "golem", "reaper" };
@@ -37,14 +40,19 @@ public class BattleScreen extends JPanel {
     // Initialize variables for the game state
     private int dead = 0;
     private int turn = 0;
+    private int source, target;
+    private boolean isPlayerTurn = true;
     private int[] allyWithDefenseStand = { 0, 0, 0 };
     private int[] enemyWithDefenseStand = { 0, 0, 0 };
     private int[] allyWithSpecialAbility = { 0, 0, 0 };
     private int[] enemyWithSpecialAbility = { 0, 0, 0 };
     private boolean wasPlayerTurn = true;
 
+    // Constructor for the BattleScreen
     public BattleScreen(Image backgroundImage, int[] selectedRace, int[] selectedClass, int[] enemyRace,
             int[] enemyClass, SelectionListener listener) {
+
+        // Initialize the listener, background image, and character selections
         this.listener = listener;
         this.backgroundImage = backgroundImage;
         this.selectedRace = selectedRace;
@@ -54,13 +62,15 @@ public class BattleScreen extends JPanel {
         this.random = new Random();
         this.dead = 0;
 
+        // Set the layout of the BattleScreen
         setLayout(new BorderLayout());
-        // Initialize panels
-        initializePanels();
 
+        // Initialize panels and draw the battle screen
+        drawBattleScreen();
     }
 
-    private void initializePanels() {
+    // Function to draw the battle screen
+    private void drawBattleScreen() {
         // Initialize the top panel with character sections
         topPanel = new JPanel(new GridLayout(1, 2));
         topPanel.setOpaque(false); // Make the top panel transparent
@@ -145,7 +155,7 @@ public class BattleScreen extends JPanel {
 
         bottomPanel.add(logPanel, BorderLayout.WEST);
 
-        initializeActionButtons();
+        drawActionButtons();
 
         add(topPanel, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
@@ -153,7 +163,7 @@ public class BattleScreen extends JPanel {
         bottomPanel.setPreferredSize(new Dimension(800, 130));
     }
 
-    private void initializeActionButtons() {
+    private void drawActionButtons() {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
         buttonPanel.setOpaque(false);
 
