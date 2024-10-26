@@ -92,46 +92,47 @@ public class GuideMenu extends JPanel {
 
         try {
             // Populate the JTextPane with the game's guide content, applying the styles
-            doc.insertString(doc.getLength(), "Realm of Strikes and Spells (RSS)\n", titleStyle);
-            doc.insertString(doc.getLength(), "\nOverview:\n", subTitleStyle);
-            doc.insertString(doc.getLength(), "Realm of Strikes and Spells (RSS) is a turn-based RPG where players control a team of allies to battle against enemies. " +
-                "The game revolves around strategic use of character stats, abilities, and dice rolls to defeat all enemies before they defeat your team.\n\n", bodyStyle);
+      doc.insertString(doc.getLength(), "Realm of Strikes and Spells (RSS)\n", titleStyle);
+doc.insertString(doc.getLength(), "\nOverview:\n", subTitleStyle);
+doc.insertString(doc.getLength(), "Realm of Strikes and Spells (RSS) is a turn-based RPG where players control a team of allies to battle against enemies. " +
+    "The game revolves around strategic use of character stats, abilities, and dice rolls to defeat all enemies before they defeat your team.\n\n", bodyStyle);
 
-            doc.insertString(doc.getLength(), "Character Stats:\n", subTitleStyle);
-            doc.insertString(doc.getLength(), "Each character has five core stats:\n" +
-                "- HP (Health Points): How much damage a character can take before being defeated.\n" +
-                "- Attack: Base damage a character can deal when attacking.\n" +
-                "- Defense: Reduces damage taken from enemy attacks.\n" +
-                "- Agility: Determines the order of turns in battle.\n" +
-                "- Intelligence: Influences the effectiveness of special abilities.\n\n", bodyStyle);
+doc.insertString(doc.getLength(), "Character Stats:\n", subTitleStyle);
+doc.insertString(doc.getLength(), "Each character has five core stats:\n" +
+    "- HP (Health Points): The amount of damage a character can withstand before being defeated.\n" +
+    "- Attack: The base damage a character inflicts when attacking.\n" +
+    "- Defense: Reduces damage taken from enemy attacks.\n" +
+    "- Agility: Determines the turn order in battle.\n" +
+    "- Intelligence: Influences the potency of special abilities.\n\n", bodyStyle);
 
-            doc.insertString(doc.getLength(), "Races:\n", subTitleStyle);
-            doc.insertString(doc.getLength(), "Allies:\n", bodyStyle);
-            doc.insertString(doc.getLength(), "1. Minotaur - HP: 150, Attack: 20, Defense: 12, Agility: 12, Intelligence: 10\n", bodyStyle);
-            doc.insertString(doc.getLength(), "2. Orc - HP: 150, Attack: 20, Defense: 12, Agility: 12, Intelligence: 10\n", bodyStyle);
-            doc.insertString(doc.getLength(), "3. Angel - HP: 100, Attack: 10, Defense: 20, Agility: 25, Intelligence: 15\n\n", bodyStyle);
+doc.insertString(doc.getLength(), "Races:\n", subTitleStyle);
+doc.insertString(doc.getLength(), "Allies:\n", bodyStyle);
+doc.insertString(doc.getLength(), "1. Minotaur - HP: 160, Attack: 18, Defense: 15, Agility: 10, Intelligence: 8\n", bodyStyle);
+doc.insertString(doc.getLength(), "2. Orc - HP: 170, Attack: 22, Defense: 12, Agility: 10, Intelligence: 7\n", bodyStyle);
+doc.insertString(doc.getLength(), "3. Angel - HP: 120, Attack: 12, Defense: 18, Agility: 25, Intelligence: 20\n\n", bodyStyle);
 
-            doc.insertString(doc.getLength(), "Enemies:\n", bodyStyle);
-            doc.insertString(doc.getLength(), "1. Golem - HP: 150, Attack: 15, Defense: 20, Agility: 20, Intelligence: 10\n", bodyStyle);
-            doc.insertString(doc.getLength(), "2. Reaper - HP: 100, Attack: 20, Defense: 10, Agility: 15, Intelligence: 10\n", bodyStyle);
-            doc.insertString(doc.getLength(), "3. Zombie - HP: 80, Attack: 10, Defense: 5, Agility: 10, Intelligence: 5\n\n", bodyStyle);
+doc.insertString(doc.getLength(), "Enemies:\n", bodyStyle);
+doc.insertString(doc.getLength(), "1. Golem - HP: 200, Attack: 16, Defense: 25, Agility: 8, Intelligence: 6\n", bodyStyle);
+doc.insertString(doc.getLength(), "2. Reaper - HP: 110, Attack: 20, Defense: 10, Agility: 18, Intelligence: 12\n", bodyStyle);
+doc.insertString(doc.getLength(), "3. Zombie - HP: 120, Attack: 12, Defense: 8, Agility: 6, Intelligence: 5\n\n", bodyStyle);
 
-            doc.insertString(doc.getLength(), "Classes and Special Abilities:\n", subTitleStyle);
-            doc.insertString(doc.getLength(), "1. Warrior - Special Ability: Power Strike (150% normal damage).\n", bodyStyle);
-            doc.insertString(doc.getLength(), "2. Mage - Special Ability: Fireball (Intelligence x 2 damage, ignores defense).\n", bodyStyle);
-            doc.insertString(doc.getLength(), "3. Rogue - Special Ability: Shadow Step (Increases agility by 50% for 3 turns).\n\n", bodyStyle);
+doc.insertString(doc.getLength(), "Classes and Special Abilities:\n", subTitleStyle);
+doc.insertString(doc.getLength(), "1. Warrior - Special Ability: Power Strike (Deals 150% of normal attack damage).\n", bodyStyle);
+doc.insertString(doc.getLength(), "2. Mage - Special Ability: Fireball (Deals Intelligence x 2 damage and ignores enemy defense).\n", bodyStyle);
+doc.insertString(doc.getLength(), "3. Rogue - Special Ability: Shadow Step (Increases agility by 50% for 3 turns).\n\n", bodyStyle);
 
-            doc.insertString(doc.getLength(), "Combat System:\n", subTitleStyle);
-            doc.insertString(doc.getLength(), "Turn order is determined by Agility. Characters can perform three actions: Strike, Defense Stand, or Special Ability.\n" +
-                "Dice rolls determine bonus attack and defense values during combat. The game ends when all enemies or allies are defeated.\n\n", bodyStyle);
+doc.insertString(doc.getLength(), "Combat System:\n", subTitleStyle);
+doc.insertString(doc.getLength(), "Turn order is based on Agility. Characters can choose from three actions: Strike, Defense Stand, or Special Ability.\n" +
+    "Dice rolls influence bonus attack and defense during combat. Victory is achieved when all opponents are defeated.\n\n", bodyStyle);
 
-            doc.insertString(doc.getLength(), "Strategy Tips:\n", subTitleStyle);
-            doc.insertString(doc.getLength(), "1. Agility is key for quicker actions.\n" +
-                "2. Use Defense Stand to prolong survival.\n" +
-                "3. Balance your team with tanks, damage dealers, and support characters.\n" +
-                "4. Save special abilities for critical moments.\n\n", bodyStyle);
+doc.insertString(doc.getLength(), "Strategy Tips:\n", subTitleStyle);
+doc.insertString(doc.getLength(), "1. Agility enables quicker actions; prioritize it if you want a speed advantage.\n" +
+    "2. Use Defense Stand to improve endurance.\n" +
+    "3. Create a balanced team with tanks, damage dealers, and supportive roles.\n" +
+    "4. Reserve special abilities for pivotal moments.\n\n", bodyStyle);
 
-            doc.insertString(doc.getLength(), "Good luck in the Realm of Strikes and Spells!\n", bodyStyle);
+doc.insertString(doc.getLength(), "Good luck in the Realm of Strikes and Spells!\n", bodyStyle);
+
 
         } catch (BadLocationException e) {
             e.printStackTrace();

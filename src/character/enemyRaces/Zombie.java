@@ -5,6 +5,7 @@ import character.CharacterClass;
 
 public class Zombie extends Character {
     public Zombie(String name, CharacterClass characterClass) {
-        super(name, 200, 15, 5, 10, 5, characterClass); // Example stats
+        super(name, 180, 15, 5, 8, 10, characterClass);
+
     }
 }
