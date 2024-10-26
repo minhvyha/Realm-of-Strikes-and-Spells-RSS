@@ -1,46 +1,38 @@
 package test;
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import screen.GameEnd;
 
-public class GameEndTest {
+class GameEndTest {
+    GameEnd gameEnd;
 
-    public static void main(String[] args) {
-        testGameEndCreation();
-        testTurnOn();
-        testTurnOff();
+    @BeforeEach
+    void setUp() {
+        gameEnd = new GameEnd();
     }
 
-    public static void testGameEndCreation() {
-        // Create an instance of GameEnd
-        GameEnd gameEnd = new GameEnd();
-
+    @Test
+    void testGameEndCreation() {
         // Check if the GameEnd instance is created
-        if (gameEnd != null) {
-            System.out.println("testGameEndCreation passed: GameEnd instance created.");
-        }
+        assertNotNull(gameEnd, "GameEnd instance should be created.");
     }
 
-    public static void testTurnOn() {
-        GameEnd gameEnd = new GameEnd();
+    @Test
+    void testTurnOn() {
         gameEnd.turnOn();
 
         // Check if the panel is visible
-        if (gameEnd.isVisible()) {
-            System.out.println("testTurnOn passed: GameEnd panel is visible.");
-        } else {
-            System.out.println("testTurnOn failed: GameEnd panel is not visible.");
-        }
+        assertTrue(gameEnd.isVisible(), "GameEnd panel should be visible.");
     }
 
-    public static void testTurnOff() {
-        GameEnd gameEnd = new GameEnd();
+    @Test
+    void testTurnOff() {
         gameEnd.turnOn(); // First turn it on
         gameEnd.turnOff(); // Then turn it off
 
         // Check if the panel is invisible
-        if (!gameEnd.isVisible()) {
-            System.out.println("testTurnOff passed: GameEnd panel is not visible.");
-        } else {
-            System.out.println("testTurnOff failed: GameEnd panel is still visible.");
-        }
+        assertFalse(gameEnd.isVisible(), "GameEnd panel should not be visible.");
     }
 }

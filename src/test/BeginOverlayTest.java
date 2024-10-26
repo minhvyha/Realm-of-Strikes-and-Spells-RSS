@@ -1,31 +1,32 @@
 package test;
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import screen.BeginOverlay;
 
-public class BeginOverlayTest {
+class BeginOverlayTest {
+    BeginOverlay overlay;
 
-    public static void main(String[] args) {
-        testTurnOn();
-        testTurnOff();
+    @BeforeEach
+    void setUp() {
+        overlay = new BeginOverlay();
     }
 
-    public static void testTurnOn() {
-        BeginOverlay overlay = new BeginOverlay();
+    @Test
+    void testTurnOn() {
         overlay.turnOn(); // Turn on the overlay
-        if (overlay.isVisible()) {
-            System.out.println("testTurnOn passed: Overlay is visible.");
-        } else {
-            System.out.println("testTurnOn failed: Overlay is not visible.");
-        }
+
+        // Check if the overlay is visible
+        assertTrue(overlay.isVisible(), "Overlay should be visible.");
     }
 
-    public static void testTurnOff() {
-        BeginOverlay overlay = new BeginOverlay();
+    @Test
+    void testTurnOff() {
         overlay.turnOn(); // Ensure it is visible first
         overlay.turnOff(); // Turn off the overlay
-        if (!overlay.isVisible()) {
-            System.out.println("testTurnOff passed: Overlay is not visible.");
-        } else {
-            System.out.println("testTurnOff failed: Overlay is still visible.");
-        }
+
+        // Check if the overlay is invisible
+        assertFalse(overlay.isVisible(), "Overlay should not be visible.");
     }
 }
