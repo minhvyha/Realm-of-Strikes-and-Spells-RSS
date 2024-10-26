@@ -8,5 +8,4 @@ public class Angel extends Character {
         super(name, 120, 15, 25, 30, 12, characterClass);
 
     }
-
 }

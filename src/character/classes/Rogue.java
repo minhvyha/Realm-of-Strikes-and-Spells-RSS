@@ -15,5 +15,4 @@ public class Rogue implements CharacterClass {
         return damage;
     }
 
-
 }

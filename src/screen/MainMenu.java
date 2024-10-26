@@ -42,7 +42,7 @@ public class MainMenu extends JPanel {
         buttonPanel.add(chooseMapButton);
         buttonPanel.add(Box.createVerticalStrut(10)); // Add space between buttons
         buttonPanel.add(guideButton);
-buttonPanel.add(Box.createVerticalStrut(10)); // Add space between buttons
+        buttonPanel.add(Box.createVerticalStrut(10)); // Add space between buttons
         buttonPanel.add(battleLogReaderButton);
         buttonPanel.add(Box.createVerticalStrut(10)); // Add space between buttons
         buttonPanel.add(quitButton);

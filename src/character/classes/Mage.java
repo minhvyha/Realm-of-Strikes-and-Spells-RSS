@@ -11,7 +11,7 @@ public class Mage implements CharacterClass {
             damage *= 1.5; // 50% more damage if target's HP is above 75%
         }
         damage = Math.max(damage, 0);
-        target.takeDamage(damage);  
+        target.takeDamage(damage);
         return damage;
     }
 

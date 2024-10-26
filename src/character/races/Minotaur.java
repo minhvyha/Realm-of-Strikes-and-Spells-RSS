@@ -9,5 +9,4 @@ public class Minotaur extends Character {
         super(name, 160, 25, 7, 5, 45, characterClass);
 
     }
-
 }

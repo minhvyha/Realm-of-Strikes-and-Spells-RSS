@@ -8,5 +8,4 @@ public class Orc extends Character {
         super(name, 150, 30, 10, 10, 10, characterClass);
 
     }
-
 }

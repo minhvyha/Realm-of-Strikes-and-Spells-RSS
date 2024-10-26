@@ -1,4 +1,5 @@
 package test;
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,10 +19,11 @@ class CharacterTest {
         target = new Character("Attacker", 150, 20, 10, 10, 10, new Mage());
 
     }
+
     @Test
     void testAttackDamage() {
         int initialHealth = target.getHp();
-        int dice1 =5;
+        int dice1 = 5;
         int dice2 = 3;
         int totalDamge = attacker.attack(target, dice1, dice2);
         int calculatedDamage = calculateDamge(attacker, target, dice1, dice2);
@@ -30,7 +32,7 @@ class CharacterTest {
     }
 
     @Test
-    void testSpecialAbility(){
+    void testSpecialAbility() {
         int initialHealth = target.getHp();
 
         int caculatedWarriorDamage = calculateWarriorDamage(attacker, target);
@@ -44,7 +46,7 @@ class CharacterTest {
         assertEquals(initialHealth - caculatedMageDamage, attacker.getHp(), "Health should decrease correctly");
         assertEquals(caculatedMageDamage, totalMageDamge, "Damage should be calculated correctly");
 
-}
+    }
 
     private int calculateDamge(Character attacker, Character target, int dice1, int dice2) {
         int damage = attacker.getStrength() * dice1 - target.getDefense() * dice2;
@@ -61,7 +63,6 @@ class CharacterTest {
         damage = Math.max(damage, 0);
         return damage;
     }
-
 
     private int calculateMageDamage(Character attacker, Character target) {
         int damage = attacker.getIntelligence() * 4 - target.getDefense();

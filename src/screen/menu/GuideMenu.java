@@ -41,10 +41,12 @@ public class GuideMenu extends JPanel {
                         listener.onMenuCharacterSelected();
                         break;
                     case "Exit":
-                        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/assets/logo.png"));
+                        ImageIcon originalIcon = new ImageIcon(
+                                getClass().getResource("/assets/logo.png"));
 
                         // Scale the image to 50x50 pixels
-                        Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                        Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50,
+                                Image.SCALE_SMOOTH);
                         ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
                         int confirm = JOptionPane.showOptionDialog(
@@ -113,7 +115,8 @@ public class GuideMenu extends JPanel {
 
             doc.insertString(doc.getLength(), "Character Stats\n", sectionTitleStyle);
             doc.insertString(doc.getLength(), "Each character has five core stats:\n" +
-                    "- HP (Health Points) The amount of damage a character can withstand before being defeated.\n" +
+                    "- HP (Health Points) The amount of damage a character can withstand before being defeated.\n"
+                    +
                     "- Attack The base damage a character inflicts when attacking.\n" +
                     "- Defense Reduces damage taken from enemy attacks.\n" +
                     "- Agility Determines the turn order in battle.\n" +
@@ -121,26 +124,34 @@ public class GuideMenu extends JPanel {
 
             doc.insertString(doc.getLength(), "Races\n", sectionTitleStyle);
             doc.insertString(doc.getLength(), "Allies:\n", bodyStyle);
-            doc.insertString(doc.getLength(), "- Minotaur HP 160 Attack 18 Defense 15 Agility 10 Intelligence 8\n",
+            doc.insertString(doc.getLength(),
+                    "- Minotaur HP 160 Attack 18 Defense 15 Agility 10 Intelligence 8\n",
                     bodyStyle);
-            doc.insertString(doc.getLength(), "- Orc HP 170 Attack 22 Defense 12 Agility 10 Intelligence 7\n",
+            doc.insertString(doc.getLength(),
+                    "- Orc HP 170 Attack 22 Defense 12 Agility 10 Intelligence 7\n",
                     bodyStyle);
-            doc.insertString(doc.getLength(), "- Angel HP 120 Attack 12 Defense 18 Agility 25 Intelligence 20\n\n",
+            doc.insertString(doc.getLength(),
+                    "- Angel HP 120 Attack 12 Defense 18 Agility 25 Intelligence 20\n\n",
                     bodyStyle);
 
             doc.insertString(doc.getLength(), "Enemies:\n", bodyStyle);
-            doc.insertString(doc.getLength(), "- Golem HP 200 Attack 16 Defense 25 Agility 8 Intelligence 6\n",
+            doc.insertString(doc.getLength(),
+                    "- Golem HP 200 Attack 16 Defense 25 Agility 8 Intelligence 6\n",
                     bodyStyle);
-            doc.insertString(doc.getLength(), "- Reaper HP 110 Attack 20 Defense 10 Agility 18 Intelligence 12\n",
+            doc.insertString(doc.getLength(),
+                    "- Reaper HP 110 Attack 20 Defense 10 Agility 18 Intelligence 12\n",
                     bodyStyle);
-            doc.insertString(doc.getLength(), "- Zombie HP 120 Attack 12 Defense 8 Agility 6 Intelligence 5\n\n",
+            doc.insertString(doc.getLength(),
+                    "- Zombie HP 120 Attack 12 Defense 8 Agility 6 Intelligence 5\n\n",
                     bodyStyle);
 
             doc.insertString(doc.getLength(), "Classes and Special Abilities\n", sectionTitleStyle);
             doc.insertString(doc.getLength(), "- Warrior Power Strike 150% attack damage.\n", bodyStyle);
-            doc.insertString(doc.getLength(), "- Mage Fireball Deals Intelligence x 2 damage and bypasses defense.\n",
+            doc.insertString(doc.getLength(),
+                    "- Mage Fireball Deals Intelligence x 2 damage and bypasses defense.\n",
                     bodyStyle);
-            doc.insertString(doc.getLength(), "- Rogue Shadow Step Boosts agility by 50% for 3 turns.\n\n", bodyStyle);
+            doc.insertString(doc.getLength(), "- Rogue Shadow Step Boosts agility by 50% for 3 turns.\n\n",
+                    bodyStyle);
 
             doc.insertString(doc.getLength(), "Combat System\n", sectionTitleStyle);
             doc.insertString(doc.getLength(),
@@ -151,7 +162,8 @@ public class GuideMenu extends JPanel {
             doc.insertString(doc.getLength(), "- High agility enables quicker actions.\n", bodyStyle);
             doc.insertString(doc.getLength(), "- Use Defense Stand for durability.\n", bodyStyle);
             doc.insertString(doc.getLength(),
-                    "- Build strong synergies between characters to maximize effectiveness.\n", bodyStyle);
+                    "- Build strong synergies between characters to maximize effectiveness.\n",
+                    bodyStyle);
         } catch (BadLocationException e) {
             e.printStackTrace();
         }

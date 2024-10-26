@@ -178,7 +178,8 @@ public class Main extends JFrame implements SelectionListener {
     }
 
     @Override
-    public void onMenuBattleLogReaderSelected() { // Method to handle battle log reader option selection on the main menu
+    public void onMenuBattleLogReaderSelected() { // Method to handle battle log reader option selection on the main
+                                                  // menu
         loadingOverlay.turnOn();
         new SwingWorker<Void, Void>() { // Create a new SwingWorker to handle the delay
             @Override

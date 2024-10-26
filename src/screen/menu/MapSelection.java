@@ -91,6 +91,9 @@ public class MapSelection extends JPanel {
         JButton nextButton = createButton("Next");
         JButton backButton = createButton("Back");
 
+        nextButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
         buttonPanelWrapper.add(backButton);
         buttonPanelWrapper.add(nextButton);
 
@@ -129,7 +132,8 @@ public class MapSelection extends JPanel {
         URL resource = getClass().getResource(imagePath);
         if (resource != null) {
             ImageIcon originalIcon = new ImageIcon(resource);
-            Image scaledImage = originalIcon.getImage().getScaledInstance(buttonSize.width, buttonSize.height, Image.SCALE_SMOOTH);
+            Image scaledImage = originalIcon.getImage().getScaledInstance(buttonSize.width, buttonSize.height,
+                    Image.SCALE_SMOOTH);
             button.setIcon(new ImageIcon(scaledImage));
         } else {
             button.setText("New Option " + mapIndex);
@@ -173,7 +177,8 @@ public class MapSelection extends JPanel {
                 if (mapUnlocked[map - 1]) { // Check if the current map is unlocked
                     listener.onMapSelected(map);
                 } else {
-                    JOptionPane.showMessageDialog(this, "You need to complete the previous map to unlock the next one.", "Map Locked", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "You need to complete the previous map to unlock the next one.",
+                            "Map Locked", JOptionPane.WARNING_MESSAGE);
                 }
             } else if (text.equals("Back")) {
                 listener.onMapSelected(-1);

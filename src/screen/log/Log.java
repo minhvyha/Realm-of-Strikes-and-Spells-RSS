@@ -1,11 +1,11 @@
 package screen.log;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import javax.swing.*;
 
 public class Log extends JPanel {
 
@@ -29,13 +29,13 @@ public class Log extends JPanel {
 
         // Initialize the JTextArea to display messages with black background and white
         // text
-        logArea = new JTextArea(10, 26);
+        logArea = new JTextArea(10, 24);
         logArea.setEditable(false);
         logArea.setLineWrap(true);
         logArea.setWrapStyleWord(true);
         logArea.setBackground(Color.BLACK); // Set background to black
         logArea.setForeground(Color.WHITE); // Set text color to white
-        logArea.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 43)); // Padding for readability
+        logArea.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 6)); // Padding for readability
 
         // Customize the scroll pane with hidden scroll bars
         JScrollPane scrollPane = new JScrollPane(logArea);
@@ -87,10 +87,10 @@ public class Log extends JPanel {
             writer.write("Line,Message\n"); // Header for CSV file
 
             LogNode current = head;
-            int line = 1;   
+            int line = 1;
             while (current != null) {
                 String message = current.message;
-                writer.write(line + "," +message + "\n");
+                writer.write(line + "," + message + "\n");
                 line++;
                 current = current.next;
             }
@@ -99,7 +99,7 @@ public class Log extends JPanel {
             e.printStackTrace();
             System.out.println("Error exporting log to CSV file.");
         }
-return uniqueFilePath;
+        return uniqueFilePath;
     }
 
     // Helper method to generate a unique file path if the file already exists
