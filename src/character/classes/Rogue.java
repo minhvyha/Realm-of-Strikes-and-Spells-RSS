@@ -12,7 +12,6 @@ public class Rogue implements CharacterClass {
         }
         damage = Math.max(damage, 1);
         target.takeDamage(damage);
-        System.out.println(character.getName() + " uses Backstab and deals " + damage + " damage to " + target.getName() + "!");
         return damage;
     }
 

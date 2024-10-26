@@ -96,10 +96,6 @@ public class Character {
         hp = Math.max(hp - damage, 0);
     }
 
-    public void heal(int amount) {
-        hp = Math.min(hp + amount, maxHp);
-        System.out.println(name + " heals for " + amount + " HP.");
-    }
 
     public boolean isAlive() {
         return hp > 0;
