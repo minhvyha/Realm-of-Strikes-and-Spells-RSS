@@ -11,71 +11,71 @@ public class GuideMenu extends JPanel {
     private JLabel titleLabel = new JLabel("Guide", SwingConstants.CENTER);
 
     public GuideMenu(SelectionListener listener) {
-        // Set the layout to BorderLayout to support NORTH, CENTER, etc.
+        // Set up the main layout with a BorderLayout to allow positioning of components
         setLayout(new BorderLayout());
 
-        // Set title label properties
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Title font and size
-        titleLabel.setForeground(Color.WHITE); // Title color
+        // Configure the title label with font, color, and alignment properties
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setForeground(Color.WHITE);
         titleLabel.setOpaque(true);
-        titleLabel.setBackground(Color.BLACK); // Background color for the title
+        titleLabel.setBackground(Color.BLACK); // Title background
         titleLabel.setBorder(BorderFactory.createEmptyBorder(30, 20, 10, 20));
 
-        // Add the title label at the top (NORTH)
+        // Place the title label at the top (NORTH)
         add(titleLabel, BorderLayout.NORTH);
 
-        // Create a panel to hold both the text and back button, in BorderLayout
-        JPanel contentPanel = new JPanel();
-        contentPanel.setLayout(new BorderLayout());
+        // Panel to hold guide text and back button in a BorderLayout for easy placement
+        JPanel contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(Color.BLACK);
 
-        // Create a JTextPane to support styled text
+        // Set up a JTextPane for displaying styled guide text content
         JTextPane guideTextPane = new JTextPane();
         guideTextPane.setEditable(false);
         guideTextPane.setBackground(Color.BLACK);
         guideTextPane.setForeground(Color.WHITE);
         guideTextPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        // Insert styled text into the JTextPane
+        // Insert the guide content with styles applied
         insertStyledText(guideTextPane);
 
-        // Create a JScrollPane to make the text area scrollable
+        // Make the JTextPane scrollable with a JScrollPane
         JScrollPane scrollPane = new JScrollPane(guideTextPane);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        // Add the scroll pane to the content panel center
+        // Add the scrollable text pane to the center of the content panel
         contentPanel.add(scrollPane, BorderLayout.CENTER);
 
-        // Create a button panel with a FlowLayout to center the button
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        // Button panel for the "Back" button, centered with FlowLayout
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.setBackground(Color.BLACK);
 
+        // Configure the back button with font, size, and action
         JButton backButton = new JButton("Back");
-        backButton.setFont(new Font("Arial", Font.BOLD, 12)); // Smaller font size for a small fit-text button
-        backButton.setPreferredSize(new Dimension(100, 30)); // Smaller button size
+        backButton.setFont(new Font("Arial", Font.BOLD, 12));
+        backButton.setPreferredSize(new Dimension(100, 30)); // Set the button size
 
         backButton.addActionListener(e -> {
             System.out.println("Back button clicked!");
             if (listener != null) {
-                listener.onGuideBack(); // Notify listener
+                listener.onGuideBack(); // Notify listener when back is pressed
             }
         });
 
-        buttonPanel.add(backButton); // Add the back button to the panel
+        // Add the back button to the button panel
+        buttonPanel.add(backButton);
 
-        // Add the button panel at the bottom (SOUTH)
+        // Add the button panel to the bottom of the content panel
         contentPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        // Add the content panel (guide + button) to the center
+        // Place the content panel containing guide and button in the center
         add(contentPanel, BorderLayout.CENTER);
     }
 
-    // Method to insert styled text into the JTextPane
+    // Method to insert styled text into the JTextPane for displaying the guide
     private void insertStyledText(JTextPane textPane) {
         StyledDocument doc = textPane.getStyledDocument();
 
-        // Create different styles for titles, subtitles, and body text
+        // Define styles for the guide text (title, subtitles, body)
         Style titleStyle = doc.addStyle("titleStyle", null);
         StyleConstants.setFontSize(titleStyle, 18);
         StyleConstants.setBold(titleStyle, true);
@@ -91,7 +91,7 @@ public class GuideMenu extends JPanel {
         StyleConstants.setForeground(bodyStyle, Color.WHITE);
 
         try {
-            // Insert styled text
+            // Populate the JTextPane with the game's guide content, applying the styles
             doc.insertString(doc.getLength(), "Realm of Strikes and Spells (RSS)\n", titleStyle);
             doc.insertString(doc.getLength(), "\nOverview:\n", subTitleStyle);
             doc.insertString(doc.getLength(), "Realm of Strikes and Spells (RSS) is a turn-based RPG where players control a team of allies to battle against enemies. " +
@@ -137,5 +137,4 @@ public class GuideMenu extends JPanel {
             e.printStackTrace();
         }
     }
-
 }

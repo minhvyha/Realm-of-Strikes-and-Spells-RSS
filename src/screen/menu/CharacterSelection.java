@@ -2,159 +2,150 @@ package screen.menu;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import screen.SelectionListener;
-
 import java.awt.*;
 import java.net.URL;
 
 public class CharacterSelection extends JPanel {
     private JLabel titleLabel = new JLabel("Select Your Allies", SwingConstants.CENTER);
     private JPanel buttonPanel = new JPanel();
-    // Arrays to store races and classes
-    private String[] races = { "Angel", "Orc", "Minotaur" };
-    private String[] classes = { "Warrior", "Mage", "Rogue" };
+    private String[] races = { "Angel", "Orc", "Minotaur" }; // Available character races
+    private String[] classes = { "Warrior", "Mage", "Rogue" }; // Available character classes
 
     public CharacterSelection(SelectionListener listener, int[] selectedRace, int[] selectedClass) {
+        setLayout(new BorderLayout()); // Set panel layout as BorderLayout
+        configureTitleLabel();         // Configure title label
+        configureButtonPanel();        // Set up the button panel layout
 
-        // Set the layout to BorderLayout to support NORTH, CENTER, etc.
-        setLayout(new BorderLayout());
+        add(titleLabel, BorderLayout.NORTH);    // Add title to NORTH position
+        add(buttonPanel, BorderLayout.CENTER);  // Add character selection panel to CENTER
 
-        // Create a JPanel with a black background
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Title font and size
-        titleLabel.setForeground(Color.WHITE); // Title color
+        addCharacterSelectionColumns(selectedRace, selectedClass); // Add character selection UI
+
+        addNavigationButtons(listener, selectedRace, selectedClass); // Add navigation buttons
+    }
+
+    // Configure the title label settings
+    private void configureTitleLabel() {
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setForeground(Color.WHITE);
         titleLabel.setOpaque(true);
-        titleLabel.setBackground(Color.BLACK); // Background color for the title
+        titleLabel.setBackground(Color.BLACK);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(30, 20, 10, 20));
+    }
 
-        // Add the title label at the top (NORTH)
-        add(titleLabel, BorderLayout.NORTH);
-
-        // Create a panel with GridLayout for the buttons
-        buttonPanel.setLayout(new GridLayout(1, 3, 20, 20)); // 3 columns
+    // Configure the button panel layout and settings
+    private void configureButtonPanel() {
+        buttonPanel.setLayout(new GridLayout(1, 3, 20, 20)); // 3 columns with spacing
         buttonPanel.setBackground(Color.BLACK);
-        int paddingSize = 20;
-        buttonPanel.setBorder(new EmptyBorder(paddingSize, paddingSize, paddingSize, paddingSize)); // Add padding
+        buttonPanel.setBorder(new EmptyBorder(20, 20, 20, 20)); // Add padding
+    }
 
-        // Add race and class selection options
+    // Create the character selection columns dynamically
+    private void addCharacterSelectionColumns(int[] selectedRace, int[] selectedClass) {
         buttonPanel.removeAll();
-
         for (int i = 0; i < 3; i++) {
-            JPanel columnPanel = new JPanel();
-            columnPanel.setLayout(new BoxLayout(columnPanel, BoxLayout.Y_AXIS));
-            columnPanel.setBackground(Color.DARK_GRAY); // Set background
-
-            // Panel for race image
-            JPanel raceImagePanel = new JPanel();
-            raceImagePanel.setBackground(Color.DARK_GRAY);
-            JLabel raceImageLabel = new JLabel();
-            loadImage(raceImageLabel, "/assets/" + races[selectedRace[i]].toLowerCase() + "/Idle/0" + ".png", 150, 150);
-            raceImagePanel.add(raceImageLabel);
-
-            // Panel for class image (weapon)
-            JPanel classImagePanel = new JPanel();
-            classImagePanel.setBackground(Color.DARK_GRAY);
-            JLabel classImageLabel = new JLabel();
-            classImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            loadImage(classImageLabel, "/assets/weapon/" + classes[selectedClass[i]].toLowerCase() + ".png", 40, 40);
-            classImagePanel.add(classImageLabel);
-
-            // Panel for race name
-            JPanel raceLabelPanel = new JPanel();
-            raceLabelPanel.setBackground(Color.DARK_GRAY);
-            JLabel raceLabel = new JLabel(races[selectedRace[i]], SwingConstants.CENTER);
-            raceLabel.setFont(new Font("Arial", Font.BOLD, 16));
-            raceLabel.setForeground(Color.WHITE);
-            raceLabelPanel.add(raceLabel);
-
-            // Panel for class name
-            JPanel classLabelPanel = new JPanel();
-            classLabelPanel.setBackground(Color.DARK_GRAY);
-            JLabel classLabel = new JLabel(classes[selectedClass[i]], SwingConstants.CENTER);
-            classLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-            classLabel.setForeground(Color.WHITE);
-            classLabelPanel.add(classLabel);
-
-            // Panel for race JComboBox
-            JPanel raceComboBoxPanel = new JPanel();
-            raceComboBoxPanel.setBackground(Color.DARK_GRAY);
-            JComboBox<String> raceComboBox = new JComboBox<>(races);
-            raceComboBox.setSelectedIndex(selectedRace[i]);
-            final int FINAL_INDEX = i;
-            raceComboBox.addActionListener(e -> {
-                selectedRace[FINAL_INDEX] = raceComboBox.getSelectedIndex();
-                raceLabel.setText(races[selectedRace[FINAL_INDEX]]);
-                loadImage(raceImageLabel, "/assets/" + races[selectedRace[FINAL_INDEX]].toLowerCase() + "/idle/" + "0.png",
-                        150, 150);
-            });
-            raceComboBoxPanel.add(raceComboBox);
-
-            // Panel for class JComboBox
-            JPanel classComboBoxPanel = new JPanel();
-            classComboBoxPanel.setBackground(Color.DARK_GRAY);
-            JComboBox<String> classComboBox = new JComboBox<>(classes);
-            classComboBox.setSelectedIndex(selectedClass[i]);
-            classComboBox.addActionListener(e -> {
-                selectedClass[FINAL_INDEX] = classComboBox.getSelectedIndex();
-                classLabel.setText(classes[selectedClass[FINAL_INDEX]]);
-                loadImage(classImageLabel, "/assets/weapon/" + classes[selectedClass[FINAL_INDEX]].toLowerCase() + ".png",
-                        40, 40);
-            });
-            classComboBoxPanel.add(classComboBox);
-
-            // Add the individual panels to the column panel
-            columnPanel.add(raceImagePanel);
-            columnPanel.add(classImagePanel);
-            columnPanel.add(raceLabelPanel);
-            columnPanel.add(classLabelPanel);
-            columnPanel.add(raceComboBoxPanel);
-            columnPanel.add(classComboBoxPanel);
-
-            // Add some spacing and border
-            columnPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-            // Add the column panel to the main button panel
-            buttonPanel.add(columnPanel);
+            JPanel columnPanel = createCharacterColumn(selectedRace, selectedClass, i);
+            buttonPanel.add(columnPanel); // Add each column to the button panel
         }
-
         buttonPanel.revalidate();
         buttonPanel.repaint();
+    }
 
-        // Add the button panel to the CENTER
-        add(buttonPanel, BorderLayout.CENTER);
+    // Create a single character selection column with race/class options
+    private JPanel createCharacterColumn(int[] selectedRace, int[] selectedClass, int index) {
+        JPanel columnPanel = new JPanel();
+        columnPanel.setLayout(new BoxLayout(columnPanel, BoxLayout.Y_AXIS));
+        columnPanel.setBackground(Color.DARK_GRAY);
+        columnPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Create "Next" button
+        JLabel raceImageLabel = new JLabel();
+        loadImage(raceImageLabel, "/assets/" + races[selectedRace[index]].toLowerCase() + "/Idle/0.png", 180, 180);
 
-        JButton nextButton = new JButton("Next");
-        nextButton.setFont(new Font("Arial", Font.BOLD, 12)); // Smaller font size for a small fit-text button
-        nextButton.setPreferredSize(new Dimension(100, 30)); // Smaller button size
+        JLabel classImageLabel = new JLabel();
+        loadImage(classImageLabel, "/assets/weapon/" + classes[selectedClass[index]].toLowerCase() + ".png", 40, 40);
 
-        nextButton.addActionListener(e -> {
+        columnPanel.add(createImagePanel(raceImageLabel));             // Add race image panel
+        columnPanel.add(createImagePanel(classImageLabel));            // Add class image panel
+        columnPanel.add(createLabelPanel(races[selectedRace[index]], 16)); // Add race name label
+        columnPanel.add(createLabelPanel(classes[selectedClass[index]], 14)); // Add class name label
+        columnPanel.add(createComboBoxPanel(races, selectedRace, index, raceImageLabel)); // Add race JComboBox
+        columnPanel.add(createComboBoxPanel(classes, selectedClass, index, classImageLabel)); // Add class JComboBox
+
+        return columnPanel;
+    }
+
+    // Create a panel to display an image
+    private JPanel createImagePanel(JLabel imageLabel) {
+        JPanel imagePanel = new JPanel();
+        imagePanel.setBackground(Color.DARK_GRAY);
+        imagePanel.add(imageLabel);
+        return imagePanel;
+    }
+
+    // Create a panel to display a label with the specified text and font size
+    private JPanel createLabelPanel(String text, int fontSize) {
+        JPanel labelPanel = new JPanel();
+        labelPanel.setBackground(Color.DARK_GRAY);
+        JLabel label = new JLabel(text, SwingConstants.CENTER);
+        label.setFont(new Font("Arial", Font.BOLD, fontSize));
+        label.setForeground(Color.WHITE);
+        labelPanel.add(label);
+        return labelPanel;
+    }
+
+    // Create a JComboBox panel to select race/class, with image update functionality
+    private JPanel createComboBoxPanel(String[] options, int[] selected, int index, JLabel imageLabel) {
+        JPanel comboBoxPanel = new JPanel();
+        comboBoxPanel.setBackground(Color.DARK_GRAY);
+
+        JComboBox<String> comboBox = new JComboBox<>(options);
+        comboBox.setSelectedIndex(selected[index]);
+        comboBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        comboBox.addActionListener(e -> {
+            selected[index] = comboBox.getSelectedIndex();
+            imageLabel.setText(options[selected[index]]);
+            loadImage(imageLabel, "/assets/" + options[selected[index]].toLowerCase() + (options == races ? "/idle/0.png" : ".png"),
+                    options == races ? 180 : 40, options == races ? 180 : 40);
+        });
+
+        comboBoxPanel.add(comboBox);
+        return comboBoxPanel;
+    }
+
+    // Add navigation buttons at the bottom of the panel
+    private void addNavigationButtons(SelectionListener listener, int[] selectedRace, int[] selectedClass) {
+        JButton nextButton = createNavigationButton("Next", e -> {
             if (listener != null) {
-                listener.onCharacterSelected(selectedRace, selectedClass); // Notify listener
+                listener.onCharacterSelected(selectedRace, selectedClass);
             }
         });
 
-        JButton backButton = new JButton("Back");
-        backButton.setFont(new Font("Arial", Font.BOLD, 12)); // Smaller font size for a small fit-text button
-        backButton.setPreferredSize(new Dimension(100, 30)); // Smaller button size
-
-        backButton.addActionListener(e -> {
-            System.out.println("Back button clicked!");
+        JButton backButton = createNavigationButton("Back", e -> {
             if (listener != null) {
-                listener.onCharacterSelected(new int[] {}, new int[] {}); // Notify listener
+                listener.onCharacterSelected(new int[]{}, new int[]{});
             }
         });
-        // Create a JPanel with FlowLayout to position the button in the middle
-        JPanel buttonPanelWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20)); // 30px padding from top
-        buttonPanelWrapper.setBackground(Color.BLACK); // Match the background color
-        buttonPanelWrapper.add(backButton); // Add the "Next" button to the wrapper panel
-        buttonPanelWrapper.add(nextButton); // Add the "Next" button to the wrapper panel
-        // Add the button panel wrapper to the CENTER, slightly above the bottom
+
+        JPanel buttonPanelWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20));
+        buttonPanelWrapper.setBackground(Color.BLACK);
+        buttonPanelWrapper.add(backButton);
+        buttonPanelWrapper.add(nextButton);
+
         add(buttonPanelWrapper, BorderLayout.SOUTH);
     }
 
-    // Helper method to load and scale images
+    // Helper method to create a navigation button with specified text and action
+    private JButton createNavigationButton(String text, java.awt.event.ActionListener action) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Arial", Font.BOLD, 12));
+        button.setPreferredSize(new Dimension(100, 30));
+        button.addActionListener(action);
+        return button;
+    }
+
+    // Helper method to load and scale images, with a fallback message if not found
     private void loadImage(JLabel label, String imagePath, int width, int height) {
         URL resource = getClass().getResource(imagePath);
         if (resource != null) {
@@ -166,5 +157,4 @@ public class CharacterSelection extends JPanel {
             label.setText("Image Not Found");
         }
     }
-
 }
