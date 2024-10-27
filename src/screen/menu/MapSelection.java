@@ -199,6 +199,9 @@ public class MapSelection extends JPanel {
         button.setHorizontalAlignment(SwingConstants.CENTER);
 
         button.addActionListener(e -> { // Update map selection on click
+        if(!listener.isUnlocked(mapIndex - 1)){
+            return;
+        }
             this.map = mapIndex;
             selectedMapLabel.setText("Selected Map: " + battleMapNames[mapIndex - 1]);
         });

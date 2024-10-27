@@ -49,21 +49,20 @@ Realm of Strikes and Spells (RSS) is a turn-based role-playing game (RPG) where 
       └─ LogTest.java                                   # Unit tests for Log.java
 
 ```
-## Key Components
 
-### Character Classes and Races
+## Character Classes and Races
 Characters in RSS are defined by both their race and class, each contributing unique attributes and abilities:
 
-#### Races:
-##### Allies:
+### Races:
+#### Allies:
 - **Minotaur**: High HP, attack but low agility and intelligence.
 - **Orc**: High HP, attack but low agility and intelligence.
 - **Angle**: High defense, intelligence and agility but low HP and attack.
-##### Enemies:
+#### Enemies:
 - **Golem**: High HP, attack and defense, but low agility and intelligence.
 - **Reaper**: High attack and agility.
 - **Zombie**: High HP. 
-#### Classes:
+### Classes:
 - **Mage**: deal 1.5x damage when target's HP is high.
 - **Rogue**: doubles damage to low-HP targets.
 - **Warrior**: excels when HP is low, dealing 1.5x damage.
@@ -75,6 +74,7 @@ RSS provides interactive UI screens for different phases of gameplay:
 - **Main Menu**: Starting screen, with options to play, choose allies, select maps, view guides, or quit.
 - **Character Selection**: Choose team members, customizing their race and class for a strategic advantage.
 - **Map Selection**: Select one of several battle environments, including Enchanted Forest, Frozen Tundra, and Dungeon Chambers.
+- **Battle Log Reader**: Displays a history of battle events, including attacks, defense moves, special abilities used, and turn outcomes, allowing players to review each action and strategize.
 - **Battle Screen**: Engages players in combat, displaying characters, health bars, and action buttons (Strike, Defense Stand, Special Ability).
 - **Overlays**: Screens like `LoadingOverlay`, `BeginOverlay`, and `DiceOverlay` enhance visual transitions and effects.
 - **End Game Screen**: Displays the outcome when the battle ends.
@@ -90,7 +90,7 @@ RSS provides interactive UI screens for different phases of gameplay:
    git clone https://github.com/minhvyha/Realm-of-Strikes-and-Spells-RSS.git
 1. **Compile the project:**
    ```bash
-   javac -d bin src/**/*.java
+   javac -d bin $(find src -name "*.java" ! -path "src/test/*")
 3. **Run the main class:**
    ```bash
    java -cp bin Main
