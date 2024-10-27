@@ -14,6 +14,8 @@ class DiceOverlayTest {
     @BeforeEach
     void setUp() {
         diceOverlay = new DiceOverlay();
+        diceOverlay.turnOff();
+
     }
 
     @Test

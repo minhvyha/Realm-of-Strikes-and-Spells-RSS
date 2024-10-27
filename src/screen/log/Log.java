@@ -51,6 +51,9 @@ public class Log extends JPanel {
 
     // Method to add a new message to the log
     public void addMessage(String message) {
+        if(message == null || message.isEmpty()) {
+            return;
+        }
         LogNode newNode = new LogNode(message, null);
 
         if (head == null) {
@@ -88,7 +91,7 @@ public class Log extends JPanel {
 
             LogNode current = head;
             int line = 1;
-            while (current != null) {
+            while (current != null && current.message != null) {
                 String message = current.message;
                 writer.write(line + "," + message + "\n");
                 line++;

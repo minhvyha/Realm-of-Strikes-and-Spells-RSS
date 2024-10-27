@@ -78,4 +78,62 @@ public class LogTest {
         new File(filePath).delete();
         new File(uniqueFilePath).delete();
     }
+@Test
+public void testAddEmptyMessage() {
+    // Add empty message
+    logPanel.addMessage("");
+
+    JTextArea logArea = (JTextArea) ((JScrollPane) logPanel.getComponent(0)).getViewport().getView();
+    String expectedOutput = "Initial Message\n";  // Expect no new lines or additions for empty message
+
+    assertEquals(expectedOutput, logArea.getText(), "Log area should not display an empty message.");
+}
+
+@Test
+public void testAddNullMessage() {
+    // Add null message
+    logPanel.addMessage(null);
+
+    JTextArea logArea = (JTextArea) ((JScrollPane) logPanel.getComponent(0)).getViewport().getView();
+    String expectedOutput = "Initial Message\n";  // Expect no new lines or additions for null message
+
+    assertEquals(expectedOutput, logArea.getText(), "Log area should not display a null message.");
+}
+
+@Test
+public void testAddLongMessage() {
+    String longMessage = "A".repeat(1000); // Very long message
+    logPanel.addMessage(longMessage);
+
+    JTextArea logArea = (JTextArea) ((JScrollPane) logPanel.getComponent(0)).getViewport().getView();
+    String expectedOutput = "Initial Message\n" + longMessage + "\n";
+
+    assertEquals(expectedOutput, logArea.getText(), "Log area should display the long message correctly.");
+}
+
+@Test
+public void testCSVFormatConsistency() throws IOException {
+    logPanel.addMessage("Check,comma,format");  // Message containing commas
+    String filePath = "./comma_log.csv";
+    logPanel.exportToCSV(filePath);
+
+    Path path = Paths.get(filePath);
+    assertTrue(Files.exists(path), "CSV file should be created.");
+
+    String expectedCSVContent = "Line,Message\n1,Initial Message\n2,Check,comma,format\n";
+    StringBuilder fileContent = new StringBuilder();
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            fileContent.append(line).append("\n");
+        }
+    }
+
+    assertEquals(expectedCSVContent, fileContent.toString(), "CSV file content should properly format messages with commas.");
+
+    // Clean up test file after test execution
+    Files.deleteIfExists(path);
+}
+
 }
