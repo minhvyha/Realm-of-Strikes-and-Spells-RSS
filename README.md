@@ -58,7 +58,7 @@ Realm of Strikes and Spells (RSS) is a turn-based role-playing game (RPG) where 
 - **screen/**: Houses UI components like battle screens, menus, and overlays (e.g., BattleScreen.java, GameEnd.java).
 - **test/**: Contains unit tests for various components, ensuring each part of the game functions correctly.
 
-- Delegation
+### Delegation
 ![6b7e4fd7](https://github.com/user-attachments/assets/b269d2f6-85da-49aa-9e55-9ba4305014e1)
 
 ## Character Classes and Races
