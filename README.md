@@ -152,3 +152,8 @@ RSS provides interactive UI screens for different phases of gameplay:
     - `testAttackDamage`: Validates regular attack damage calculation and health decrease.
     - `testSpecialAbility`: Validates special abilities for Warrior and Mage classes.
 
+## Class
+- **Example of class for character**
+  ![09ce80fd](https://github.com/user-attachments/assets/5043a777-0dfa-450f-b599-00a471e044bb)
+
+
