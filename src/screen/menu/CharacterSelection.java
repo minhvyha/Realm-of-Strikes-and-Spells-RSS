@@ -4,7 +4,7 @@ import java.awt.*;
 import java.net.URL;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import screen.SelectionListener;
+import screen.Listener;
 
 public class CharacterSelection extends JPanel {
     private JLabel titleLabel = new JLabel("Select Your Allies", SwingConstants.CENTER);
@@ -16,7 +16,7 @@ public class CharacterSelection extends JPanel {
     private JLabel[] raceTextLabels = new JLabel[3];
     private JLabel[] classTextLabels = new JLabel[3];
 
-    public CharacterSelection(SelectionListener listener, int[] selectedRace, int[] selectedClass) {
+    public CharacterSelection(Listener listener, int[] selectedRace, int[] selectedClass) {
         setLayout(new BorderLayout()); // Set panel layout as BorderLayout
         configureTitleLabel(); // Configure title label
         configureButtonPanel(); // Set up the button panel layout
@@ -30,7 +30,7 @@ public class CharacterSelection extends JPanel {
         add(navbar, BorderLayout.NORTH); // Add navbar to the NORTH position
     }
 
-    private void createNavbar(SelectionListener listener) {
+    private void createNavbar(Listener listener) {
         navbar.setLayout(new FlowLayout(FlowLayout.LEFT));
         navbar.setBackground(Color.DARK_GRAY);
 
@@ -197,7 +197,7 @@ public class CharacterSelection extends JPanel {
     }
 
     // Add navigation buttons at the bottom of the panel
-    private void addNavigationButtons(SelectionListener listener, int[] selectedRace, int[] selectedClass) {
+    private void addNavigationButtons(Listener listener, int[] selectedRace, int[] selectedClass) {
         JButton nextButton = createNavigationButton("Next", e -> {
             if (listener != null) {
                 listener.onCharacterSelected(selectedRace, selectedClass);

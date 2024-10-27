@@ -1,7 +1,7 @@
 package screen;
 
 // Listener interface for the main menu
-public interface SelectionListener {
+public interface Listener {
     void onMenuPlaySelected(); // Called when the play button is pressed
     void onMenuMapSelected(); // Called when the choose map button is pressed
     void onMenuCharacterSelected(); // Called when the choose allies button is pressed

@@ -9,7 +9,7 @@ import screen.BattleScreen;
 import screen.DiceOverlay;
 import screen.LoadingOverlay;
 import screen.MainMenu;
-import screen.SelectionListener;
+import screen.Listener;
 import screen.BeginOverlay;
 import screen.GameEnd;
 
@@ -30,7 +30,7 @@ import character.races.Angel;
 import character.races.Minotaur;
 import character.races.Orc;
 
-public class Main extends JFrame implements SelectionListener {
+public class Main extends JFrame implements Listener {
 
     // Declare the main panel
     private JPanel mainPanel;

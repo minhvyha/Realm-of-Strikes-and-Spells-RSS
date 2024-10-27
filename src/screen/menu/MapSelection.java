@@ -4,14 +4,14 @@ import java.awt.*;
 import java.net.URL;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import screen.SelectionListener;
+import screen.Listener;
 
 public class MapSelection extends JPanel {
     // UI Components
     private JLabel titleLabel = new JLabel("Select Your Allies", SwingConstants.CENTER);
     private JPanel buttonPanel = new JPanel();// Panel to hold map selection buttons
     private JLabel selectedMapLabel = new JLabel("", SwingConstants.CENTER);
-    private SelectionListener listener; // Listener to handle map selection events
+    private Listener listener; // Listener to handle map selection events
     private String[] battleMapNames = { // Array of map names
             "Enchanted Forest", "Frozen Tundra", "Desert Dunes", "Desert Oasis",
             "Cavern Depths", "Autumn Woods", "Mystic Grove", "Dungeon Chambers",
@@ -20,7 +20,7 @@ public class MapSelection extends JPanel {
     private int map; // Variable to store selected map
 
     // Constructor to set up MapSelection screen
-    public MapSelection(SelectionListener listener, int map) {
+    public MapSelection(Listener listener, int map) {
         this.map = map;
         this.listener = listener;
 

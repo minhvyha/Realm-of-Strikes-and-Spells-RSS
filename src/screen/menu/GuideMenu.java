@@ -4,10 +4,10 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.*;
-import screen.SelectionListener;
+import screen.Listener;
 
 public class GuideMenu extends JPanel {
-        public GuideMenu(SelectionListener listener) {
+        public GuideMenu(Listener listener) {
                 setLayout(new BorderLayout());// Set the layout manager for the panel
                 setBackground(Color.WHITE);
 

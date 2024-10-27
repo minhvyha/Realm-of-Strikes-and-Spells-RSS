@@ -9,13 +9,13 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import screen.SelectionListener;
+import screen.Listener;
 
 public class BattleLogReader extends JPanel {
 
     private JTable table;
 
-    public BattleLogReader(SelectionListener listener) {
+    public BattleLogReader(Listener listener) {
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
 

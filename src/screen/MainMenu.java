@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class MainMenu extends JPanel {
-    public MainMenu(SelectionListener listener) {
+    public MainMenu(Listener listener) {
         setLayout(new BorderLayout()); // Use BorderLayout for the main panel
 
         // Create a title label

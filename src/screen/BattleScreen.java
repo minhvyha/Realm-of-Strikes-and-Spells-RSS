@@ -11,7 +11,7 @@ import character.EnemyLabel;
 
 public class BattleScreen extends JPanel {
     private Random random;
-    private SelectionListener listener;
+    private Listener listener;
     private Image backgroundImage;
 
     private JPanel topPanel, bottomPanel;
@@ -50,7 +50,7 @@ public class BattleScreen extends JPanel {
 
     // Constructor for the BattleScreen
     public BattleScreen(Image backgroundImage, int[] selectedRace, int[] selectedClass, int[] enemyRace,
-            int[] enemyClass, SelectionListener listener) {
+            int[] enemyClass, Listener listener) {
 
         // Initialize the listener, background image, and character selections
         this.listener = listener;
