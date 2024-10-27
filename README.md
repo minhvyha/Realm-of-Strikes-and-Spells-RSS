@@ -1,4 +1,8 @@
 # Realm of Strikes and Spells (RSS)
+Team name: x Assignment Group - a name
+Topic: 1 Turn-Based RPG Combat
+Students Name: Minh Vy Ha, Daniel Huynh,  Khoi Nguyen Nguyen, Minying Wu  
+
 
 ## Overview
 
