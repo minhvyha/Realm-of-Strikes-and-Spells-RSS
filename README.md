@@ -165,3 +165,8 @@ RSS provides interactive UI screens for different phases of gameplay:
   ![09ce80fd](https://github.com/user-attachments/assets/5043a777-0dfa-450f-b599-00a471e044bb)
 
 
+- **Example of class for GameEnd**
+  ![4a7c1ceb](https://github.com/user-attachments/assets/0a30429b-0ed9-4cca-8011-1ac59bf4668f)
+
+
+
