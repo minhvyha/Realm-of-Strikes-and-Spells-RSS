@@ -162,11 +162,11 @@ RSS provides interactive UI screens for different phases of gameplay:
     - `testSpecialAbility`: Validates special abilities for Warrior and Mage classes.
 
 ### GameEnd Test
-- **GameEnd Class: **
+- GameEnd Class: 
   - Manages the GUI components for the game-over screen.
   - Includes methods to show, hide, and check visibility of the screen.
 
-- **GameEndTest Class:- **
+- GameEndTest Class:- 
   - Contains unit tests for the GameEnd class.
   - Verifies correct behaviour of the game-over screen under various scenarios, ensuring reliability and correctness of the game-end functionality.
 
