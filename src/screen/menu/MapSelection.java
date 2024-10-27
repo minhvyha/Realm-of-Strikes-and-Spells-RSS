@@ -9,7 +9,7 @@ import screen.SelectionListener;
 public class MapSelection extends JPanel {
     // UI Components
     private JLabel titleLabel = new JLabel("Select Your Allies", SwingConstants.CENTER);
-    private JPanel buttonPanel = new JPanel();
+    private JPanel buttonPanel = new JPanel();// Panel to hold map selection buttons
     private JLabel selectedMapLabel = new JLabel("", SwingConstants.CENTER);
     private SelectionListener listener; // Listener to handle map selection events
     private String[] battleMapNames = { // Array of map names
@@ -57,10 +57,10 @@ public class MapSelection extends JPanel {
         buttonPanel.setBackground(Color.BLACK);
         buttonPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        Dimension buttonSize = new Dimension(230, 200);
-        for (int i = 1; i <= 9; i++) {
+        Dimension buttonSize = new Dimension(230, 200);//size of map
+        for (int i = 1; i <= 9; i++) {// Create buttons for each map
             JLayeredPane mapButton = createMapButton(i, buttonSize);
-            buttonPanel.add(mapButton);
+            buttonPanel.add(mapButton);//add the button to panel
         }
     }
 
@@ -87,8 +87,8 @@ public class MapSelection extends JPanel {
     // Set up the label that shows the selected map name
     private void configureSelectedMapLabel() {
         selectedMapLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        selectedMapLabel.setForeground(Color.WHITE);
-        selectedMapLabel.setOpaque(true);
+        selectedMapLabel.setForeground(Color.WHITE);//text colour
+        selectedMapLabel.setOpaque(true);// Make background color visible
         selectedMapLabel.setBackground(Color.BLACK);
         selectedMapLabel.setBorder(BorderFactory.createEmptyBorder(30, 20, 10, 20));
         selectedMapLabel.setText("Selected Map: " + battleMapNames[map - 1]);
@@ -99,6 +99,7 @@ public class MapSelection extends JPanel {
         JPanel navbar = new JPanel(new FlowLayout(FlowLayout.LEFT));
         navbar.setBackground(Color.DARK_GRAY);
 
+         // Adding an action for each navigation item
         String[] navItems = { "Home", "Map", "Characters", "Battle Log Reader", "Exit" };
         for (String item : navItems) {
             JButton navButton = new JButton(item);
@@ -116,18 +117,17 @@ public class MapSelection extends JPanel {
             navButton.addActionListener(e -> {
                 switch (currentItem) {
                     case "Home":
-                        listener.onGuideBack();
+                        listener.onGuideBack(); // Navigate back to the guide
                         break;
                     case "Map":
-                        listener.onMenuMapSelected();
+                        listener.onMenuMapSelected();// Navigate to the map selection
                         break;
                     case "Characters":
-                        listener.onMenuCharacterSelected();
-                        break;
+                        listener.onMenuCharacterSelected();// Navigate to character selection
                     case "Battle Log Reader":
-                        listener.onMenuBattleLogReaderSelected();
+                        listener.onMenuBattleLogReaderSelected();// Navigate to battle log reader
                         break;
-                    case "Exit":
+                    case "Exit":// Prompt user to confirm exit
                         ImageIcon originalIcon = new ImageIcon(
                                 getClass().getResource("/assets/logo.png"));
 
@@ -146,7 +146,7 @@ public class MapSelection extends JPanel {
                                 null, // No custom button options
                                 null); // Default button option
                         if (confirm == JOptionPane.YES_OPTION) {
-                            System.exit(0);
+                            System.exit(0);// Exit application if confirmed
                         }
                         break;
                 }
@@ -160,12 +160,12 @@ public class MapSelection extends JPanel {
         JPanel buttonPanelWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         buttonPanelWrapper.setBackground(Color.BLACK);
 
-        JButton nextButton = createButton("Next");
+        JButton nextButton = createButton("Next");// Create Next button
         JButton backButton = createButton("Back");
-        nextButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        nextButton.setCursor(new Cursor(Cursor.HAND_CURSOR));// Set hand cursor for Next button
         backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         buttonPanelWrapper.add(backButton);
-        buttonPanelWrapper.add(nextButton);
+        buttonPanelWrapper.add(nextButton);// Add Next button to the wrapper
 
         return buttonPanelWrapper;
     }
@@ -173,19 +173,19 @@ public class MapSelection extends JPanel {
     // Create a map selection button with overlay and label
     private JLayeredPane createMapButton(int mapIndex, Dimension buttonSize) {
         JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setPreferredSize(buttonSize);
+        layeredPane.setPreferredSize(buttonSize);// Set preferred size
 
         JButton button = createMapImageButton(mapIndex, buttonSize);
         JPanel overlayPanel = createOverlayPanel(buttonSize);
         JLabel textLabel = createMapLabel(mapIndex, buttonSize);
 
-        layeredPane.add(button, Integer.valueOf(0));
-        layeredPane.add(overlayPanel, Integer.valueOf(1));
-        layeredPane.add(textLabel, Integer.valueOf(2));
+        layeredPane.add(button, Integer.valueOf(0));// Add map button to layered pane
+        layeredPane.add(overlayPanel, Integer.valueOf(1));// Add overlay panel to layered
+        layeredPane.add(textLabel, Integer.valueOf(2));// Add text label to layered pane
 
         layeredPane.setCursor(new Cursor(Cursor.HAND_CURSOR));
-layeredPane.revalidate();
-layeredPane.repaint();
+        layeredPane.revalidate();
+        layeredPane.repaint();
 
         return layeredPane;
     }
@@ -280,7 +280,4 @@ layeredPane.repaint();
 
         return button;
     }
-
-
-
 }

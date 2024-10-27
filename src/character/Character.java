@@ -20,72 +20,73 @@ public class Character {
 
     // Getters and Setters
     public String getName() {
-        return name;
+        return name; // Get the character's name
     }
 
     public int getHp() {
-        return hp;
+        return hp; // Get the current health points
     }
 
     public int getMaxHp() {
-        return maxHp;
+        return maxHp; // Get the maximum health points
     }
 
     public int getStrength() {
-        return strength;
+        return strength; // Get the strength attribute
     }
 
     public int getAgility() {
-        return agility;
+        return agility; // Get the agility attribute
     }
 
     public int getMaxAgility() {
-        return maxAgility;
+        return maxAgility; // Get the maximum agility value
     }
 
     public int getIntelligence() {
-        return intelligence;
+        return intelligence; // Get the intelligence attribute
     }
 
     public int getDefense() {
-        return defense;
+        return defense; // Get the defense attribute
     }
 
     public CharacterClass getCharacterClass() {
-        return characterClass;
+        return characterClass; // Get the character's class
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name; // Set the character's name
     }
 
     public void setHp(int hp) {
-        this.hp = hp;
+        this.hp = hp; // Set the current health points
     }
 
     public void setStrength(int strength) {
-        this.strength = strength;
+        this.strength = strength; // Set the strength attribute
     }
 
     public void setAgility(int agility) {
-        this.agility = agility;
+        this.agility = agility; // Set the agility attribute
     }
 
     public void setIntelligence(int intelligence) {
-        this.intelligence = intelligence;
+        this.intelligence = intelligence; // Set the intelligence attribute
     }
 
     public void setDefense(int defense) {
-        this.defense = defense;
+        this.defense = defense; // Set the defense attribute
     }
 
     public void setMaxHp(int maxHp) {
-        this.maxHp = maxHp;
+        this.maxHp = maxHp; // Set the maximum health points
     }
 
     public void setCharacterClass(CharacterClass characterClass) {
-        this.characterClass = characterClass;
+        this.characterClass = characterClass; // Set the character's class
     }
+
 
     // Methods for in-game actions
     public void resetDefense() {
@@ -93,15 +94,15 @@ public class Character {
     }
 
     public void takeDamage(int damage) {
-        hp = Math.max(hp - damage, 0);
+        hp = Math.max(hp - damage, 0); // Reduce HP by damage taken, ensuring it doesn't go below 0
     }
 
     public boolean isAlive() {
-        return hp > 0;
+        return hp > 0; // Check if the character is still alive
     }
 
     public void reduceDefense(int amount) {
-        defense = Math.max(defense - amount, 0);
+        defense = Math.max(defense - amount, 0); // Reduce defense by a specified amount, ensuring it doesn't go below 0
     }
 
     public int attack(Character target, int dice1, int dice2) {

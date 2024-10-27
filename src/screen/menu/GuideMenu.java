@@ -7,22 +7,23 @@ import javax.swing.text.*;
 import screen.SelectionListener;
 
 public class GuideMenu extends JPanel {
-
         public GuideMenu(SelectionListener listener) {
-                setLayout(new BorderLayout());
+                setLayout(new BorderLayout());// Set the layout manager for the panel
                 setBackground(Color.WHITE);
 
+                // Create a navigation bar
                 JPanel navbar = new JPanel(new FlowLayout(FlowLayout.LEFT));
                 navbar.setBackground(Color.DARK_GRAY);
 
+                // Define navigation items
                 String[] navItems = { "Home", "Map", "Characters", "Battle Log Reader", "Exit" };
                 for (String item : navItems) {
                         JButton navButton = new JButton(item);
                         navButton.setForeground(Color.WHITE);
                         navButton.setBackground(Color.DARK_GRAY);
-                        navButton.setBorderPainted(false);
-                        navButton.setFocusPainted(false);
-                        navButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                        navButton.setBorderPainted(false);//// Remove border
+                        navButton.setFocusPainted(false);// Remove focus painting
+                        navButton.setCursor(new Cursor(Cursor.HAND_CURSOR));// Change cursor to hand on hover
                         navbar.add(navButton);
 
                         // Capture the current item in a final variable for the action listener
@@ -100,7 +101,7 @@ public class GuideMenu extends JPanel {
 
         private void insertStyledText(JTextPane textPane) {
                 StyledDocument doc = textPane.getStyledDocument();
-
+                // Define styles for different text elements
                 Style titleStyle = doc.addStyle("titleStyle", null);
                 StyleConstants.setFontSize(titleStyle, 24);
                 StyleConstants.setBold(titleStyle, true);
@@ -113,7 +114,7 @@ public class GuideMenu extends JPanel {
                 StyleConstants.setFontSize(bodyStyle, 12);
                 StyleConstants.setForeground(bodyStyle, Color.BLACK);
 
-                try {
+                try {//// Insert styled text 
                         doc.insertString(doc.getLength(), "Game Overview\n", sectionTitleStyle);
                         doc.insertString(doc.getLength(),
                                         "Realm of Strikes and Spells (RSS) is a turn-based RPG where players control a team of allies to battle against enemies. Use character stats, abilities, and dice rolls to gain an advantage!\n\n",
