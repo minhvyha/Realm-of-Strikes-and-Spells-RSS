@@ -149,6 +149,7 @@ RSS provides interactive UI screens for different phases of gameplay:
     - Documented processes.
 
 ## Application Solves
+### Character Test
 - **Character Test**
   - Enables damage calculation during attacks, factoring in attacker's strength and target's defense.
   - Implements damage computation with variability from dice rolls.
@@ -159,6 +160,15 @@ RSS provides interactive UI screens for different phases of gameplay:
   - Tests include:
     - `testAttackDamage`: Validates regular attack damage calculation and health decrease.
     - `testSpecialAbility`: Validates special abilities for Warrior and Mage classes.
+
+### GameEnd Test
+- **GameEnd Class: **
+  - Manages the GUI components for the game-over screen.
+  - Includes methods to show, hide, and check visibility of the screen.
+
+- **GameEndTest Class:- **
+  - Contains unit tests for the GameEnd class.
+  - Verifies correct behaviour of the game-over screen under various scenarios, ensuring reliability and correctness of the game-end functionality.
 
 ## Class
 - **Example of class for character**
