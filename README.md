@@ -51,6 +51,13 @@ Realm of Strikes and Spells (RSS) is a turn-based role-playing game (RPG) where 
       └─ LogTest.java                    # Unit tests for Log.java
 
 ```
+### Organize project directories for game assets and components
+
+- **assets/**: Contains game assets.
+- **character/**: Includes classes for character attributes and behaviors, categorized by classes (Mage, Rogue, Warrior) and races (Golem, Reaper, Angel, Minotaur).
+- **screen/**: Houses UI components like battle screens, menus, and overlays (e.g., BattleScreen.java, GameEnd.java).
+- **test/**: Contains unit tests for various components, ensuring each part of the game functions correctly.
+
 
 ## Character Classes and Races
 
