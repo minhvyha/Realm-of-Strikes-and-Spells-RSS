@@ -4,18 +4,49 @@
 Realm of Strikes and Spells (RSS) is a turn-based role-playing game (RPG) where players lead a team of allies against various enemies in strategic battles. Players can choose characters of different races and classes, each offering unique abilities, and navigate multiple battle maps to engage in tactical combat.
 
 ## Project Structure
-The code is organized into three main directories under the `src` folder:
-- **assets**: Contains visual assets including sprites, background images, and icons.
-- **character**: Contains core logic for characters, defining races, classes, and enemy configurations. Subfolders include:
-  - **classes**: Contains `Mage.java`, `Rogue.java`, and `Warrior.java`, each representing a distinct combat style.
-  - **enemyRaces**: Contains enemy character types like `Golem.java`, `Reaper.java`, and `Zombie.java`.
-  - **races**: Defines ally races such as `Angel.java`, `Minotaur.java`, and `Orc.java`.
-- **screen**: Contains components for the game's UI screens, including selection menus, battle displays, overlays, and action listeners. Key components:
-  - **menu**: Includes `CharacterSelection.java`, `GuideMenu.java`, and `MapSelection.java` for game navigation.
-  - **log**: `Log.java` for displaying game logs.
-  - Other files provide in-game overlays and visuals, including `BattleScreen.java`, `LoadingOverlay.java`, `GameEnd.java`, and `MainMenu.java`.
-- Additional helper and test files (`BeginOverlayTest.java`, `CharacterTest.java`, `GameEndTest.java`, and `Main.java`).
-
+```
+src/
+ ┣ assets/
+ ┣ character/
+ ┃ ┣ classes/
+ ┃ ┃ ┣ Mage.java
+ ┃ ┃ ┣ Rogue.java
+ ┃ ┃ ┗ Warrior.java
+ ┃ ┣ enemyRaces/
+ ┃ ┃ ┣ Golem.java
+ ┃ ┃ ┣ Reaper.java
+ ┃ ┃ ┗ Zombie.java
+ ┃ ┣ races/
+ ┃ ┃ ┣ Angel.java
+ ┃ ┃ ┣ Minotaur.java
+ ┃ ┃ ┗ Orc.java
+ ┃ ┣ Character.java
+ ┃ ┣ CharacterClass.java
+ ┃ ┣ CharacterLabel.java
+ ┃ ┗ EnemyLabel.java
+ ┣ screen/
+ ┃ ┣ log/
+ ┃ ┃ ┗ Log.java
+ ┃ ┣ menu/
+ ┃ ┃ ┣ BattleLogReader.java
+ ┃ ┃ ┣ CharacterSelection.java
+ ┃ ┃ ┣ GuideMenu.java
+ ┃ ┃ ┗ MapSelection.java
+ ┃ ┣ BattleScreen.java
+ ┃ ┣ BeginOverlay.java
+ ┃ ┣ DiceOverlay.java
+ ┃ ┣ GameEnd.java
+ ┃ ┣ LoadingOverlay.java
+ ┃ ┣ MainMenu.java
+ ┃ ┗ SelectionListener.java
+ ┣ test.
+ ┃ ┣ BeginOverlayTest.java
+ ┃ ┣ CharacterTest.java
+ ┃ ┣ DiceOverlayTest.java
+ ┃ ┣ GameEndTest.java
+ ┃ ┗ LogTest.java
+ ┗ Main.java
+```
 ## Key Components
 
 ### Character Classes and Races
