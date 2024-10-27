@@ -149,6 +149,8 @@ RSS provides interactive UI screens for different phases of gameplay:
     - Documented processes.
 
 ## Application Solves
+The application provides a solid foundation for testing the functionality of a game. The tests are straightforward, focusing on critical aspects of the class to ensure it behaves correctly during gameplay. This structure not only aids in validating the current implementation but also sets the stage for future enhancements and testing of other game components.
+
 ### Character Test
 - **Character Test**
   - Enables damage calculation during attacks, factoring in attacker's strength and target's defense.
