@@ -111,7 +111,7 @@ RSS provides interactive UI screens for different phases of gameplay:
    java -cp bin Main
    ```
 
-[Feature] <Brief description of the feature or task>
+## Description of the feature or task>
 
 - **Percentage of Work:**
   - **Minh Vy Ha (35%)**
@@ -140,7 +140,7 @@ RSS provides interactive UI screens for different phases of gameplay:
     - Assisted in implementing game mechanics and debugging.
     - Documented processes.
 
-[Application Solves]
+## Application Solves
 - **Character Test**
   - Enables damage calculation during attacks, factoring in attacker's strength and target's defense.
   - Implements damage computation with variability from dice rolls.
