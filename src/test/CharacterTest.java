@@ -22,12 +22,15 @@ class CharacterTest {
 
     @Test
     void testAttackDamage() {
-        int initialHealth = target.getHp();
-        int dice1 = 5;
+        int initialHealth = target.getHp();// Set initial health for the target
+        int dice1 = 5;// Attacker's damage rolls
         int dice2 = 3;
+        // Calculate damage dealt considering the defense
         int totalDamge = attacker.attack(target, dice1, dice2);
         int calculatedDamage = calculateDamge(attacker, target, dice1, dice2);
+        // Check if target's HP is decreased correctly
         assertEquals(initialHealth - calculatedDamage, target.getHp(), "Health should decrease correctly");
+        // Assert that the damage dealt equals the calculated effective damage
         assertEquals(calculatedDamage, totalDamge, "Damage should be calculated correctly");
     }
 
