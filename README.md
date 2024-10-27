@@ -14,15 +14,18 @@ The application provides a solid foundation for testing the functionality of a g
    ```bash
    git clone https://github.com/minhvyha/Realm-of-Strikes-and-Spells-RSS.git
    ```
-1. **Compile the project:**
+2. **Compile the project:**
    ```bash
    javac -d bin $(find src -name "*.java" ! -path "src/test/*")
    ```
-1. **Run the main class:**
+3. **Run the main class:**
    ```bash
    java -cp bin Main
    ```
 
+## Jar file
+
+A .jar file located in /dist folder allow user on MacOS and Window to open directly.
 
 ## Project Structure
 
