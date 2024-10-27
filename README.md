@@ -4,7 +4,30 @@
 
 Realm of Strikes and Spells (RSS) is a turn-based role-playing game (RPG) where players lead a team of allies against various enemies in strategic battles. Players can choose characters of different races and classes, each offering unique abilities, and navigate multiple battle maps to engage in tactical combat.
 
+## Application Solves
+The application provides a solid foundation for testing the functionality of a game. The tests are straightforward, focusing on critical aspects of the class to ensure it behaves correctly during gameplay. This structure not only aids in validating the current implementation but also sets the stage for future enhancements and testing of other game components.
+
+
+## How to Run the Program
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/minhvyha/Realm-of-Strikes-and-Spells-RSS.git
+   ```
+1. **Compile the project:**
+   ```bash
+   javac -d bin $(find src -name "*.java" ! -path "src/test/*")
+   ```
+1. **Run the main class:**
+   ```bash
+   java -cp bin Main
+   ```
+
+
 ## Project Structure
+
+
+Our project is structured to streamline the development of our Java-based RPG game. At the root, we have README.md for documentation, giving players and developers setup and gameplay instructions. In src, Main.java serves as the entry point, and assets holds resources like images and sounds. The character directory encapsulates all character functionality: Character.java outlines core attributes, while specific class implementations (e.g., Mage, Rogue, Warrior) are organized under classes, enemy types (e.g., Golem, Reaper) in enemyRaces, and other races (e.g., Angel, Minotaur) in races. For UI, screen includes primary screens like BattleScreen, MainMenu, and GameEnd, plus overlays (DiceOverlay, LoadingOverlay) and a logging utility (Log.java). In menu, we've set up components like CharacterSelection and MapSelection to streamline user interactions. Testing is centralized in test, where each component has dedicated unit tests to ensure stability across gameplay and interface features. This structure keeps our game logic, UI, and testing modular and maintainable, fostering efficient development and clear organization.
 
 ```
 ├─ README.md
@@ -58,7 +81,6 @@ Realm of Strikes and Spells (RSS) is a turn-based role-playing game (RPG) where 
 - **screen/**: Houses UI components like battle screens, menus, and overlays (e.g., BattleScreen.java, GameEnd.java).
 - **test/**: Contains unit tests for various components, ensuring each part of the game functions correctly.
 
-### Delegation
 ![6b7e4fd7](https://github.com/user-attachments/assets/b269d2f6-85da-49aa-9e55-9ba4305014e1)
 
 ## Character Classes and Races
@@ -105,23 +127,8 @@ RSS provides interactive UI screens for different phases of gameplay:
 - **Java Swing**: Used for creating graphical user interface components.
 - **JUnit**: For unit testing game components.
 
-## How to Run the Program
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/minhvyha/Realm-of-Strikes-and-Spells-RSS.git
-   ```
-1. **Compile the project:**
-   ```bash
-   javac -d bin $(find src -name "*.java" ! -path "src/test/*")
-   ```
-1. **Run the main class:**
-   ```bash
-   java -cp bin Main
-   ```
-
-## Description of the feature or task>
-
+## Work Contributions:
 - **Percentage of Work:**
   - **Minh Vy Ha (35%)**
     - Main contributor, designed the core game mechanics and implemented character classes, redacted code for readability.
@@ -148,38 +155,4 @@ RSS provides interactive UI screens for different phases of gameplay:
   - **Daniel Huynh (20%)**
     - Assisted in implementing game mechanics and debugging.
     - Documented processes.
-
-## Application Solves
-The application provides a solid foundation for testing the functionality of a game. The tests are straightforward, focusing on critical aspects of the class to ensure it behaves correctly during gameplay. This structure not only aids in validating the current implementation but also sets the stage for future enhancements and testing of other game components.
-
-### Character Test
-- **Character Test**
-  - Enables damage calculation during attacks, factoring in attacker's strength and target's defense.
-  - Implements damage computation with variability from dice rolls.
-  - Contains specific damage calculation logic for different character classes (e.g., `calculateWarriorDamage`, `calculateMageDamage`).
-
-- **Character Abilities**
-  - Validates that special abilities for character classes work correctly, ensuring strengths are represented in mechanics.
-  - Tests include:
-    - `testAttackDamage`: Validates regular attack damage calculation and health decrease.
-    - `testSpecialAbility`: Validates special abilities for Warrior and Mage classes.
-
-### GameEnd Test
-- GameEnd Class: 
-  - Manages the GUI components for the game-over screen.
-  - Includes methods to show, hide, and check visibility of the screen.
-
-- GameEndTest Class:- 
-  - Contains unit tests for the GameEnd class.
-  - Verifies correct behaviour of the game-over screen under various scenarios, ensuring reliability and correctness of the game-end functionality.
-
-## Class
-- **Example of class for character**
-  ![09ce80fd](https://github.com/user-attachments/assets/5043a777-0dfa-450f-b599-00a471e044bb)
-
-
-- **Example of class for GameEnd**
-  ![4a7c1ceb](https://github.com/user-attachments/assets/0a30429b-0ed9-4cca-8011-1ac59bf4668f)
-
-
 
