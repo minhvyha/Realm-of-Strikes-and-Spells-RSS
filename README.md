@@ -110,3 +110,45 @@ RSS provides interactive UI screens for different phases of gameplay:
    ```bash
    java -cp bin Main
    ```
+
+[Feature] <Brief description of the feature or task>
+
+- **Percentage of Work:**
+  - **Minh Vy Ha (35%)**
+    - Main contributor, designed the core game mechanics and implemented character classes, redacted code for readability.
+    - Created Character Class Structure with attributes like HP, strength, intelligence, and defense.
+    - Implemented Character Inheritance with subclasses based on race (Orc, Elf, Alien) and class (Rogue, Barbarian, Mage).
+    - Developed Combat System, determining turn order using stats like initiative and randomization with dice rolls.
+    - Created an Equipment System for characters to equip items that modify base stats.
+    - Handled Status Effects management, including "Poisoned" and "Wounded."
+
+  - **Minying Wu (25%)**
+    - Developed part of the UI component of battle, including buttons, and assisted in implementing game mechanics.
+    - Designed Action Methods (e.g., attack(), defend(), special abilities).
+    - Implemented Dice Rolls and Randomness for damage modifiers and success chances.
+    - Managed Teams and Victory Conditions tracking (e.g., when all characters on one team have 0 HP).
+    - Created part of the Map Lock system and added a navigation bar for improved game UI.
+    - Documented the process for Section B.
+
+  - **Khoi Nguyen (20%)**
+    - Designed unit tests for Character, enhancing overall testing framework.
+    - Assisted in Equipment and Combat systems.
+    - Streamlined testing process and implemented endgame tests.
+    - Debugged issues.
+
+  - **Daniel Huynh (20%)**
+    - Assisted in implementing game mechanics and debugging.
+    - Documented processes.
+
+[Application Solves]
+- **Character Test**
+  - Enables damage calculation during attacks, factoring in attacker's strength and target's defense.
+  - Implements damage computation with variability from dice rolls.
+  - Contains specific damage calculation logic for different character classes (e.g., `calculateWarriorDamage`, `calculateMageDamage`).
+
+- **Character Abilities**
+  - Validates that special abilities for character classes work correctly, ensuring strengths are represented in mechanics.
+  - Tests include:
+    - `testAttackDamage`: Validates regular attack damage calculation and health decrease.
+    - `testSpecialAbility`: Validates special abilities for Warrior and Mage classes.
+
