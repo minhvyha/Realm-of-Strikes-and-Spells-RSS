@@ -5,13 +5,7 @@ Realm of Strikes and Spells (RSS) is a turn-based role-playing game (RPG) where 
 
 ## Project Structure
 ```
-📦 
-.gitignore
-.vscode/
-│  └─ settings.json
 ├─ README.md
-├─ lib/
-│  └─ junit-platform-console-standalone-1.7.2.jar
 └─ src/
    ├─ Main.java                                         # Main class to run the game
    ├─ assets/
@@ -89,7 +83,7 @@ RSS provides interactive UI screens for different phases of gameplay:
 - **Java**: Core programming language.
 - **Java Swing**: Used for creating graphical user interface components.
 - **JUnit**: For unit testing game components.
-- 
+  
 ## How to Run the Program
 1. **Clone the repository:**
    ```bash
