@@ -34,7 +34,7 @@ public class CharacterSelection extends JPanel {
         navbar.setLayout(new FlowLayout(FlowLayout.LEFT));
         navbar.setBackground(Color.DARK_GRAY);
 
-                String[] navItems = { "Home", "Map", "Characters", "Battle Log Reader" , "Exit" };
+        String[] navItems = { "Home", "Map", "Characters", "Battle Log Reader", "Exit" };
         for (String item : navItems) {
             JButton navButton = new JButton(item);
             navButton.setForeground(Color.WHITE);
@@ -59,8 +59,9 @@ public class CharacterSelection extends JPanel {
                     case "Characters":
                         listener.onMenuCharacterSelected();
                         break;
-                        case "Battle Log Reader":
+                    case "Battle Log Reader":
                         listener.onMenuBattleLogReaderSelected();
+                        break;
                     case "Exit":
                         ImageIcon originalIcon = new ImageIcon(
                                 getClass().getResource("/assets/logo.png"));
